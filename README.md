@@ -1,3 +1,8 @@
+# SRYTAL INC
+
+This Application copy rights all belongs to @srytal-inc
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
