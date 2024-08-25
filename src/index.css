@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply text-black bg-white font-sans;
+}
+
+h1 {
+  @apply text-2xl font-bold;
+}
