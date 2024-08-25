@@ -27,6 +27,7 @@ const mockLoginAdmin = loginAdmin as jest.MockedFunction<typeof loginAdmin>;
 
 const mockOrganizationConfig: OrganizationConfig = {
   logo: "/data-store.png",
+  organization: "data",
   theme: {
     primaryColor: "blue",
     colorScheme: "light",

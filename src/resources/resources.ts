@@ -2,6 +2,7 @@ import { OrganizationConfig } from "../types/interfaces";
 
 const defaultConfig: OrganizationConfig = {
   logo: "/data-store.png",
+  organization: "default",
   theme: {
     primaryColor: "blue",
     colorScheme: "light",
@@ -34,6 +35,7 @@ const defaultConfig: OrganizationConfig = {
 
 const organizationConfigs: Record<string, OrganizationConfig> = {
   data: {
+    organization: "data",
     logo: "/data-store.png",
     theme: {
       colors: {
@@ -77,6 +79,7 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
     },
   },
   epam: {
+    organization: "epam",
     logo: "/epam.png",
     theme: {
       colors: {
@@ -120,6 +123,7 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
     },
   },
   techcorp: {
+    organization: "techcorp",
     logo: "/data-store.png",
     theme: {
       colors: {
@@ -163,6 +167,7 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
     },
   },
   innovate: {
+    organization: "innovate",
     logo: "/data-store.png",
     theme: {
       colors: {
@@ -199,13 +204,14 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
         textColor: "white",
       },
       color: "#17a2b8",
-      backgroundColor: "#f0f8f9",
+      backgroundColor: "#ffffff",
       borderColor: "#d2d7d9",
       linkColor: "#17a2b8",
       headerBackgroundColor: "#e9ecef",
     },
   },
   vision: {
+    organization: "vision",
     logo: "/epam.png",
     theme: {
       colors: {
@@ -249,6 +255,7 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
     },
   },
   techco: {
+    organization: "techco",
     logo: "/data-store.png",
     theme: {
       colors: {
@@ -284,15 +291,28 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
         color: "#dc3545",
         textColor: "white",
       },
-      color: "green",
-      backgroundColor: "gray",
-      borderColor: "red",
+      color: "#dc3545",
+      backgroundColor: "#ffffff",
+      borderColor: "#ced4da",
       linkColor: "#dc3545",
-      headerBackgroundColor: "#e9ecef",
+      headerBackgroundColor: "#f8f9fa",
     },
   },
 };
 
 export const getOrganizationConfig = (
   organization: string
-): OrganizationConfig => organizationConfigs[organization];
+): OrganizationConfig => {
+  return {
+    ...defaultConfig,
+    ...organizationConfigs[organization],
+    theme: {
+      ...defaultConfig.theme,
+      ...organizationConfigs[organization]?.theme,
+      colors: {
+        ...defaultConfig.theme.colors,
+        ...organizationConfigs[organization]?.theme?.colors,
+      },
+    },
+  };
+};
