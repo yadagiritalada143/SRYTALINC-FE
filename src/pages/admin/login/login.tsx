@@ -49,7 +49,7 @@ const AdminLogin = ({
     >
       <form
         onSubmit={handleSubmit(Submit)}
-        className="bg-white shadow-lg border rounded-lg p-6 max-w-md w-full"
+        className=" shadow-lg border rounded-lg p-6 max-w-md w-full"
         style={{ borderColor: organizationConfig.theme.borderColor }}
       >
         <div className="flex flex-col items-center">
@@ -69,7 +69,7 @@ const AdminLogin = ({
             error={errors.email?.message}
             classNames={{
               input: "w-full",
-              label: "text-gray-700 font-semibold mb-1",
+              label: " font-semibold mb-1",
             }}
           />
         </div>
@@ -80,7 +80,7 @@ const AdminLogin = ({
             error={errors.password?.message}
             classNames={{
               input: "w-full",
-              label: "text-gray-700 font-semibold mb-1",
+              label: "font-semibold mb-1",
             }}
           />
         </div>

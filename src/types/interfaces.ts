@@ -1,5 +1,5 @@
 export interface OrganizationConfig {
-  organization?: string;
+  organization: string;
   logo: string;
   theme: {
     colorScheme: "light" | "dark";
