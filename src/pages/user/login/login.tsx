@@ -1,43 +1,20 @@
 import { Button, Loader, PasswordInput, TextInput } from "@mantine/core";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginForm } from "../../../types/form-schema";
-import { Link, useNavigate } from "react-router-dom";
-import { loginAdmin } from "../../../services/api-services";
-import axios from "axios";
-import { toast } from "react-toastify";
 import { OrganizationConfig } from "../../../types/interfaces";
-const AdminLogin = ({
+import { useForm } from "react-hook-form";
+import { LoginForm, loginSchema } from "../../../types/form-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "react-router-dom";
+
+const EmployeeLogin = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
-  const navigate = useNavigate();
   const {
     register,
-    handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const Submit = async (formData: LoginForm) => {
-    try {
-      const data = await loginAdmin(formData);
-      localStorage.setItem("adminToken", data.token);
-      toast.success("Login Successful!");
-      navigate(`/${organizationConfig.organization}/admin/dashboard`);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(
-          "Login failed: " + (error.response?.data?.message || "Unknown error")
-        );
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
-    }
-  };
-
+    handleSubmit,
+  } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
   return (
     <div
       className="flex justify-center items-center h-screen px-4"
@@ -48,12 +25,14 @@ const AdminLogin = ({
       }}
     >
       <form
-        onSubmit={handleSubmit(Submit)}
+        onSubmit={handleSubmit((data) => console.log(data))}
         className=" shadow-lg border rounded-lg p-6 max-w-md w-full"
         style={{ borderColor: organizationConfig.theme.borderColor }}
       >
         <div className="flex flex-col items-center">
-          <h1 className="text-3xl font-bold text-center mb-4">ADMIN LOGIN</h1>
+          <h1 className="text-3xl font-bold text-center mb-4">
+            EMPLOYEE LOGIN
+          </h1>
           <img
             src={organizationConfig.logo}
             className="mb-4 w-20 h-20 object-contain"
@@ -98,4 +77,4 @@ const AdminLogin = ({
   );
 };
 
-export default AdminLogin;
+export default EmployeeLogin;

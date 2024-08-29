@@ -3,6 +3,7 @@ import AddEmployee from "./components/admin/dashboard/add-employee/add-employee"
 import AdminDashboard from "./pages/admin/dashboard/dashboard";
 import AdminLogin from "./pages/admin/login/login";
 import { OrganizationConfig } from "./types/interfaces";
+import EmployeeLogin from "./pages/user/login/login";
 
 const OrganizationRoutes: React.FC<{
   organizationConfig: OrganizationConfig;
@@ -23,6 +24,10 @@ const OrganizationRoutes: React.FC<{
         />
         <Route path="employees" element={<h1>Update Employee</h1>} />
       </Route>
+      <Route
+        path="user/login"
+        element={<EmployeeLogin organizationConfig={organizationConfig} />}
+      />
     </Routes>
   );
 };
