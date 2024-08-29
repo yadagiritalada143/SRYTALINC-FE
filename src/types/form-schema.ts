@@ -20,3 +20,12 @@ export const addEmployeeSchema = z.object({
 });
 
 export type AddEmployeeForm = z.infer<typeof addEmployeeSchema>;
+
+export const contactForm = z.object({
+  companyName: z.string().min(1),
+  emailForContact: z.string().email(),
+  title: z.string().min(5),
+  message: z.string().min(20),
+});
+
+export type ContactForm = z.infer<typeof contactForm>;

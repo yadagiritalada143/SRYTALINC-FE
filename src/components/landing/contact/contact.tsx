@@ -1,0 +1,73 @@
+import { useForm } from "react-hook-form";
+import { TextInput, Textarea, Button, Group } from "@mantine/core";
+import { ContactForm, contactForm } from "../../../types/form-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const ContactComponent = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactForm>({ resolver: zodResolver(contactForm) });
+
+  const onSubmit = (data: ContactForm) => {
+    console.log(data);
+  };
+
+  return (
+    <div className="flex bg-transparent justify-center items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className=" px-8 py-4 w-full md:w-1/2  rounded-lg shadow-lg "
+      >
+        <h1 className="text-center text-xl font-semibold">Contact Us</h1>
+        <TextInput
+          label="Company Name"
+          placeholder="Your company name"
+          {...register("companyName", { required: "Company name is required" })}
+          error={errors.companyName?.message}
+        />
+
+        <TextInput
+          label="Email"
+          placeholder="Your email"
+          {...register("emailForContact", {
+            required: "Email is required",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Invalid email address",
+            },
+          })}
+          error={errors.emailForContact?.message}
+          mt="md"
+        />
+
+        <TextInput
+          label="Title"
+          placeholder="Message title"
+          {...register("title", { required: "Title is required" })}
+          error={errors.title?.message}
+          mt="md"
+        />
+
+        <Textarea
+          label="Message"
+          placeholder="Your message"
+          autosize
+          minRows={3}
+          {...register("message", { required: "Message is required" })}
+          error={errors.message?.message}
+          mt="md"
+        />
+
+        <div className="items-center flex justify-center">
+          <Button type="submit" className="bg-blue-500 mt-4 hover:bg-blue-600">
+            Send Message
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default ContactComponent;
