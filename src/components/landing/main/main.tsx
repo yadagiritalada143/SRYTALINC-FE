@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 const Main = () => {
   return (
     <main className="relative h-[130dvh] text-white flex flex-col justify-center items-center px-4 bg-cover bg-center bg-fixed">
-      <h1 className="text-5xl w-full md:w-3/4 font-bold mb-6 text-center">
+      <h1 className="text-2xl md:text-5xl font-bold mb-4 md:mb-6 text-center">
         Empowering Businesses with Innovative Technology Solutions
       </h1>
-      <p className="text-lg text-white text-center max-w-2xl">
+      <p className="text-base md:text-lg text-white text-center max-w-full md:max-w-2xl px-4 md:px-0">
         At SrytalInc, we are dedicated to driving digital transformation by
         providing cutting-edge software solutions tailored to meet the unique
         needs of businesses across industries. Our expertise spans custom
