@@ -7,6 +7,7 @@ import {
   IconBrandMeta,
   IconBrandWhatsapp,
 } from "@tabler/icons-react";
+import { HashLink as Link } from "react-router-hash-link";
 
 const CardDropdownStyles = {
   overflow: "hidden",
@@ -19,15 +20,16 @@ const Header = () => {
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <header className="relative text-white py-4 ">
+    <header className="relative text-white my-4">
       <div className="container mx-auto flex flex-col lg:flex-row px-4 items-center justify-between">
         <div className="flex justify-between w-full lg:w-auto lg:justify-start items-center">
-          <h1
-            className="text-purple-500 text-3xl lg:text-4xl font-bold"
-            style={{ textShadow: "2px 2px 2px white" }}
+          <a
+            href="/"
+            className="text-3xl sm:text-4xl cursor-pointer font-bold  text-white hover:text-transparent bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text shadow-md transition-transform duration-300 ease-in-out hover:scale-110  text-center"
           >
             SRYTAL
-          </h1>
+          </a>
+
           <div className="lg:hidden ml-auto">
             <Burger color="white" opened={opened} onClick={toggle} />
           </div>
@@ -38,11 +40,30 @@ const Header = () => {
           } lg:max-h-none lg:opacity-100 overflow-hidden transition-all duration-500 ease-in-out lg:flex justify-center items-center text-center w-full mt-4 lg:mt-0 space-y-4 lg:space-y-0 lg:space-x-8`}
         >
           <nav className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+            <Link
+              to="#"
+              smooth={true}
+              className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-1 hover:rotate-x-12 hover:rotate-y-6 hover:text-purple-400"
+            >
+              Home
+            </Link>
+            <Link
+              to="#about"
+              smooth={true}
+              className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-1 hover:rotate-x-12 hover:rotate-y-6 hover:text-purple-400"
+            >
+              About
+            </Link>
+
             <HoverCard width="max-content" position="bottom" radius="md">
               <HoverCard.Target>
-                <a href="#" className="text-gray-300 hover:text-purple-400">
+                <Link
+                  to="#services"
+                  smooth={true}
+                  className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-1 hover:rotate-x-12 hover:rotate-y-6 hover:text-purple-400"
+                >
                   Services
-                </a>
+                </Link>
               </HoverCard.Target>
               <HoverCard.Dropdown style={CardDropdownStyles}>
                 <div className="flex flex-col space-y-2">
@@ -66,9 +87,13 @@ const Header = () => {
             </HoverCard>
             <HoverCard width="max-content" position="bottom" radius="md">
               <HoverCard.Target>
-                <a href="#" className="text-gray-300 hover:text-purple-400">
-                  Technology
-                </a>
+                <Link
+                  to="#technologies"
+                  smooth={true}
+                  className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-1 hover:rotate-x-12 hover:rotate-y-6 hover:text-purple-400"
+                >
+                  Technologies
+                </Link>
               </HoverCard.Target>
               <HoverCard.Dropdown style={CardDropdownStyles}>
                 <div className="flex flex-col space-y-2">
@@ -90,15 +115,20 @@ const Header = () => {
                 </div>
               </HoverCard.Dropdown>
             </HoverCard>
-            <a href="#" className="text-gray-300 hover:text-purple-400">
-              Insights
-            </a>
-            <a href="#" className="text-gray-300 hover:text-purple-400">
+
+            <a
+              href="#"
+              className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-1 hover:rotate-x-12 hover:rotate-y-6 hover:text-purple-400"
+            >
               Pricing
             </a>
-            <a href="#" className="text-gray-300 hover:text-purple-400">
-              Changelog
-            </a>
+            <Link
+              to="#contact"
+              smooth={true}
+              className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-1 hover:rotate-x-12 hover:rotate-y-6 hover:text-purple-400"
+            >
+              Contact
+            </Link>
           </nav>
         </div>
         <div className="flex justify-center space-x-3 mt-4 lg:mt-0 items-center">
@@ -111,9 +141,9 @@ const Header = () => {
           <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
             <IconBrandFacebook size={28} />
           </div>
-          <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
+          {/* <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
             <IconBrandWhatsapp size={28} />
-          </div>
+          </div> */}
         </div>
       </div>
     </header>

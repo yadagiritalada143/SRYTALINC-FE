@@ -40,19 +40,21 @@ const services = [
     icon: <IconDeviceLaptop size="4rem" />,
   },
   {
-    title: "Cybersecurity Solutions",
+    title: "Security Solutions",
     description:
-      "Comprehensive cybersecurity strategies to protect your digital assets and ensure business continuity.",
+      "Comprehensive cyber security strategies to protect your digital assets and ensure business continuity.",
     icon: <IconShieldCheck size="4rem" />,
   },
 ];
 
 const Services = () => {
   return (
-    <section className="py-16">
+    <section id="services" className="py-16">
       <div className="container mx-auto px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold">Our Services</h2>
+          <h2 className="text-2xl md:text-3xl text-center font-bold">
+            Our Services
+          </h2>
           <p className="text-xl mt-4">
             Empowering your business with innovative solutions tailored to your
             needs.
