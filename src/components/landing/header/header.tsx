@@ -19,7 +19,7 @@ const Header = () => {
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <header className="relative text-white py-4 h-full">
+    <header className="relative text-white py-4 ">
       <div className="container mx-auto flex flex-col lg:flex-row px-4 items-center justify-between">
         <div className="flex justify-between w-full lg:w-auto lg:justify-start items-center">
           <h1

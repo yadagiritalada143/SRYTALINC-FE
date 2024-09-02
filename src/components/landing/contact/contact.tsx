@@ -54,13 +54,14 @@ const ContactComponent = () => {
           label="Message"
           placeholder="Your message"
           autosize
+          maxRows={5}
           minRows={3}
           {...register("message", { required: "Message is required" })}
           error={errors.message?.message}
           mt="md"
         />
 
-        <div className="items-center flex justify-center">
+        <div className="mt-2">
           <Button type="submit" className="bg-blue-500 mt-4 hover:bg-blue-600">
             Send Message
           </Button>

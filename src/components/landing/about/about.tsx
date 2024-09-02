@@ -35,15 +35,11 @@ const About = () => {
           <div
             id="flip-card"
             ref={flipRef}
-            className="relative float-right md:w-1/2 m-4 rounded-3xl w-full h-64 md:h-80 transform transition-transform duration-1000"
+            className="relative float-right  md:w-1/2 m-4 rounded-3xl w-full h-64 md:h-80 transform transition-transform duration-1000"
             onMouseEnter={handleHover}
             onMouseLeave={handleHover}
-            style={{
-              perspective: "1000px",
-              boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px",
-            }}
           >
-            <div className="flip-inner absolute w-full h-full">
+            <div className="flip-inner mx-4 absolute w-full h-full">
               <div
                 className="absolute w-full h-full backface-hidden"
                 style={{
@@ -52,7 +48,7 @@ const About = () => {
                 }}
               >
                 <img
-                  className="w-full h-full rounded-3xl object-cover"
+                  className="w-full h-full  rounded-3xl object-cover"
                   src="/img-2.jpg"
                   alt="Front"
                 />
