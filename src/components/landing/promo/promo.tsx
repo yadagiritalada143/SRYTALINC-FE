@@ -1,5 +1,6 @@
 import { Button } from "@mantine/core";
 import { IconRocket } from "@tabler/icons-react";
+import { HashLink as Link } from "react-router-hash-link";
 
 const PromoBanner = () => {
   return (
@@ -13,14 +14,12 @@ const PromoBanner = () => {
         our expertise.
       </p>
       <Button
-        component="a"
-        href="#demo"
         className="mt-6 bg-black text-white hover:bg-gray-800"
         size="md"
         radius="md"
         leftSection={<IconRocket />}
       >
-        Explore Our Solutions
+        <Link to="#contact">Contact our experts</Link>
       </Button>
     </div>
   );

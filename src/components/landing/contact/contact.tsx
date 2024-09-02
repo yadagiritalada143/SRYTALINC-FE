@@ -15,7 +15,10 @@ const ContactComponent = () => {
   };
 
   return (
-    <div className="flex bg-transparent justify-center items-center">
+    <div
+      id="contact"
+      className="flex bg-transparent justify-center items-center"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className=" px-8 py-4 w-full md:w-1/2  rounded-lg shadow-lg "
@@ -35,7 +38,7 @@ const ContactComponent = () => {
             required: "Email is required",
             pattern: {
               value: /^\S+@\S+$/i,
-              message: "Invalid email address",
+              message: "Please enter valid email !",
             },
           })}
           error={errors.emailForContact?.message}
@@ -43,10 +46,10 @@ const ContactComponent = () => {
         />
 
         <TextInput
-          label="Title"
-          placeholder="Message title"
-          {...register("title", { required: "Title is required" })}
-          error={errors.title?.message}
+          label="Subject"
+          placeholder="Message subject"
+          {...register("subject", { required: "Please enter the Subject !" })}
+          error={errors.subject?.message}
           mt="md"
         />
 
@@ -56,12 +59,12 @@ const ContactComponent = () => {
           autosize
           maxRows={5}
           minRows={3}
-          {...register("message", { required: "Message is required" })}
+          {...register("message", { required: "Please enter the Message !" })}
           error={errors.message?.message}
           mt="md"
         />
 
-        <div className="mt-2">
+        <div className="mt-2 text-right">
           <Button type="submit" className="bg-blue-500 mt-4 hover:bg-blue-600">
             Send Message
           </Button>

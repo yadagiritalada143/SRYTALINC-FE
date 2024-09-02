@@ -35,9 +35,9 @@ const WhyChooseUs = () => {
 
   return (
     <section className="bg-gray-900 text-white py-12 mx-4 md:mx-8 px-4 rounded-lg shadow-lg">
-      <Title ta="center" mb="lg" order={2}>
-        Why Choose Us?
-      </Title>
+      <h1 className="text-2xl md:text-3xl text-center font-bold mb-16">
+        Why Choose Us ?
+      </h1>
       <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {features.map((feature, index) => (

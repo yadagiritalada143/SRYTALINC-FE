@@ -7,24 +7,9 @@ import Services from "../../components/landing/services/services";
 import PromoBanner from "../../components/landing/promo/promo";
 import WhyChooseUs from "../../components/landing/choose/choose";
 import ContactComponent from "../../components/landing/contact/contact";
+import Technologies from "../../components/landing/technologies/technologies";
 
 const Landing = () => {
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.screenY;
-      const parallaxElement = document.getElementById("parallax-bg");
-      if (parallaxElement) {
-        parallaxElement.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <div className="relative  w-full h-screen bg-gray-900 text-white overflow-x-hidden">
       <div className="fixed top-10 left-10 w-32 h-32 bg-purple-500 rounded-full opacity-50 animate-move1"></div>
@@ -39,16 +24,19 @@ const Landing = () => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           backgroundAttachment: "fixed",
+          height: "120dvh",
         }}
       >
         <Header />
         <Main />
       </div>
 
-      <div className=" py-6 w-full mx-auto">
+      <div className=" py-6 w-full ">
         <About />
       </div>
-
+      <div className="py-6 w-full ">
+        <Technologies />
+      </div>
       <div className=" py-6 w-full mx-auto">
         <Services />
       </div>
