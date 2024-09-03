@@ -1,9 +1,12 @@
 import { Button, Loader, PasswordInput, TextInput } from "@mantine/core";
-import { OrganizationConfig } from "../../../types/interfaces";
+import { OrganizationConfig } from "../../../interfaces/organization";
 import { useForm } from "react-hook-form";
-import { LoginForm, loginSchema } from "../../../types/form-schema";
+import { LoginForm, loginSchema } from "../../../forms/login";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../../services/common-services";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const EmployeeLogin = ({
   organizationConfig,
@@ -15,6 +18,31 @@ const EmployeeLogin = ({
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
+  const navigate = useNavigate();
+
+  const Submit = async (formData: LoginForm) => {
+    try {
+      const data = await login(formData);
+      localStorage.setItem("adminToken", data.token);
+      localStorage.setItem("userRole", data.userRole);
+      if (data.userRole === "recruiter") {
+        navigate(`/${organizationConfig.organization}/employee/dashboard`);
+      } else {
+        navigate(
+          `/${organizationConfig.organization}/employee/dashboard/profile`
+        );
+      }
+      toast.success("Login Successful!");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          "Login failed: " + (error.response?.data?.message || "Unknown error")
+        );
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    }
+  };
   return (
     <div
       className="flex justify-center items-center h-screen px-4"
@@ -25,7 +53,7 @@ const EmployeeLogin = ({
       }}
     >
       <form
-        onSubmit={handleSubmit((data) => console.log(data))}
+        onSubmit={handleSubmit(Submit)}
         className=" shadow-lg border rounded-lg p-6 max-w-md w-full"
         style={{ borderColor: organizationConfig.theme.borderColor }}
       >

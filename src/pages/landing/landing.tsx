@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Header from "../../components/landing/header/header";
 import Main from "../../components/landing/main/main";
 import Footer from "../../components/landing/footer/footer";

@@ -4,7 +4,7 @@ import {
   IconBrandYoutube,
   IconBrandGithub,
 } from "@tabler/icons-react";
-import TechIcon from "../../common/tech-icons";
+import TechIcon from "../../common/tech-icons/tech-icons";
 
 const SocialIcons = [
   { name: "Follow us on LinkedIn", icon: IconBrandLinkedin },
@@ -27,10 +27,10 @@ const Footer = () => {
               Empowering businesses with technology solutions!
             </p>
             <div className="flex gap-6 mb-4">
-              {SocialIcons.map((icon) => {
+              {SocialIcons.map((icon, index) => {
                 const IconComponent = icon.icon;
                 return (
-                  <a href="#">
+                  <a href="#" key={index}>
                     <TechIcon
                       icon={IconComponent}
                       name={icon.name}

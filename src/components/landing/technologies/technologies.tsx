@@ -8,7 +8,7 @@ import {
   IconBrandCss3,
   IconBrandMongodb,
 } from "@tabler/icons-react";
-import TechIcon from "../../common/tech-icons";
+import TechIcon from "../../common/tech-icons/tech-icons";
 
 const technologies = [
   { name: "React", icon: IconBrandReact, color: "text-blue-500" },
