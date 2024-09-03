@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { Outlet } from "react-router-dom";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import AdminNavbar from "../../../components/common/navbar/navbar";
-import { adminNavLinks } from "../../../utils/admin/nav-links/admin-nav-links";
+import EmployeeNavbar from "../../../components/common/navbar/navbar";
+import { recruiterNavLinks } from "../../../utils/user/user-nav-links";
 
-const AdminDashboard = ({
+const EmployeeDashboard = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
@@ -30,12 +30,12 @@ const AdminDashboard = ({
 
       <div
         ref={drawerRef}
-        className={`fixed inset-y-0 left-0 w-64 shadow-lg z-40 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 w-64 min-w-64 shadow-lg z-40 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <AdminNavbar
-          navLinks={adminNavLinks}
+        <EmployeeNavbar
+          navLinks={recruiterNavLinks}
           organizationConfig={organizationConfig}
         />
       </div>
@@ -47,7 +47,7 @@ const AdminDashboard = ({
         ></div>
       )}
 
-      <div className="flex-grow p-6 transition-all duration-300 z-20">
+      <div className="flex-grow p-6 transition-all duration-300 z-20 overflow-hidden">
         <div className="h-full overflow-auto">
           <Outlet />
         </div>
@@ -56,4 +56,4 @@ const AdminDashboard = ({
   );
 };
 
-export default AdminDashboard;
+export default EmployeeDashboard;

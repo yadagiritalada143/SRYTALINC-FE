@@ -1,12 +1,12 @@
 import { Button, Loader, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginForm } from "../../../types/form-schema";
+import { loginSchema, LoginForm } from "../../../forms/login";
 import { Link, useNavigate } from "react-router-dom";
-import { loginAdmin } from "../../../services/api-services";
+import { login } from "../../../services/common-services";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { OrganizationConfig } from "../../../types/interfaces";
+import { OrganizationConfig } from "../../../interfaces/organization";
 const AdminLogin = ({
   organizationConfig,
 }: {
@@ -23,7 +23,7 @@ const AdminLogin = ({
 
   const Submit = async (formData: LoginForm) => {
     try {
-      const data = await loginAdmin(formData);
+      const data = await login(formData);
       localStorage.setItem("adminToken", data.token);
       toast.success("Login Successful!");
       navigate(`/${organizationConfig.organization}/admin/dashboard`);

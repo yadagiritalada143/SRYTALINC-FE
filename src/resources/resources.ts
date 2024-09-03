@@ -1,4 +1,4 @@
-import { OrganizationConfig } from "../types/interfaces";
+import { OrganizationConfig } from "../interfaces/organization";
 
 const defaultConfig: OrganizationConfig = {
   logo: "/data-store.png",
@@ -249,7 +249,7 @@ const organizationConfigs: Record<string, OrganizationConfig> = {
       },
       color: "#17a2b8",
       backgroundColor: "#ffffff",
-      borderColor: "#d2d7d9",
+      borderColor: "#17a2b8",
       linkColor: "#17a2b8",
       headerBackgroundColor: "#e9ecef",
     },

@@ -1,10 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import AdminLogin from "./login";
-import { OrganizationConfig } from "../../../types/interfaces";
+import { OrganizationConfig } from "../../../interfaces/organization";
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
-import { loginAdmin } from "../../../services/api-services";
+import { loginAdmin } from "../../../services/admin-services";
 import { toast } from "react-toastify";
 
 jest.mock("../../../services/api-services", () => ({

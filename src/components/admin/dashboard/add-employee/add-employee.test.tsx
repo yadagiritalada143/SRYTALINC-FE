@@ -1,9 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import AddEmployee from "./add-employee";
-import { OrganizationConfig } from "../../../../types/interfaces";
+import { OrganizationConfig } from "../../../../interfaces/organization";
 import { MantineProvider } from "@mantine/core";
-import { registerEmployee } from "../../../../services/api-services";
+import { registerEmployee } from "../../../../services/admin-services";
 import { toast } from "react-toastify";
 
 jest.mock("../../../../services/api-services", () => ({

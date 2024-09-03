@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import {
   AddEmployeeForm,
   addEmployeeSchema,
-} from "../../../../types/form-schema";
-import { OrganizationConfig } from "../../../../types/interfaces";
-import { registerEmployee } from "../../../../services/api-services";
+} from "../../../../forms/add-employee";
+import { OrganizationConfig } from "../../../../interfaces/organization";
+import { registerEmployee } from "../../../../services/admin-services";
 import axios from "axios";
 
 const AddEmployee = ({

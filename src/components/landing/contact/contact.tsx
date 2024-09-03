@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { TextInput, Textarea, Button, Group } from "@mantine/core";
-import { ContactForm, contactForm } from "../../../types/form-schema";
+import { ContactForm, contactForm } from "../../../forms/contact";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const ContactComponent = () => {
