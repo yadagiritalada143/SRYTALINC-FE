@@ -6,12 +6,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../../services/common-services";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useMantineTheme } from "@mantine/core";
+import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { OrganizationConfig } from "../../../interfaces/organization";
+
 const AdminLogin = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
+  const theme = useMantineTheme();
   const navigate = useNavigate();
   const {
     register,
@@ -25,8 +29,24 @@ const AdminLogin = ({
     try {
       const data = await login(formData);
       localStorage.setItem("adminToken", data.token);
-      toast.success("Login Successful!");
-      navigate(`/${organizationConfig.organization}/admin/dashboard`);
+      localStorage.setItem("userRole", data.userRole);
+      localStorage.setItem("firstName", data.firstName);
+      localStorage.setItem("lastName", data.lastName);
+      if (data.userRole === "admin") {
+        toast("Login Successful!", {
+          style: {
+            color: theme.colors.primary[2],
+            backgroundColor: organizationConfig.theme.backgroundColor,
+          },
+          progressStyle: {
+            background: theme.colors.primary[8],
+          },
+          icon: <IconCircleDashedCheck width={32} height={32} />,
+        });
+        navigate(`/${organizationConfig.organization}/admin/dashboard`);
+      } else {
+        toast.error("Not authorized to access");
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(
@@ -42,22 +62,22 @@ const AdminLogin = ({
     <div
       className="flex justify-center items-center h-screen px-4"
       style={{
-        color: organizationConfig.theme.color,
-        backgroundColor: organizationConfig.theme.backgroundColor,
-        fontFamily: organizationConfig.theme.fontFamily,
+        color: theme.colors.primary[8],
+        backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
+        fontFamily: theme.fontFamily,
       }}
     >
       <form
         onSubmit={handleSubmit(Submit)}
-        className=" shadow-lg border rounded-lg p-6 max-w-md w-full"
-        style={{ borderColor: organizationConfig.theme.borderColor }}
+        style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
+        className="shadow-lg border rounded-lg p-6 max-w-md w-full"
       >
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-bold text-center mb-4">ADMIN LOGIN</h1>
           <img
             src={organizationConfig.logo}
             className="mb-4 w-20 h-20 object-contain"
-            alt={organizationConfig.organization}
+            alt="default"
           />
         </div>
         <div className="mb-4">
@@ -76,7 +96,14 @@ const AdminLogin = ({
         </div>
         <div className="flex flex-wrap justify-between items-center gap-4 mt-8">
           <div className="w-full md:w-auto flex justify-center md:justify-start order-2 md:order-1">
-            <Link to="forgot-password" className="text-blue-600 text-sm">
+            <Link
+              to="forgot-password"
+              style={{
+                textDecoration: "underline",
+                color: organizationConfig.theme.linkColor,
+              }}
+              className="text-sm"
+            >
               Forgot Password
             </Link>
           </div>
@@ -85,9 +112,18 @@ const AdminLogin = ({
               type="submit"
               data-testid="loginButton"
               className="w-1/2 md:w-auto"
-              style={{ minWidth: "200px" }}
+              style={{
+                minWidth: "200px",
+              }}
               disabled={isSubmitting}
-              leftSection={isSubmitting && <Loader size="xs" color="blue" />}
+              leftSection={
+                isSubmitting && (
+                  <Loader
+                    size="xs"
+                    color={organizationConfig.theme.button.textColor}
+                  />
+                )
+              }
             >
               {isSubmitting ? "Logging in..." : "Login"}
             </Button>

@@ -6,7 +6,7 @@ import Companies from "../components/user/dashboard/companies/companies";
 import AddCompany from "../components/user/dashboard/add-company/add-company";
 import UpdateCompany from "../components/user/dashboard/update-company/update-company";
 
-const EmployeeNavbarRoutes = ({
+const EmployeeRoutes = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
@@ -39,4 +39,4 @@ const EmployeeNavbarRoutes = ({
   );
 };
 
-export default EmployeeNavbarRoutes;
+export default EmployeeRoutes;

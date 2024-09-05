@@ -7,6 +7,7 @@ import PromoBanner from "../../components/landing/promo/promo";
 import WhyChooseUs from "../../components/landing/choose/choose";
 import ContactComponent from "../../components/landing/contact/contact";
 import Technologies from "../../components/landing/technologies/technologies";
+import VisitorCount from "../../components/landing/count/count";
 
 const Landing = () => {
   return (
@@ -48,6 +49,9 @@ const Landing = () => {
         <WhyChooseUs />
       </div>
 
+      <div className=" py-6 w-full mx-auto">
+        <VisitorCount />
+      </div>
       <div className=" py-6 w-full mx-auto">
         <ContactComponent />
       </div>

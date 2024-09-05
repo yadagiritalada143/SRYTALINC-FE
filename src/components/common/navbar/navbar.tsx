@@ -2,6 +2,7 @@ import { Icon, IconBuildings } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { memo } from "react";
+import { useMantineTheme } from "@mantine/core";
 
 const Navbar = ({
   organizationConfig,
@@ -10,11 +11,12 @@ const Navbar = ({
   navLinks: { url: string; icon: Icon; name: string }[];
   organizationConfig: OrganizationConfig;
 }) => {
+  const theme = useMantineTheme();
   return (
     <nav
       className="h-full flex flex-col shadow-lg"
       style={{
-        backgroundColor: organizationConfig.theme.backgroundColor,
+        backgroundColor: theme.colors.primary[1],
         color: organizationConfig.theme.color,
       }}
     >
@@ -24,19 +26,20 @@ const Navbar = ({
       <div className="flex flex-col mt-6 space-y-4 px-4">
         {localStorage.getItem("userRole") === "recruiter" && (
           <NavLink
-            to={`/${organizationConfig.organization}/employee/dashboard}`}
+            to={`/${organizationConfig.organization}/employee/dashboard`}
             end
             className={({ isActive }) =>
-              `flex items-center p-4 rounded-lg ${
+              `flex items-center  p-4 rounded-lg ${
                 isActive ? "font-bold" : ""
               } hover:bg-opacity-75 transition-all`
             }
             style={({ isActive }) => ({
+              boxShadow: `2px 2px 2px ${organizationConfig.theme.borderColor}`,
               backgroundColor: isActive
-                ? organizationConfig.theme.color
+                ? organizationConfig.theme.backgroundColor
                 : "transparent",
               color: isActive
-                ? organizationConfig.theme.backgroundColor
+                ? theme.colors.primary[5]
                 : organizationConfig.theme.color,
             })}
           >
@@ -57,11 +60,12 @@ const Navbar = ({
                 } hover:bg-opacity-75 transition-all`
               }
               style={({ isActive }) => ({
+                boxShadow: `1px 1px 2px ${organizationConfig.theme.color}`,
                 backgroundColor: isActive
-                  ? organizationConfig.theme.color
+                  ? organizationConfig.theme.backgroundColor
                   : "transparent",
                 color: isActive
-                  ? organizationConfig.theme.backgroundColor
+                  ? theme.colors.primary[5]
                   : organizationConfig.theme.color,
               })}
             >

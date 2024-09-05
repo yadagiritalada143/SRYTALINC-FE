@@ -43,12 +43,12 @@ const Footer = () => {
               })}
             </div>
             <p className="text-xs text-gray-400">
-              SRYTAL Inc. 2024 | All Rights Reserved
+              &copy;SRYTAL Inc. 2024 | All Rights Reserved
             </p>
           </div>
 
           <div className="flex flex-wrap gap-8">
-            <div className="w-1/3 mb-6 md:mb-0">
+            <div className="mb-6 md:mb-0">
               <h2 className=" text-xl font-bold mb-2">Company</h2>
               <ul className=" text-gray-400">
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">
@@ -66,7 +66,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="w-1/3 mb-6 md:mb-0">
+            <div className="mb-6 md:mb-0">
               <h2 className="text-xl font-bold mb-2">Product</h2>
               <ul className="space-y-1  text-gray-400">
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">
@@ -84,7 +84,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="w-1/2 mb-6 md:mb-0">
+            <div className=" mb-6 md:mb-0">
               <h2 className="text-xl font-bold mb-2">Resources</h2>
               <ul className="space-y-1  text-gray-400">
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">

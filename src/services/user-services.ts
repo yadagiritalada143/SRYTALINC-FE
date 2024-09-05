@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AddCompanyForm } from "../forms/add-company";
+import { UpdatePasswordForm } from "../forms/update-password";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -49,6 +50,15 @@ export const getCompanyDetailsByIdByRecruiter = async (id: string) => {
       `/recruiter/getCompanyDetailsByIdByRecruiter/${id}`
     );
     return response.data.poolCompanyResponse;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updatePasswordForEmployee = async (form: UpdatePasswordForm) => {
+  try {
+    console.log(form);
+    return { success: true };
   } catch (error) {
     throw error;
   }

@@ -4,11 +4,11 @@ import AdminLogin from "./login";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
-import { loginAdmin } from "../../../services/admin-services";
+import { login } from "../../../services/common-services";
 import { toast } from "react-toastify";
 
-jest.mock("../../../services/api-services", () => ({
-  loginAdmin: jest.fn(),
+jest.mock("../../../services/common-services", () => ({
+  login: jest.fn(),
 }));
 
 jest.mock("react-toastify", () => ({
@@ -23,7 +23,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-const mockLoginAdmin = loginAdmin as jest.MockedFunction<typeof loginAdmin>;
+const mockLoginAdmin = login as jest.MockedFunction<typeof login>;
 
 const mockOrganizationConfig: OrganizationConfig = {
   logo: "/data-store.png",
@@ -133,7 +133,7 @@ test("Successful login", async () => {
 });
 
 test("handles login failure", async () => {
-  (loginAdmin as jest.Mock).mockRejectedValueOnce({
+  (login as jest.Mock).mockRejectedValueOnce({
     response: {
       data: {
         message: "Invalid credentials",
@@ -159,7 +159,7 @@ test("handles login failure", async () => {
   fireEvent.click(screen.getByTestId("loginButton"));
 
   await waitFor(() => {
-    expect(loginAdmin).toHaveBeenCalledWith({
+    expect(login).toHaveBeenCalledWith({
       email: "wrong-email@example.com",
       password: "wrong-password",
     });

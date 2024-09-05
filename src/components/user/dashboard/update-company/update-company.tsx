@@ -15,12 +15,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import moment from "moment";
+import { useMantineTheme } from "@mantine/core";
+import { IconCircleDashedCheck } from "@tabler/icons-react";
 
 const UpdateCompany = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
+  const theme = useMantineTheme();
   const params = useParams();
   const companyId = params.companyId as string;
 
@@ -44,7 +47,6 @@ const UpdateCompany = ({
     getCompanyDetailsByIdByRecruiter(companyId)
       .then((response) => {
         reset(response);
-        console.log(response);
         if (response.comments) {
           setComments(response.comments);
         }
@@ -55,7 +57,16 @@ const UpdateCompany = ({
   const onSubmit = async (data: AddCompanyForm) => {
     try {
       await updateCompanyByRecruiter(data, companyId);
-      toast.success("Company updated successfully");
+      toast("Login Successful!", {
+        style: {
+          color: theme.colors.primary[2],
+          backgroundColor: organizationConfig.theme.backgroundColor,
+        },
+        progressStyle: {
+          background: theme.colors.primary[8],
+        },
+        icon: <IconCircleDashedCheck width={32} height={32} />,
+      });
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -63,7 +74,7 @@ const UpdateCompany = ({
 
   const handleAddComment = () => {
     const comment = {
-      name: "User", // Replace with actual user name if available
+      name: localStorage.getItem("firstName") || ("Recruiter" as string),
       date: new Date().toLocaleDateString(),
       comment: newComment,
     };
@@ -76,11 +87,11 @@ const UpdateCompany = ({
     <div>
       <h1 className="text-center text-2xl font-bold mb-4">Update Company</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="p-4 ">
+        <div className="px-4 flex flex-wrap space-x-10 ">
           <TextInput
             {...register("companyName")}
             label="Company Name"
-            className="mb-4"
+            className="mb-4 w-1/3"
             disabled
             error={errors.companyName?.message}
           />
@@ -91,6 +102,7 @@ const UpdateCompany = ({
               <Select
                 label="Select Status"
                 placeholder="Pick value"
+                className="w-1/3"
                 {...field}
                 data={[
                   { value: "Created", label: "Created" },
@@ -107,10 +119,15 @@ const UpdateCompany = ({
               />
             )}
           />
+          <div className="m-4 w-1/4 flex justify-center items-center">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Loading..." : "Update Company"}
+            </Button>
+          </div>
         </div>
 
         <fieldset
-          className="m-4 p-4 border"
+          className="mx-4  p-4 border"
           style={{ borderColor: organizationConfig.theme.borderColor }}
         >
           <legend className="text-lg font-semibold">Primary Contact</legend>
@@ -192,25 +209,23 @@ const UpdateCompany = ({
 
         <div className="text-right ">
           <div className="m-4">
-            <Button size="md" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Loading..." : "Update Company"}
-            </Button>
-          </div>
-          <div className="m-4">
             <Button size="md" onClick={open}>
               Add Comment
             </Button>
           </div>
         </div>
 
-        <div className="space-y-4 flex justify-center items-center ">
+        <div className=" ">
           {comments.map((comment, index) => (
-            <div key={index} className="border p-4 w-1/2 shadow-md rounded-md">
-              <p className="text-gray-600 text-right">
-                {moment(comment.date).format("MMM Do YY")}
+            <div
+              key={index}
+              className="p-4  mx-4 my-4 hover:shadow-lg shadow-gray-500"
+            >
+              <p className="text-right">
+                {moment(comment.date).format("DD MMM YYYY")}
               </p>
               <p className="text-left">{comment.comment}</p>
-              <h2 className="font-semibold text-right">-Employee name</h2>
+              <h2 className="font-semibold text-right">-{comment.name}</h2>
             </div>
           ))}
         </div>
@@ -224,7 +239,7 @@ const UpdateCompany = ({
           className="mb-4"
         />
         <div className="flex justify-between">
-          <Button onClick={close}>Close</Button>
+          <Button onClick={close}>Cancel</Button>
           <Button onClick={handleAddComment}>Add Comment</Button>
         </div>
       </Modal>

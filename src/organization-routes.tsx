@@ -1,8 +1,8 @@
 import { OrganizationConfig } from "./interfaces/organization";
 
-import AdminNavbarRoutes from "./routes/admin-navbar";
+import AdminNavbarRoutes from "./routes/admin";
 import React from "react";
-import EmployeeNavbarRoutes from "./routes/user-navbar";
+import EmployeeNavbarRoutes from "./routes/user";
 
 const OrganizationRoutes: React.FC<{
   organizationConfig: OrganizationConfig;

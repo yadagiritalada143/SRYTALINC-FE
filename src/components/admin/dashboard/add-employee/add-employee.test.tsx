@@ -6,7 +6,7 @@ import { MantineProvider } from "@mantine/core";
 import { registerEmployee } from "../../../../services/admin-services";
 import { toast } from "react-toastify";
 
-jest.mock("../../../../services/api-services", () => ({
+jest.mock("../../../../services/admin-services", () => ({
   registerEmployee: jest.fn(),
 }));
 
