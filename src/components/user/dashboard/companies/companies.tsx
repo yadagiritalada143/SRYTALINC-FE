@@ -31,7 +31,7 @@ const Companies = ({
       style={{
         color: organizationConfig.theme.color,
       }}
-      className="w-full h-screen p-8 "
+      className=" h-screen p-8 "
     >
       <div className="flex justify-between items-center mx-4 my-4">
         <h1 className="text-2xl font-bold text-center">

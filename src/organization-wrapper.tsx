@@ -37,10 +37,6 @@ const OrganizationWrapper: React.FC = () => {
             color: organizationConfig.theme.color,
           },
           item: {
-            "&:hover": {
-              backgroundColor: organizationConfig.theme.colors.primary[5],
-              color: organizationConfig.theme.color,
-            },
             color: organizationConfig.theme.color,
           },
         }),
