@@ -53,7 +53,10 @@ const AddEmployee = ({
   };
 
   return (
-    <div className="flex items-center justify-center h-screen ">
+    <div
+      style={{ color: theme.colors.primary[8], fontFamily: theme.fontFamily }}
+      className="flex items-center justify-center h-screen "
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
