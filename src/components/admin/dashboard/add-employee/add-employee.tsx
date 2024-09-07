@@ -1,6 +1,6 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextInput, Button, Loader } from "@mantine/core";
+import { TextInput, Button, Loader, Select } from "@mantine/core";
 import { toast } from "react-toastify";
 import { useMantineTheme } from "@mantine/core";
 import {
@@ -22,6 +22,7 @@ const AddEmployee = ({
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<AddEmployeeForm>({
     resolver: zodResolver(addEmployeeSchema),
@@ -30,7 +31,7 @@ const AddEmployee = ({
   const onSubmit = async (employeeDetails: AddEmployeeForm) => {
     try {
       await registerEmployee(employeeDetails);
-      toast("Login Successful!", {
+      toast("Login Successful !", {
         style: {
           color: theme.colors.primary[2],
           backgroundColor: organizationConfig.theme.backgroundColor,
@@ -93,18 +94,41 @@ const AddEmployee = ({
             {...register("mobileNumber")}
             error={errors.mobileNumber?.message}
           />
-        </div>
+          <Controller
+            name="userRole"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="User Role"
+                {...field}
+                error={errors.userRole?.message}
+                placeholder="Select user role"
+                value={field.value}
+                data={[
+                  { label: "Employee", value: "employee" },
+                  { label: "Recruiter", value: "recruiter" },
+                ]}
+              />
+            )}
+          />
 
-        <Button
-          type="submit"
-          fullWidth
-          className="mt-10"
-          data-testid="submitButton"
-          leftSection={isSubmitting && <Loader size="xs" color="blue" />}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Logging in..." : "Create Employee"}
-        </Button>
+          <Button
+            className=" mt-7 rounded-md"
+            type="submit"
+            data-testid="submitButton"
+            leftSection={
+              isSubmitting && (
+                <Loader
+                  size="xs"
+                  color={organizationConfig.theme.button.color}
+                />
+              )
+            }
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Logging in..." : "Create Employee"}
+          </Button>
+        </div>
       </form>
     </div>
   );

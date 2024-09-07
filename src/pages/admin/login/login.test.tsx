@@ -125,7 +125,7 @@ test("Successful login", async () => {
       password: "correct-password",
     });
     expect(mockLoginAdmin).toHaveBeenCalledTimes(1);
-    expect(toast.success).toHaveBeenCalledWith("Login Successful!");
+    expect(toast.success).toHaveBeenCalledWith("Login Successful !");
     expect(mockedUsedNavigate).toHaveBeenCalledWith(
       expect.stringMatching(/^\/\w+\/admin\/dashboard$/)
     );

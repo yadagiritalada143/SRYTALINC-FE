@@ -86,7 +86,7 @@ const Employees = ({
                       <Button
                         onClick={() =>
                           navigate(
-                            `/${organizationConfig.organization}/admin/dashboard/update/${employee._id.$oid}`
+                            `/${organizationConfig.organization}/admin/dashboard/update/${employee.email}`
                           )
                         }
                       >

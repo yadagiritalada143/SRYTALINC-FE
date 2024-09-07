@@ -49,9 +49,9 @@ const Landing = () => {
         <WhyChooseUs />
       </div>
 
-      <div className=" py-6 w-full mx-auto">
+      {/* <div className=" py-6 w-full mx-auto">
         <VisitorCount />
-      </div>
+      </div> */}
       <div className=" py-6 w-full mx-auto">
         <ContactComponent />
       </div>

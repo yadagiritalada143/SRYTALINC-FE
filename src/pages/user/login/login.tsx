@@ -38,7 +38,7 @@ const EmployeeLogin = ({
           `/${organizationConfig.organization}/employee/dashboard/profile`
         );
       }
-      toast("Login Successful!", {
+      toast("Login Successful !", {
         style: {
           color: theme.colors.primary[2],
           backgroundColor: organizationConfig.theme.backgroundColor,

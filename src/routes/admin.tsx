@@ -30,7 +30,7 @@ const AdminRoutes = ({
           element={<Employees organizationConfig={organizationConfig} />}
         />
         <Route
-          path="update/:employeeId"
+          path="update/:employeeEmail"
           element={<UpdateEmployee organizationConfig={organizationConfig} />}
         />
       </Route>
