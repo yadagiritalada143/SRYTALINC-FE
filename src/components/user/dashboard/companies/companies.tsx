@@ -30,6 +30,7 @@ const Companies = ({
     <div
       style={{
         color: organizationConfig.theme.color,
+        fontFamily: theme.fontFamily,
       }}
       className=" h-screen p-8 "
     >

@@ -84,7 +84,12 @@ const UpdateCompany = ({
   };
 
   return (
-    <div>
+    <div
+      style={{
+        color: organizationConfig.theme.color,
+        fontFamily: theme.fontFamily,
+      }}
+    >
       <h1 className="text-center text-2xl font-bold mb-4">Update Company</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="px-4 flex flex-wrap space-x-10 ">

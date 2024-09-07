@@ -32,7 +32,7 @@ const AdminDashboard = ({
 
       <div
         ref={drawerRef}
-        className={`fixed inset-y-0 left-0 w-64 shadow-lg z-40 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 w-64 min-w-64 shadow-lg z-40 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -63,7 +63,7 @@ const AdminDashboard = ({
             organization={organizationConfig.organization}
           />
         </div>
-        <div className="h-full  overflow-auto">
+        <div className="h-full overflow-auto">
           <Outlet />
         </div>
       </div>

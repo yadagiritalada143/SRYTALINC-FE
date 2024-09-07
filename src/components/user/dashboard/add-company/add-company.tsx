@@ -46,9 +46,17 @@ const AddCompany = ({
   };
 
   return (
-    <div style={{ color: organizationConfig.theme.color }}>
+    <div
+      style={{
+        color: organizationConfig.theme.color,
+        fontFamily: theme.fontFamily,
+      }}
+    >
       <h1 className="text-center">Add Company</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        style={{ color: organizationConfig.theme.color }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <TextInput
           {...register("companyName")}
           label="Company Name"
