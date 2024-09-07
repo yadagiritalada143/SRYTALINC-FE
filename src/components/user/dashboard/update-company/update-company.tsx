@@ -57,7 +57,7 @@ const UpdateCompany = ({
   const onSubmit = async (data: AddCompanyForm) => {
     try {
       await updateCompanyByRecruiter(data, companyId);
-      toast("Login Successful!", {
+      toast("Login Successful !", {
         style: {
           color: theme.colors.primary[2],
           backgroundColor: organizationConfig.theme.backgroundColor,
