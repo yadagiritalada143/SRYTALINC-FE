@@ -55,7 +55,7 @@ const AdminDashboard = ({
           backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
           fontFamily: theme.fontFamily,
         }}
-        className="flex-grow p-6 transition-all duration-300 z-20"
+        className="flex-grow p-6 transition-all duration-300 z-20 overflow-hidden"
       >
         <div className="my-2">
           <Header
@@ -63,7 +63,7 @@ const AdminDashboard = ({
             organization={organizationConfig.organization}
           />
         </div>
-        <div className="h-full overflow-auto">
+        <div className="h-full  overflow-auto">
           <Outlet />
         </div>
       </div>

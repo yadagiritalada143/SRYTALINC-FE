@@ -1,5 +1,6 @@
 import { Avatar, Button, Menu, rem } from "@mantine/core";
 import { IconLogout, IconSettings, IconUser } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 const Header = ({
   color,
   organization,
@@ -7,6 +8,17 @@ const Header = ({
   color: string;
   organization: string;
 }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    const userRole = localStorage.getItem("userRole");
+
+    if (userRole === "admin") {
+      navigate(`/${organization}/${userRole}/login`);
+    } else {
+      navigate(`/${organization}/employee/login`);
+    }
+    localStorage.clear();
+  };
   return (
     <div style={{ color }} className="flex justify-between mx-4">
       <div>
@@ -42,6 +54,7 @@ const Header = ({
               </Menu.Item>
               <Menu.Label>Actions</Menu.Label>
               <Menu.Item
+                onClick={handleLogout}
                 className="hover:bg-transparent  hover:text-inherit tranform transition-all duration-150 hover:scale-110"
                 leftSection={
                   <IconLogout style={{ width: rem(14), height: rem(14) }} />

@@ -3,6 +3,7 @@ import AddEmployee from "../components/admin/dashboard/add-employee/add-employee
 import { OrganizationConfig } from "../interfaces/organization";
 import AdminDashboard from "../pages/admin/dashboard/dashboard";
 import AdminLogin from "../pages/admin/login/login";
+import Employees from "../components/admin/dashboard/employees/employees";
 
 const AdminRoutes = ({
   organizationConfig,
@@ -23,7 +24,10 @@ const AdminRoutes = ({
           path=""
           element={<AddEmployee organizationConfig={organizationConfig} />}
         />
-        <Route path="employees" element={<h1>Update Employee</h1>} />
+        <Route
+          path="employees"
+          element={<Employees organizationConfig={organizationConfig} />}
+        />
       </Route>
     </Routes>
   );
