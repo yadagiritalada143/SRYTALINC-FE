@@ -8,12 +8,15 @@ import { useForm } from "react-hook-form";
 import { Button, TextInput } from "@mantine/core";
 import { addCompanyByRecruiter } from "../../../../services/user-services";
 import { toast } from "react-toastify";
+import { IconCircleDashedCheck } from "@tabler/icons-react";
+import { useMantineTheme } from "@mantine/core";
 
 const AddCompany = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
+  const theme = useMantineTheme();
   const {
     register,
     formState: { errors, isSubmitting },
@@ -27,14 +30,23 @@ const AddCompany = ({
     try {
       await addCompanyByRecruiter(data);
       reset();
-      toast.success("Company added successfully");
+      toast("Company Added Successfully !", {
+        style: {
+          color: theme.colors.primary[2],
+          backgroundColor: organizationConfig.theme.backgroundColor,
+        },
+        progressStyle: {
+          background: theme.colors.primary[8],
+        },
+        icon: <IconCircleDashedCheck width={32} height={32} />,
+      });
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
   };
 
   return (
-    <div>
+    <div style={{ color: organizationConfig.theme.color }}>
       <h1 className="text-center">Add Company</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput

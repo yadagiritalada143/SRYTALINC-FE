@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import AdminNavbar from "../../../components/common/navbar/navbar";
 import { adminNavLinks } from "../../../utils/admin/nav-links/admin-nav-links";
+import { useMantineTheme } from "@mantine/core";
+import Header from "../../../components/common/header/header";
 
 const AdminDashboard = ({
   organizationConfig,
@@ -12,7 +14,7 @@ const AdminDashboard = ({
 }) => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
-
+  const theme = useMantineTheme();
   const toggleDrawer = () => setDrawerOpen(!isDrawerOpen);
 
   return (
@@ -47,7 +49,20 @@ const AdminDashboard = ({
         ></div>
       )}
 
-      <div className="flex-grow p-6 transition-all duration-300 z-20">
+      <div
+        style={{
+          color: theme.colors.primary[8],
+          backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
+          fontFamily: theme.fontFamily,
+        }}
+        className="flex-grow p-6 transition-all duration-300 z-20"
+      >
+        <div className="my-2">
+          <Header
+            color={organizationConfig.theme.color}
+            organization={organizationConfig.organization}
+          />
+        </div>
         <div className="h-full overflow-auto">
           <Outlet />
         </div>

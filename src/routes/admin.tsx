@@ -4,7 +4,7 @@ import { OrganizationConfig } from "../interfaces/organization";
 import AdminDashboard from "../pages/admin/dashboard/dashboard";
 import AdminLogin from "../pages/admin/login/login";
 
-const AdminNavbarRoutes = ({
+const AdminRoutes = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
@@ -29,4 +29,4 @@ const AdminNavbarRoutes = ({
   );
 };
 
-export default AdminNavbarRoutes;
+export default AdminRoutes;

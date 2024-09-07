@@ -16,3 +16,16 @@ export const login = async (Credentials: LoginForm) => {
     throw error;
   }
 };
+
+export const getVisitorCount = async () => {
+  try {
+    const response = await apiClient("/getVisitorCount");
+    if (typeof response.data.count === "number") {
+      return response.data.visitorCount;
+    } else {
+      return String(response.data.visitorCount);
+    }
+  } catch (error) {
+    throw error;
+  }
+};

@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const addCompanySchema = z.object({
-  companyName: z.string({ required_error: "Company name is required" }),
+  companyName: z
+    .string({ required_error: "Company name is required" })
+    .min(1, { message: "Please enter company name" }),
   primaryContact: z.object({
     name: z.string().optional(),
     email: z
