@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { TextInput, Textarea, Button, Group } from "@mantine/core";
 import { ContactForm, contactForm } from "../../../forms/contact";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { sendContactUsMail } from "../../../services/common-services";
+import { useState } from "react";
 
 const ContactComponent = () => {
   const {
@@ -9,9 +11,30 @@ const ContactComponent = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ContactForm>({ resolver: zodResolver(contactForm) });
+  const [submit, setSubmit] = useState({ message: "", status: false });
 
   const onSubmit = (data: ContactForm) => {
-    console.log(data);
+    sendContactUsMail(data)
+      .then(() => {
+        setSubmit({
+          message:
+            "Thank you for reaching out! Your message has been successfully sent. We will get back to you as soon as possible",
+          status: true,
+        });
+        setTimeout(() => {
+          setSubmit({ message: "", status: false });
+        }, 5000);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          setSubmit({ message: "", status: false });
+        }, 5000);
+        setSubmit({
+          message:
+            "Oops! Something went wrong while sending your message. Please try again later or contact us directly.",
+          status: true,
+        });
+      });
   };
 
   return (
@@ -34,14 +57,14 @@ const ContactComponent = () => {
         <TextInput
           label="Email"
           placeholder="Your email"
-          {...register("emailForContact", {
+          {...register("customerEmail", {
             required: "Email is required",
             pattern: {
               value: /^\S+@\S+$/i,
               message: "Please enter valid email !",
             },
           })}
-          error={errors.emailForContact?.message}
+          error={errors.customerEmail?.message}
           mt="md"
         />
 
@@ -63,6 +86,8 @@ const ContactComponent = () => {
           error={errors.message?.message}
           mt="md"
         />
+
+        {submit.status && <p className="my-8 ">{submit.message}</p>}
 
         <div className="mt-2 text-right">
           <Button type="submit" className="bg-blue-500 mt-4 hover:bg-blue-600">
