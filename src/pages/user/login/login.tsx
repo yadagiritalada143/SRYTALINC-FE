@@ -26,7 +26,7 @@ const EmployeeLogin = ({
   const Submit = async (formData: LoginForm) => {
     try {
       const data = await login(formData);
-      localStorage.setItem("adminToken", data.token);
+      localStorage.setItem("employeeToken", data.token);
       localStorage.setItem("userRole", data.userRole);
       localStorage.setItem("passwordReset", data.passwordResetRequired);
       localStorage.setItem("firstName", data.firstName);

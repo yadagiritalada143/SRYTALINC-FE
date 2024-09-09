@@ -30,14 +30,13 @@ const OrganizationWrapper: React.FC = () => {
       Menu: {
         styles: () => ({
           dropdown: {
-            color: organizationConfig.theme.color,
             backgroundColor: organizationConfig.theme.colors.primary[5],
           },
           label: {
-            color: organizationConfig.theme.color,
+            color: organizationConfig.theme.button.textColor,
           },
           item: {
-            color: organizationConfig.theme.color,
+            color: organizationConfig.theme.button.textColor,
           },
         }),
       },

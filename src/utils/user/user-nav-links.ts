@@ -1,6 +1,6 @@
 import { IconUserEdit } from "@tabler/icons-react";
 
-export const recruiterNavLinks = [
+export const NavLinks = [
   {
     url: "employee/dashboard/profile",
     icon: IconUserEdit,

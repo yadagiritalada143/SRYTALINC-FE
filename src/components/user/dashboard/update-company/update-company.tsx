@@ -7,6 +7,7 @@ import { OrganizationConfig } from "../../../../interfaces/organization";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Select, TextInput, Modal, Group } from "@mantine/core";
 import {
+  addCommentByRecruiter,
   getCompanyDetailsByIdByRecruiter,
   updateCompanyByRecruiter,
 } from "../../../../services/user-services";
@@ -17,6 +18,7 @@ import { useDisclosure } from "@mantine/hooks";
 import moment from "moment";
 import { useMantineTheme } from "@mantine/core";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 const UpdateCompany = ({
   organizationConfig,
@@ -26,9 +28,14 @@ const UpdateCompany = ({
   const theme = useMantineTheme();
   const params = useParams();
   const companyId = params.companyId as string;
+  const navigate = useNavigate();
 
   const [comments, setComments] = useState<
-    { name: string; date: string; comment: string }[]
+    {
+      updatedAt: string;
+      userId: { firstName: string; lastName: string };
+      comment: string;
+    }[]
   >([]);
   const [opened, { open, close }] = useDisclosure(false);
   const [newComment, setNewComment] = useState("");
@@ -49,6 +56,8 @@ const UpdateCompany = ({
         reset(response);
         if (response.comments) {
           setComments(response.comments);
+        } else {
+          setComments([]);
         }
       })
       .catch((error) => toast.error(error.response.data.message));
@@ -67,26 +76,48 @@ const UpdateCompany = ({
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
+      navigate(`/${organizationConfig.organization}/employee/dashboard`);
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
   };
 
   const handleAddComment = () => {
-    const comment = {
-      name: localStorage.getItem("firstName") || ("Recruiter" as string),
-      date: new Date().toLocaleDateString(),
-      comment: newComment,
-    };
-    setComments((prev) => [...prev, comment]);
-    setNewComment("");
-    close();
+    addCommentByRecruiter(companyId, newComment)
+      .then(() => {
+        toast("Login Successful !", {
+          style: {
+            color: theme.colors.primary[2],
+            backgroundColor: organizationConfig.theme.backgroundColor,
+          },
+          progressStyle: {
+            background: theme.colors.primary[8],
+          },
+          icon: <IconCircleDashedCheck width={32} height={32} />,
+        });
+        const comment = {
+          userId: {
+            firstName: localStorage.getItem("firstName") as string,
+            lastName: localStorage.getItem("lastName") as string,
+          },
+          updatedAt: new Date().toLocaleDateString(),
+          comment: newComment,
+        };
+        setComments((prev) => [...prev, comment]);
+        setNewComment("");
+        close();
+      })
+      .catch((error) =>
+        toast.error(
+          error || error.response.data.message || "Something went wrong"
+        )
+      );
   };
 
   return (
     <div
       style={{
-        color: organizationConfig.theme.color,
+        color: organizationConfig.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
     >
@@ -213,24 +244,30 @@ const UpdateCompany = ({
         </div>
 
         <div className="text-right ">
-          <div className="m-4">
+          <div className="m-4 mb-8">
             <Button size="md" onClick={open}>
               Add Comment
             </Button>
           </div>
         </div>
 
-        <div className=" ">
+        <div>
           {comments.map((comment, index) => (
             <div
               key={index}
-              className="p-4  mx-4 my-4 hover:shadow-lg shadow-gray-500"
+              style={{
+                backgroundColor: organizationConfig.theme.backgroundColor,
+                color: theme.colors.primary[8],
+              }}
+              className="p-4 mx-10 my-4 rounded-md hover:shadow-lg shadow-gray-500"
             >
               <p className="text-right">
-                {moment(comment.date).format("DD MMM YYYY")}
+                {moment(comment.updatedAt).format("DD MMM YYYY")}
               </p>
               <p className="text-left">{comment.comment}</p>
-              <h2 className="font-semibold text-right">-{comment.name}</h2>
+              <h2 className="font-semibold text-right">
+                -{comment.userId.firstName} {comment.userId.lastName}
+              </h2>
             </div>
           ))}
         </div>

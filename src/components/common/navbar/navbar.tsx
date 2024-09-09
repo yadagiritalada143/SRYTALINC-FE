@@ -17,7 +17,7 @@ const Navbar = ({
       className="h-full flex flex-col shadow-lg"
       style={{
         backgroundColor: theme.colors.primary[1],
-        color: organizationConfig.theme.color,
+        color: organizationConfig.theme.button.textColor,
       }}
     >
       <div className="p-6">
@@ -66,7 +66,7 @@ const Navbar = ({
                   : "transparent",
                 color: isActive
                   ? theme.colors.primary[5]
-                  : organizationConfig.theme.color,
+                  : organizationConfig.theme.button.textColor,
               })}
             >
               <Icon size={24} className="mr-2" />

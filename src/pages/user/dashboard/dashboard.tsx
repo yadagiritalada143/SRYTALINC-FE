@@ -3,7 +3,7 @@ import { OrganizationConfig } from "../../../interfaces/organization";
 import { Outlet } from "react-router-dom";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import EmployeeNavbar from "../../../components/common/navbar/navbar";
-import { recruiterNavLinks } from "../../../utils/user/user-nav-links";
+import { NavLinks } from "../../../utils/user/user-nav-links";
 import { Modal, PasswordInput, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { toast } from "react-toastify";
@@ -82,7 +82,7 @@ const EmployeeDashboard = ({
           }`}
         >
           <EmployeeNavbar
-            navLinks={recruiterNavLinks}
+            navLinks={NavLinks}
             organizationConfig={organizationConfig}
           />
         </div>
@@ -104,7 +104,7 @@ const EmployeeDashboard = ({
         >
           <div className="my-2">
             <Header
-              color={organizationConfig.theme.color}
+              color={organizationConfig.theme.button.textColor}
               organization={organizationConfig.organization}
             />
           </div>
@@ -138,7 +138,9 @@ const EmployeeDashboard = ({
               error={errors.confirmNewPassword?.message}
             />
             <div className="text-right mt-4">
-              <Button type="submit">Update</Button>
+              <Button onClick={close} type="submit">
+                Update
+              </Button>
             </div>
           </form>
         </div>
