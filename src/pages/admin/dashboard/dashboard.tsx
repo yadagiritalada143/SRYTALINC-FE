@@ -59,7 +59,7 @@ const AdminDashboard = ({
       >
         <div className="my-2">
           <Header
-            color={organizationConfig.theme.color}
+            color={organizationConfig.theme.button.textColor}
             organization={organizationConfig.organization}
           />
         </div>

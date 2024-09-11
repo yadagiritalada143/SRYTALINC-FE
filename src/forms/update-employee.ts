@@ -10,9 +10,7 @@ export const employeeSchema = z.object({
     .max(10, { message: "Phone number must be 10 digits" })
     .regex(/^\d+$/, { message: "Phone number must contain only digits" })
     .or(z.number()),
-  bloodGroup: z.object({
-    id: z.string().optional(),
-  }),
+  bloodGroup: z.string().optional(),
   bankDetailsInfo: z
     .object({
       accountNumber: z.union([
@@ -32,11 +30,8 @@ export const employeeSchema = z.object({
       ]),
     })
     .optional(),
-  employmentType: z
-    .object({
-      id: z.string().optional(),
-    })
-    .optional(),
+  employmentType: z.string().optional(),
+  employeeRole: z.array(z.string().optional()),
 });
 
 export type EmployeeUpdateForm = z.infer<typeof employeeSchema>;

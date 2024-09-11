@@ -29,10 +29,10 @@ const Companies = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.color,
+        color: organizationConfig.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
-      className=" h-screen p-8 "
+      className=" h-screen  "
     >
       <div className="flex justify-between items-center mx-4 my-4">
         <h1 className="text-2xl font-bold text-center">

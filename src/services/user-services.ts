@@ -63,3 +63,29 @@ export const updatePasswordForEmployee = async (form: UpdatePasswordForm) => {
     throw error;
   }
 };
+
+export const addCommentByRecruiter = async (id: string, comment: string) => {
+  const token = localStorage.getItem("employeeToken");
+  const userRole = localStorage.getItem("userRole");
+
+  try {
+    if (!token) {
+      throw "Not authorized, Please login and try again";
+    }
+    if (userRole !== "recruiter") {
+      throw "Not authorized, Please login and try again";
+    }
+    const response = await apiClient.post(
+      "/recruiter/addCommentByRecruiter",
+      {
+        id,
+        comment,
+      },
+      { headers: { auth_token: token } }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

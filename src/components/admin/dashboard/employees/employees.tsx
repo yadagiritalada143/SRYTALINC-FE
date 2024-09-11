@@ -15,13 +15,26 @@ const Employees = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.color,
+        color: organizationConfig.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
       className=" h-screen p-8 "
     >
       <div>
-        <h2 className="text-2xl font-bold text-center mb-6">Employees</h2>
+        <div className="flex justify-between items-center mx-4 my-4">
+          <h1 className="text-2xl font-bold text-center">Manage Employee</h1>
+          <div>
+            <Button
+              onClick={() =>
+                navigate(
+                  `/${organizationConfig.organization}/admin/dashboard/addemployee`
+                )
+              }
+            >
+              Add Employee
+            </Button>
+          </div>
+        </div>
         <div className=" overflow-x-auto">
           <table className="min-w-full table-fixed text-center shadow-md ">
             <colgroup>

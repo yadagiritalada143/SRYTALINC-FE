@@ -1,6 +1,11 @@
 import { useParams } from "react-router-dom";
-import { OrganizationConfig } from "../../../../interfaces/organization";
-import { TextInput, Button, Select, useMantineTheme } from "@mantine/core";
+import {
+  TextInput,
+  Button,
+  Select,
+  useMantineTheme,
+  MultiSelect,
+} from "@mantine/core";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -13,7 +18,8 @@ import {
 } from "../../../../services/admin-services";
 import { toast } from "react-toastify";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { OrganizationConfig } from "../../../../interfaces/organization";
 
 const UpdateEmployee = ({
   organizationConfig,
@@ -45,38 +51,31 @@ const UpdateEmployee = ({
     { value: "66cae2a743400091bccfdc52", label: "Contractor" },
   ];
 
-  const onSubmit = (data: any) => {
-    const newData = { ...data };
-    newData.email = employeeEmail;
-    const bloodGroupId = data.bloodGroup.id;
-    const employmentTypeId = data.employmentType.id;
-    const accountNumber = data.bankDetailsInfo.accountNumber;
-    const accountHolderName = data.bankDetailsInfo.accountHolderName;
-    const ifscCode = data.bankDetailsInfo.ifscCode;
-    if (bloodGroupId) {
-      newData.bloodGroup = bloodGroupId;
-    } else {
-      delete newData.bloodGroup;
-    }
-    if (employmentTypeId) {
-      newData.employmentType = employmentTypeId;
-    } else {
-      delete newData.employmentType;
-    }
-    if (!accountNumber) {
-      delete newData.bankDetailsInfo.accountNumber;
-    }
-    if (!accountHolderName) {
-      delete newData.bankDetailsInfo.accountHolderName;
-    }
-    if (!ifscCode) {
-      delete newData.bankDetailsInfo.ifscCode;
-    }
-    if (!ifscCode && accountHolderName && accountNumber) {
-      delete newData.bankDetailsInfo;
+  const employeeRoles = [
+    { value: "66d332c2bc7f50be0a7a573f", label: "Trainee" },
+    { value: "66d332c2bc7f50be0a7a5740", label: "Trainer" },
+    { value: "66d332c2bc7f50be0a7a5741", label: "Junior Software Engineer" },
+    { value: "66d332c2bc7f50be0a7a5742", label: "Senior Software Engineer" },
+    { value: "66d332c2bc7f50be0a7a5743", label: "Technical Lead" },
+    { value: "66d332c2bc7f50be0a7a5744", label: "Senior Executive" },
+  ];
+
+  const onSubmit = (data: EmployeeUpdateForm) => {
+    const updatedData = {
+      ...data,
+      email: employeeEmail,
+      employeeRole: data.employeeRole?.filter((role) => role),
+    };
+
+    if (
+      !data.bankDetailsInfo?.accountNumber &&
+      !data.bankDetailsInfo?.accountHolderName &&
+      !data.bankDetailsInfo?.ifscCode
+    ) {
+      delete updatedData.bankDetailsInfo;
     }
 
-    updateEmployeeDetailsByAdmin(newData)
+    updateEmployeeDetailsByAdmin(updatedData)
       .then(() => {
         toast("Updated Successful !", {
           style: {
@@ -90,18 +89,24 @@ const UpdateEmployee = ({
         });
       })
       .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.message || "Something went wrong");
+        toast.error(error.response?.data?.message || "Something went wrong");
       });
   };
 
   useEffect(() => {
     getEmployeeDetailsByAdmin(employeeEmail)
-      .then((emp) => reset(emp))
+      .then((emp) => {
+        reset({
+          ...emp,
+          bloodGroup: emp.bloodGroup.id,
+          employmentType: emp.employmentType.id,
+          employeeRole: emp.employeeRole.map((role: { id: string }) => role.id),
+        });
+      })
       .catch((error) =>
-        toast.error(error.response.data.message || "Something went wrong")
+        toast.error(error.response?.data?.message || "Something went wrong")
       );
-  }, []);
+  }, [employeeEmail, reset]);
 
   return (
     <div
@@ -145,9 +150,9 @@ const UpdateEmployee = ({
           />
         </div>
 
-        <div className="mb-6">
+        <div className="grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <Controller
-            {...register("bloodGroup.id")}
+            name="bloodGroup"
             control={control}
             render={({ field }) => (
               <Select
@@ -155,6 +160,22 @@ const UpdateEmployee = ({
                 label="Blood Group"
                 {...field}
                 error={errors.bloodGroup?.message}
+              />
+            )}
+          />
+          <Controller
+            name="employeeRole"
+            control={control}
+            render={({ field }) => (
+              <MultiSelect
+                data={employeeRoles}
+                label="Employee Role"
+                value={
+                  field.value?.filter((role) => role !== undefined) as string[]
+                }
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                error={errors.employeeRole?.message}
               />
             )}
           />
@@ -180,24 +201,22 @@ const UpdateEmployee = ({
         </div>
 
         <h3 className="text-lg font-bold mt-8 mb-4">Employment Details</h3>
-        <div className="mb-6">
-          <Controller
-            name="employmentType.id"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Employment Type"
-                data={employmentTypeOptions}
-                {...field}
-                error={errors.employmentType?.message}
-              />
-            )}
-          />
-        </div>
+        <Controller
+          name="employmentType"
+          control={control}
+          render={({ field }) => (
+            <Select
+              label="Employment Type"
+              data={employmentTypeOptions}
+              {...field}
+              error={errors.employmentType?.message}
+            />
+          )}
+        />
 
-        <div className="flex justify-center">
-          <Button type="submit" className="mt-6">
-            Update Profile
+        <div className="text-right mt-8">
+          <Button type="submit" className="bg-primary">
+            Update Employee
           </Button>
         </div>
       </form>

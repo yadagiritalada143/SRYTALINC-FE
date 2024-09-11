@@ -10,6 +10,7 @@ import { addCompanyByRecruiter } from "../../../../services/user-services";
 import { toast } from "react-toastify";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 const AddCompany = ({
   organizationConfig,
@@ -17,6 +18,7 @@ const AddCompany = ({
   organizationConfig: OrganizationConfig;
 }) => {
   const theme = useMantineTheme();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors, isSubmitting },
@@ -40,6 +42,7 @@ const AddCompany = ({
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
+      navigate(`/${organizationConfig.organization}/employee/dashboard`);
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -48,13 +51,13 @@ const AddCompany = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.color,
+        color: organizationConfig.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
     >
       <h1 className="text-center">Add Company</h1>
       <form
-        style={{ color: organizationConfig.theme.color }}
+        style={{ color: organizationConfig.theme.button.textColor }}
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextInput
