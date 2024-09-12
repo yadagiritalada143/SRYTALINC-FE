@@ -11,18 +11,21 @@ import { OrganizationConfig } from "../../../../interfaces/organization";
 import { registerEmployee } from "../../../../services/admin-services";
 import axios from "axios";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
+import { useNavigate } from "react-router";
 
 const AddEmployee = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
+  const navigate = useNavigate();
   const theme = useMantineTheme();
   const {
     register,
     handleSubmit,
     reset,
     control,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<AddEmployeeForm>({
     resolver: zodResolver(addEmployeeSchema),
@@ -31,7 +34,7 @@ const AddEmployee = ({
   const onSubmit = async (employeeDetails: AddEmployeeForm) => {
     try {
       await registerEmployee(employeeDetails);
-      toast("Login Successful !", {
+      toast(`${getValues("userRole")} created successfully !`, {
         style: {
           color: theme.colors.primary[2],
           backgroundColor: organizationConfig.theme.backgroundColor,
@@ -42,6 +45,7 @@ const AddEmployee = ({
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
       reset();
+      navigate(`/${organizationConfig.organization}/admin/dashboard`);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(

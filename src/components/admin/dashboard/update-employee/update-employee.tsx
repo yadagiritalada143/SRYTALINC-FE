@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   TextInput,
   Button,
@@ -26,6 +26,7 @@ const UpdateEmployee = ({
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
+  const navigate = useNavigate();
   const params = useParams();
   const employeeEmail = params.employeeEmail as string;
   const theme = useMantineTheme();
@@ -77,7 +78,7 @@ const UpdateEmployee = ({
 
     updateEmployeeDetailsByAdmin(updatedData)
       .then(() => {
-        toast("Updated Successful !", {
+        toast("Employee details updated !", {
           style: {
             color: theme.colors.primary[2],
             backgroundColor: organizationConfig.theme.backgroundColor,
@@ -87,6 +88,7 @@ const UpdateEmployee = ({
           },
           icon: <IconCircleDashedCheck width={32} height={32} />,
         });
+        navigate(`/${organizationConfig.organization}/admin/dashboard`);
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Something went wrong");

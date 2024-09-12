@@ -33,7 +33,7 @@ const AdminLogin = ({
       localStorage.setItem("firstName", data.firstName);
       localStorage.setItem("lastName", data.lastName);
       if (data.userRole === "admin") {
-        toast("Login Successful !", {
+        toast("Login successfully !", {
           style: {
             color: theme.colors.primary[2],
             backgroundColor: organizationConfig.theme.backgroundColor,

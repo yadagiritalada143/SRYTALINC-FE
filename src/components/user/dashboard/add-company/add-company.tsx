@@ -32,7 +32,7 @@ const AddCompany = ({
     try {
       await addCompanyByRecruiter(data);
       reset();
-      toast("Company Added Successfully !", {
+      toast("Company added successfully !", {
         style: {
           color: theme.colors.primary[2],
           backgroundColor: organizationConfig.theme.backgroundColor,
@@ -103,19 +103,19 @@ const AddCompany = ({
               <h1 className="px-2">Secondary Contact 1</h1>
             </legend>
             <TextInput
-              {...register("secondaryContact1.name")}
+              {...register("secondaryContact_1.name")}
               label="Name"
-              error={errors.secondaryContact1?.name?.message}
+              error={errors.secondaryContact_1?.name?.message}
             />
             <TextInput
-              {...register("secondaryContact1.email")}
+              {...register("secondaryContact_1.email")}
               label="Email"
-              error={errors.secondaryContact1?.email?.message}
+              error={errors.secondaryContact_1?.email?.message}
             />
             <TextInput
-              {...register("secondaryContact1.phone")}
+              {...register("secondaryContact_1.phone")}
               label="Phone"
-              error={errors.secondaryContact1?.phone?.message}
+              error={errors.secondaryContact_1?.phone?.message}
             />
           </fieldset>
 
@@ -129,19 +129,19 @@ const AddCompany = ({
               <h1 className="px-2">Secondary Contact 2</h1>
             </legend>
             <TextInput
-              {...register("secondaryContact2.name")}
+              {...register("secondaryContact_2.name")}
               label="Name"
-              error={errors.secondaryContact2?.name?.message}
+              error={errors.secondaryContact_2?.name?.message}
             />
             <TextInput
-              {...register("secondaryContact2.email")}
+              {...register("secondaryContact_2.email")}
               label="Email"
-              error={errors.secondaryContact2?.email?.message}
+              error={errors.secondaryContact_2?.email?.message}
             />
             <TextInput
-              {...register("secondaryContact2.phone")}
+              {...register("secondaryContact_2.phone")}
               label="Phone"
-              error={errors.secondaryContact2?.phone?.message}
+              error={errors.secondaryContact_2?.phone?.message}
             />
           </fieldset>
         </div>

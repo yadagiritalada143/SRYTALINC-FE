@@ -32,7 +32,7 @@ const UpdateCompany = ({
 
   const [comments, setComments] = useState<
     {
-      updatedAt: string;
+      updateAt: string;
       userId: { firstName: string; lastName: string };
       comment: string;
     }[]
@@ -66,7 +66,7 @@ const UpdateCompany = ({
   const onSubmit = async (data: AddCompanyForm) => {
     try {
       await updateCompanyByRecruiter(data, companyId);
-      toast("Login Successful !", {
+      toast("Company details updated successfully !", {
         style: {
           color: theme.colors.primary[2],
           backgroundColor: organizationConfig.theme.backgroundColor,
@@ -85,7 +85,7 @@ const UpdateCompany = ({
   const handleAddComment = () => {
     addCommentByRecruiter(companyId, newComment)
       .then(() => {
-        toast("Login Successful !", {
+        toast("Your comment has been added !", {
           style: {
             color: theme.colors.primary[2],
             backgroundColor: organizationConfig.theme.backgroundColor,
@@ -100,10 +100,10 @@ const UpdateCompany = ({
             firstName: localStorage.getItem("firstName") as string,
             lastName: localStorage.getItem("lastName") as string,
           },
-          updatedAt: new Date().toLocaleDateString(),
+          updateAt: new Date().toLocaleDateString(),
           comment: newComment,
         };
-        setComments((prev) => [...prev, comment]);
+        setComments((prev) => [comment, ...prev]);
         setNewComment("");
         close();
       })
@@ -196,22 +196,22 @@ const UpdateCompany = ({
               Secondary Contact 1
             </legend>
             <TextInput
-              {...register("secondaryContact1.name")}
+              {...register("secondaryContact_1.name")}
               label="Name"
               className="mb-2"
-              error={errors.secondaryContact1?.name?.message}
+              error={errors.secondaryContact_1?.name?.message}
             />
             <TextInput
-              {...register("secondaryContact1.email")}
+              {...register("secondaryContact_1.email")}
               label="Email"
               className="mb-2"
-              error={errors.secondaryContact1?.email?.message}
+              error={errors.secondaryContact_1?.email?.message}
             />
             <TextInput
-              {...register("secondaryContact1.phone")}
+              {...register("secondaryContact_1.phone")}
               label="Phone"
               className="mb-2"
-              error={errors.secondaryContact1?.phone?.message}
+              error={errors.secondaryContact_1?.phone?.message}
             />
           </fieldset>
 
@@ -223,22 +223,22 @@ const UpdateCompany = ({
               Secondary Contact 2
             </legend>
             <TextInput
-              {...register("secondaryContact2.name")}
+              {...register("secondaryContact_2.name")}
               label="Name"
               className="mb-2"
-              error={errors.secondaryContact2?.name?.message}
+              error={errors.secondaryContact_2?.name?.message}
             />
             <TextInput
-              {...register("secondaryContact2.email")}
+              {...register("secondaryContact_2.email")}
               label="Email"
               className="mb-2"
-              error={errors.secondaryContact2?.email?.message}
+              error={errors.secondaryContact_2?.email?.message}
             />
             <TextInput
-              {...register("secondaryContact2.phone")}
+              {...register("secondaryContact_2.phone")}
               label="Phone"
               className="mb-2"
-              error={errors.secondaryContact2?.phone?.message}
+              error={errors.secondaryContact_2?.phone?.message}
             />
           </fieldset>
         </div>
@@ -252,24 +252,26 @@ const UpdateCompany = ({
         </div>
 
         <div>
-          {comments.map((comment, index) => (
-            <div
-              key={index}
-              style={{
-                backgroundColor: organizationConfig.theme.backgroundColor,
-                color: theme.colors.primary[8],
-              }}
-              className="p-4 mx-10 my-4 rounded-md hover:shadow-lg shadow-gray-500"
-            >
-              <p className="text-right">
-                {moment(comment.updatedAt).format("DD MMM YYYY")}
-              </p>
-              <p className="text-left">{comment.comment}</p>
-              <h2 className="font-semibold text-right">
-                -{comment.userId.firstName} {comment.userId.lastName}
-              </h2>
-            </div>
-          ))}
+          {comments.map((comment, index) => {
+            return (
+              <div
+                key={index}
+                style={{
+                  backgroundColor: organizationConfig.theme.backgroundColor,
+                  color: theme.colors.primary[8],
+                }}
+                className="p-4 mx-10 my-4 rounded-md hover:shadow-lg shadow-gray-500"
+              >
+                <p className="text-right">
+                  {moment(comment.updateAt).format("DD MMM YYYY")}
+                </p>
+                <p className="text-left">{comment.comment}</p>
+                <h2 className="font-semibold text-right">
+                  -{comment.userId.firstName} {comment.userId.lastName}
+                </h2>
+              </div>
+            );
+          })}
         </div>
       </form>
 
