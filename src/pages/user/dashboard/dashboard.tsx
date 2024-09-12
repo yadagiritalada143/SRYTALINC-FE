@@ -69,9 +69,14 @@ const EmployeeDashboard = ({
           color: organizationConfig.theme.color,
         }}
       >
-        <div className="lg:hidden fixed top-4 right-4 z-50">
+        <div className="lg:hidden fixed top-4 z-50">
           <button onClick={toggleDrawer} className="p-2 rounded-md">
-            {isDrawerOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
+            {!isDrawerOpen && (
+              <IconMenu2
+                size={24}
+                color={organizationConfig.theme.button.textColor}
+              />
+            )}
           </button>
         </div>
 
@@ -84,6 +89,8 @@ const EmployeeDashboard = ({
           <EmployeeNavbar
             navLinks={NavLinks}
             organizationConfig={organizationConfig}
+            isDrawerOpen={isDrawerOpen}
+            toggleDrawer={toggleDrawer}
           />
         </div>
 

@@ -19,7 +19,7 @@ export const addCompanySchema = z.object({
       .optional()
       .or(z.literal("")),
   }),
-  secondaryContact1: z.object({
+  secondaryContact_1: z.object({
     name: z.string().optional(),
     email: z
       .string()
@@ -35,7 +35,7 @@ export const addCompanySchema = z.object({
       .optional()
       .or(z.literal("")),
   }),
-  secondaryContact2: z.object({
+  secondaryContact_2: z.object({
     name: z.string().optional(),
     email: z
       .string()

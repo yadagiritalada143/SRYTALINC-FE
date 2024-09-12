@@ -18,7 +18,7 @@ const Employees = ({
         color: organizationConfig.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
-      className=" h-screen p-8 "
+      className=" h-screen "
     >
       <div>
         <div className="flex justify-between items-center mx-4 my-4">

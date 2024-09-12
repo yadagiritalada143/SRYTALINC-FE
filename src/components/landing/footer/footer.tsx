@@ -5,6 +5,7 @@ import {
   IconBrandGithub,
 } from "@tabler/icons-react";
 import TechIcon from "../../common/tech-icons/tech-icons";
+import { HashLink as Link } from "react-router-hash-link";
 
 const SocialIcons = [
   { name: "Follow us on LinkedIn", icon: IconBrandLinkedin },
@@ -52,10 +53,14 @@ const Footer = () => {
               <h2 className=" text-xl font-bold mb-2">Company</h2>
               <ul className=" text-gray-400">
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">
-                  <a href="#">Home</a>
+                  <Link to="#header" smooth={true}>
+                    Home
+                  </Link>
                 </li>
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">
-                  <a href="#">About Us</a>
+                  <Link to="#about" smooth={true}>
+                    About Us
+                  </Link>
                 </li>
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">
                   <a href="#">Careers</a>
@@ -97,7 +102,9 @@ const Footer = () => {
                   <a href="#">Help Center</a>
                 </li>
                 <li className="text-gray-300 nav-item transform transition-transform duration-300 ease-out hover:scale-125 hover:-translate-y-2 hover:rotate-x-16 hover:rotate-y-8 hover:text-purple-400">
-                  <a href="#">Contact Us</a>
+                  <Link to="#contact" smooth={true}>
+                    Contact Us
+                  </Link>
                 </li>
               </ul>
             </div>
