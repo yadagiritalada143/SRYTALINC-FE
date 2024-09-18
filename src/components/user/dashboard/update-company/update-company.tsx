@@ -121,7 +121,19 @@ const UpdateCompany = ({
         fontFamily: theme.fontFamily,
       }}
     >
-      <h1 className="text-center text-2xl font-bold mb-4">Update Company</h1>
+      <div className="px-4 flex justify-between">
+        <Button
+          bg={theme.colors.primary[5]}
+          onClick={() =>
+            navigate(`/${organizationConfig.organization}/employee/dashboard`)
+          }
+        >
+          {" "}
+          Go back
+        </Button>
+        <h1 className="text-center text-2xl font-bold mb-4">Update Company</h1>
+        <div></div>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="px-4 flex flex-wrap space-x-10 ">
           <TextInput

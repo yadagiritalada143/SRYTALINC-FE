@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const updatePasswordSchema = z.object({
-  password: z
+  oldPassword: z
     .string({ required_error: "Please enter password" })
     .min(8, { message: "Password must be 8 characters long" }),
   newPassword: z

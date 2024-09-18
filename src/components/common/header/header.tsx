@@ -25,9 +25,8 @@ const Header = ({
         <h1 className="text-2xl uppercase underline">{organization}</h1>
       </div>
       <div className="flex ">
-        <p className=" flex justify-center items-center px-4">
-          Hello, {localStorage.getItem("firstName")}{" "}
-          {localStorage.getItem("lastName")}{" "}
+        <p className=" flex justify-center items-center px-4 font-bold">
+          {localStorage.getItem("firstName")} {localStorage.getItem("lastName")}{" "}
         </p>
         <div>
           <Menu shadow="md" width={200} position="bottom-end">

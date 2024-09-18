@@ -56,8 +56,16 @@ export const getCompanyDetailsByIdByRecruiter = async (id: string) => {
 };
 
 export const updatePasswordForEmployee = async (form: UpdatePasswordForm) => {
+  const token = localStorage.getItem("employeeToken");
   try {
-    console.log(form);
+    if (!token) {
+      throw "Not authorized, Please login and try again";
+    }
+    const response = await apiClient.post(
+      "/updatePassword",
+      { ...form },
+      { headers: { auth_token: token } }
+    );
     return { success: true };
   } catch (error) {
     throw error;

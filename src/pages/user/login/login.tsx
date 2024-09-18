@@ -31,6 +31,7 @@ const EmployeeLogin = ({
       localStorage.setItem("passwordReset", data.passwordResetRequired);
       localStorage.setItem("firstName", data.firstName);
       localStorage.setItem("lastName", data.lastName);
+      localStorage.setItem("userId", data.id);
       if (data.userRole === "recruiter") {
         navigate(`/${organizationConfig.organization}/employee/dashboard`);
       } else {
