@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { Outlet } from "react-router-dom";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import EmployeeNavbar from "../../../components/common/navbar/navbar";
 import { NavLinks } from "../../../utils/user/user-nav-links";
 import { Modal, PasswordInput, Button } from "@mantine/core";
@@ -38,8 +38,7 @@ const EmployeeDashboard = ({
 
   useEffect(() => {
     const passwordReset = localStorage.getItem("passwordReset");
-    const userRole = localStorage.getItem("userRole");
-    if (passwordReset === "true" && userRole === "employee") {
+    if (passwordReset === "true") {
       open();
     }
   });
@@ -54,7 +53,9 @@ const EmployeeDashboard = ({
           }
         })
         .catch((error: any) =>
-          toast.error(error.response.data.message || "something went wrong")
+          toast.error(
+            error || error.response.data.message || "something went wrong"
+          )
         );
     } else {
       toast.error("New password and confirm password doesn't match");
@@ -130,18 +131,18 @@ const EmployeeDashboard = ({
         <div className=" flex justify-center items-center">
           <form onSubmit={handleSubmit(onSubmit)} className="p-2 w-full">
             <PasswordInput
-              {...register("password")}
-              label="Enter the Password"
-              error={errors.password?.message}
+              {...register("oldPassword")}
+              label="Enter the old password"
+              error={errors.oldPassword?.message}
             />
             <PasswordInput
               {...register("newPassword")}
-              label="Enter the New Password"
+              label="Enter the new password"
               error={errors.newPassword?.message}
             />
             <PasswordInput
               {...register("confirmNewPassword")}
-              label="Confirm the New Password"
+              label="Confirm the new password"
               error={errors.confirmNewPassword?.message}
             />
             <div className="text-right mt-4">

@@ -26,7 +26,6 @@ const Companies = ({
       );
   }, []);
 
-  console.log(companies);
   return (
     <div
       style={{

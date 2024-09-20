@@ -28,7 +28,7 @@ const UpdateEmployee = ({
 }) => {
   const navigate = useNavigate();
   const params = useParams();
-  const employeeEmail = params.employeeEmail as string;
+  const employeeId = params.employeeId as string;
   const theme = useMantineTheme();
 
   const {
@@ -62,9 +62,9 @@ const UpdateEmployee = ({
   ];
 
   const onSubmit = (data: EmployeeUpdateForm) => {
+    console.log("Updateding", data);
     const updatedData = {
       ...data,
-      email: employeeEmail,
       employeeRole: data.employeeRole?.filter((role) => role),
     };
 
@@ -96,19 +96,21 @@ const UpdateEmployee = ({
   };
 
   useEffect(() => {
-    getEmployeeDetailsByAdmin(employeeEmail)
+    getEmployeeDetailsByAdmin(employeeId)
       .then((emp) => {
         reset({
           ...emp,
-          bloodGroup: emp.bloodGroup.id,
-          employmentType: emp.employmentType.id,
-          employeeRole: emp.employeeRole.map((role: { id: string }) => role.id),
+          bloodGroup: emp.bloodGroup?.id,
+          employmentType: emp.employmentType?.id,
+          employeeRole: emp.employeeRole.map(
+            (role: { id: string }) => role?.id
+          ),
         });
       })
-      .catch((error) =>
-        toast.error(error.response?.data?.message || "Something went wrong")
-      );
-  }, [employeeEmail, reset]);
+      .catch((error) => {
+        toast.error(error.response?.data?.message || "Something went wrong");
+      });
+  }, [employeeId, reset]);
 
   return (
     <div
@@ -160,27 +162,33 @@ const UpdateEmployee = ({
               <Select
                 data={bloodGroupOptions}
                 label="Blood Group"
+                placeholder="Enter blood group"
                 {...field}
                 error={errors.bloodGroup?.message}
               />
             )}
           />
-          <Controller
-            name="employeeRole"
-            control={control}
-            render={({ field }) => (
-              <MultiSelect
-                data={employeeRoles}
-                label="Employee Role"
-                value={
-                  field.value?.filter((role) => role !== undefined) as string[]
-                }
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                error={errors.employeeRole?.message}
-              />
-            )}
-          />
+          <div className="mt-8">
+            <Controller
+              name="employeeRole"
+              control={control}
+              render={({ field }) => (
+                <MultiSelect
+                  data={employeeRoles}
+                  label="Employee Role"
+                  placeholder="Select employee roles"
+                  value={
+                    field.value?.filter(
+                      (role) => role !== undefined
+                    ) as string[]
+                  }
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  error={errors.employeeRole?.message}
+                />
+              )}
+            />
+          </div>
         </div>
 
         <h3 className="text-lg font-bold mt-8 mb-4">Bank Details</h3>
@@ -189,14 +197,17 @@ const UpdateEmployee = ({
             label="Account Number"
             {...register("bankDetailsInfo.accountNumber")}
             error={errors.bankDetailsInfo?.accountNumber?.message}
+            placeholder="Enter bank account number"
           />
           <TextInput
             label="Account Holder Name"
+            placeholder="Enter bank account holder name"
             {...register("bankDetailsInfo.accountHolderName")}
             error={errors.bankDetailsInfo?.accountHolderName?.message}
           />
           <TextInput
             label="IFSC Code"
+            placeholder="Enter bank ifsc code"
             {...register("bankDetailsInfo.ifscCode")}
             error={errors?.bankDetailsInfo?.ifscCode?.message}
           />
@@ -209,6 +220,7 @@ const UpdateEmployee = ({
           render={({ field }) => (
             <Select
               label="Employment Type"
+              placeholder="Enter employment type"
               data={employmentTypeOptions}
               {...field}
               error={errors.employmentType?.message}
@@ -216,10 +228,9 @@ const UpdateEmployee = ({
           )}
         />
 
-        <div className="text-right mt-8">
-          <Button type="submit" className="bg-primary">
-            Update Employee
-          </Button>
+        <div className=" flex flex-wrap justify-between mt-8">
+          <Button bg={theme.colors.primary[5]}>Reset Password</Button>
+          <Button type="submit">Update Employee</Button>
         </div>
       </form>
     </div>

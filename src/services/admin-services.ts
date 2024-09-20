@@ -35,12 +35,27 @@ export const updateEmployeeDetailsByAdmin = async (
   }
 };
 
-export const getEmployeeDetailsByAdmin = async (email: string) => {
+export const getEmployeeDetailsByAdmin = async (id: string) => {
   try {
     const response = await apiClient.get(
-      `/admin/getEmployeeDetailsByAdmin/${email}`
+      `/admin/getEmployeeDetailsByAdmin/${id}`
     );
     return response.data.userDetails;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllEmployeeDetailsByAdmin = async () => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    if (!adminToken) {
+      throw "Not authorized to access";
+    }
+    const response = await apiClient("/admin/getAllEmployeeDetailsByAdmin", {
+      headers: { auth_token: adminToken },
+    });
+    return response.data.usersList;
   } catch (error) {
     throw error;
   }
