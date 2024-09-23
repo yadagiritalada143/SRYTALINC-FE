@@ -42,7 +42,7 @@ const Companies = ({
           <Button
             onClick={() =>
               navigate(
-                `/${organizationConfig.organization}/employee/dashboard/addcompany`
+                `/employee/${organizationConfig.organization}/dashboard/addcompany`
               )
             }
           >
@@ -159,7 +159,7 @@ const Companies = ({
                     <Button
                       onClick={() =>
                         navigate(
-                          `/${organizationConfig.organization}/employee/dashboard/update/${company.id}`
+                          `/employee/${organizationConfig.organization}/dashboard/update/${company.id}`
                         )
                       }
                       size="sm"

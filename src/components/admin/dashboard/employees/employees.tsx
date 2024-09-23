@@ -40,7 +40,7 @@ const Employees = ({
             <Button
               onClick={() =>
                 navigate(
-                  `/${organizationConfig.organization}/admin/dashboard/addemployee`
+                  `/admin/${organizationConfig.organization}/dashboard/addemployee`
                 )
               }
             >
@@ -115,7 +115,7 @@ const Employees = ({
                       <Button
                         onClick={() =>
                           navigate(
-                            `/${organizationConfig.organization}/admin/dashboard/update/${employee._id}`
+                            `/admin/${organizationConfig.organization}/dashboard/update/${employee._id}`
                           )
                         }
                       >

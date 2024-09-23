@@ -76,7 +76,7 @@ const UpdateCompany = ({
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
-      navigate(`/${organizationConfig.organization}/employee/dashboard`);
+      navigate(`/employee/${organizationConfig.organization}/dashboard`);
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -125,7 +125,7 @@ const UpdateCompany = ({
         <Button
           bg={theme.colors.primary[5]}
           onClick={() =>
-            navigate(`/${organizationConfig.organization}/employee/dashboard`)
+            navigate(`/employee/${organizationConfig.organization}/dashboard`)
           }
         >
           {" "}

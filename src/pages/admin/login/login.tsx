@@ -43,7 +43,7 @@ const AdminLogin = ({
           },
           icon: <IconCircleDashedCheck width={32} height={32} />,
         });
-        navigate(`/${organizationConfig.organization}/admin/dashboard`);
+        navigate(`/admin/${organizationConfig.organization}/dashboard`);
       } else {
         toast.error("Not authorized to access");
       }

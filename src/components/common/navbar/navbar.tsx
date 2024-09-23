@@ -10,7 +10,12 @@ const Navbar = ({
   isDrawerOpen,
   toggleDrawer,
 }: {
-  navLinks: { url: string; icon: Icon; name: string }[];
+  navLinks: {
+    role: "employee" | "admin";
+    url: string;
+    icon: Icon;
+    name: string;
+  }[];
   organizationConfig: OrganizationConfig;
   isDrawerOpen: Boolean;
   toggleDrawer: () => void;
@@ -40,7 +45,7 @@ const Navbar = ({
       <div className="flex flex-col mt-6  px-2">
         {localStorage.getItem("userRole") === "recruiter" && (
           <NavLink
-            to={`/${organizationConfig.organization}/employee/dashboard`}
+            to={`/employee/${organizationConfig.organization}/dashboard`}
             end
             className={({ isActive }) =>
               `flex items-center  p-4 py-6 hover:shadow-xl ${
@@ -65,7 +70,7 @@ const Navbar = ({
           return (
             <NavLink
               key={link.url}
-              to={`/${organizationConfig.organization}/${link.url}`}
+              to={`/${link.role}/${organizationConfig.organization}/${link.url}`}
               end
               className={({ isActive }) =>
                 `flex items-center p-4 py-6 shadow-md hover:shadow-xl ${

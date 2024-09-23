@@ -3,16 +3,19 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
   IconBrandGithub,
+  IconBrandX,
+  IconBrandFacebook,
 } from "@tabler/icons-react";
 import TechIcon from "../../common/tech-icons/tech-icons";
 import { HashLink as Link } from "react-router-hash-link";
 
 const SocialIcons = [
   { name: "Follow us on LinkedIn", icon: IconBrandLinkedin },
-  {
-    name: "Watch us on YouTube",
-    icon: IconBrandYoutube,
-  },
+  { name: "Follow us on Facebook", icon: IconBrandFacebook },
+  // {
+  //   name: "Watch us on YouTube",
+  //   icon: IconBrandYoutube,
+  // },
 ];
 
 const Footer = () => {
@@ -44,7 +47,7 @@ const Footer = () => {
               })}
             </div>
             <p className="text-xs text-gray-400">
-              &copy;SRYTAL Inc. 2024 | All Rights Reserved
+              &copy; SRYTAL Systems Pvt. Ltd. 2024 | All Rights Reserved
             </p>
           </div>
 
