@@ -45,7 +45,7 @@ const AddEmployee = ({
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
       reset();
-      navigate(`/${organizationConfig.organization}/admin/dashboard`);
+      navigate(`/admin/${organizationConfig.organization}/dashboard`);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(

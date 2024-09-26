@@ -33,10 +33,10 @@ const EmployeeLogin = ({
       localStorage.setItem("lastName", data.lastName);
       localStorage.setItem("userId", data.id);
       if (data.userRole === "recruiter") {
-        navigate(`/${organizationConfig.organization}/employee/dashboard`);
+        navigate(`/employee/${organizationConfig.organization}/dashboard`);
       } else {
         navigate(
-          `/${organizationConfig.organization}/employee/dashboard/profile`
+          `/employee/${organizationConfig.organization}/dashboard/profile`
         );
       }
       toast("Login successfully !", {

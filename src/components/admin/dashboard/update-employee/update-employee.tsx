@@ -88,7 +88,7 @@ const UpdateEmployee = ({
           },
           icon: <IconCircleDashedCheck width={32} height={32} />,
         });
-        navigate(`/${organizationConfig.organization}/admin/dashboard`);
+        navigate(`/admin/${organizationConfig.organization}/dashboard`);
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Something went wrong");

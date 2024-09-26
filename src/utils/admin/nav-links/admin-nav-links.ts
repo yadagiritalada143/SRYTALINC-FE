@@ -2,7 +2,8 @@ import { IconUser, IconUsersPlus } from "@tabler/icons-react";
 
 export const adminNavLinks = [
   {
-    url: "admin/dashboard",
+    role: "admin",
+    url: "dashboard",
     icon: IconUser,
     name: "Employees",
   },

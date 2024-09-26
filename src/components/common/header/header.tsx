@@ -13,9 +13,9 @@ const Header = ({
     const userRole = localStorage.getItem("userRole");
 
     if (userRole === "admin") {
-      navigate(`/${organization}/${userRole}/login`);
+      navigate(`/${userRole}/${organization}/login`);
     } else {
-      navigate(`/${organization}/employee/login`);
+      navigate(`/employee/${organization}/login`);
     }
     localStorage.clear();
   };
