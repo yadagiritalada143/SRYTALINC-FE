@@ -128,7 +128,21 @@ const UpdateEmployee = ({
         }}
         className="rounded-lg shadow-lg w-full max-w-4xl p-8"
       >
-        <h2 className="text-2xl font-bold text-center mb-6">Update Profile</h2>
+        <div className="px-4 flex justify-between">
+          <div></div>
+          <h2 className="text-2xl font-bold text-center mb-6">
+            Update Profile
+          </h2>
+          <Button
+            bg={theme.colors.primary[5]}
+            onClick={() =>
+              navigate(`/admin/${organizationConfig.organization}/dashboard`)
+            }
+          >
+            {" "}
+            Cancel
+          </Button>
+        </div>
 
         <h3 className="text-lg font-bold mb-4">Personal Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
