@@ -10,7 +10,7 @@ import {
 import { OrganizationConfig } from "../../../../interfaces/organization";
 import { registerEmployee } from "../../../../services/admin-services";
 import axios from "axios";
-import { IconCircleDashedCheck } from "@tabler/icons-react";
+import { IconCircleDashedCheck, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router";
 
 const AddEmployee = ({
@@ -67,7 +67,18 @@ const AddEmployee = ({
         style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
         className="w-full max-w-2xl p-8 shadow-lg rounded-lg"
       >
-        <h2 className="text-2xl font-bold text-center mb-6">Add Employee</h2>
+        <div className="flex justify-between">
+          <div></div>
+          <h2 className="text-2xl font-bold text-center mb-6">Add Employee</h2>
+          <Button
+            className="rounded-full"
+            onClick={() =>
+              navigate(`/admin/${organizationConfig.organization}/dashboard`)
+            }
+          >
+            <IconX />
+          </Button>
+        </div>
 
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
           <TextInput
