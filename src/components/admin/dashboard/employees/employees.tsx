@@ -1,6 +1,5 @@
 import { OrganizationConfig } from "../../../../interfaces/organization";
-import { Button, useMantineTheme } from "@mantine/core";
-
+import { Button, useMantineTheme, Loader } from "@mantine/core";
 import { IconEdit, IconUser } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,15 +14,20 @@ const Employees = ({
 }) => {
   const theme = useMantineTheme();
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllEmployeeDetailsByAdmin()
-      .then((employeesList) => setEmployees(employeesList))
-      .catch((error) =>
-        toast(error || error.response.data.message || "Something went wrong")
-      );
-  }, [employees]);
+      .then((employeesList) => {
+        setEmployees(employeesList);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        toast(error?.response?.data?.message || "Something went wrong");
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <div
@@ -49,34 +53,38 @@ const Employees = ({
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-fixed text-center shadow-md">
-            <colgroup>
-              <col className="w-56" />
-              <col className="w-32" />
-              <col className="w-32" />
-              <col className="w-32" />
-              <col className="w-32" />
-              <col className="w-32" />
-              <col className="w-32" />
-              <col className="w-32" />
-            </colgroup>
-            <thead className="text-xs uppercase">
-              <tr>
-                <th className="p-2 border">First Name</th>
-                <th className="p-2 border">Last Name</th>
-                <th className="p-2 border">Email</th>
-                <th className="p-2 border">Mobile Number</th>
-                <th className="p-2 border">Role</th>
-                <th className="p-2 border">Employment Type</th>
-                <th className="p-2 border">Blood Group</th>
-                <th className="p-2 border">Employee Role</th>
-                <th className="p-2 border">Update Details</th>
-              </tr>
-            </thead>
-            <tbody className="text-sm">
-              {employees.map((employee) => {
-                return (
+        {isLoading ? ( // Display Loader when loading
+          <div className="flex justify-center items-center h-48">
+            <Loader size="xl" color={organizationConfig.theme.button.color} />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-fixed text-center shadow-md">
+              <colgroup>
+                <col className="w-56" />
+                <col className="w-32" />
+                <col className="w-32" />
+                <col className="w-32" />
+                <col className="w-32" />
+                <col className="w-32" />
+                <col className="w-32" />
+                <col className="w-32" />
+              </colgroup>
+              <thead className="text-xs uppercase">
+                <tr>
+                  <th className="p-2 border">First Name</th>
+                  <th className="p-2 border">Last Name</th>
+                  <th className="p-2 border">Email</th>
+                  <th className="p-2 border">Mobile Number</th>
+                  <th className="p-2 border">Role</th>
+                  <th className="p-2 border">Employment Type</th>
+                  <th className="p-2 border">Blood Group</th>
+                  <th className="p-2 border">Employee Role</th>
+                  <th className="p-2 border">Update Details</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                {employees.map((employee) => (
                   <tr
                     key={employee._id}
                     className="hover:bg-slate-200 hover:text-black"
@@ -97,14 +105,14 @@ const Employees = ({
                       {employee.userRole}
                     </td>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
-                      {employee.employmentType.employmentType}
+                      {employee.employmentType?.employmentType}
                     </td>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
-                      {employee.bloodGroup.type}
+                      {employee.bloodGroup?.type}
                     </td>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
                       <ul>
-                        {employee.employeeRole.map((role, index) => (
+                        {employee.employeeRole?.map((role, index) => (
                           <li key={role._id}>
                             {index + 1}. {role.designation}
                           </li>
@@ -124,11 +132,11 @@ const Employees = ({
                       </Button>
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

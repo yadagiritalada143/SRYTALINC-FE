@@ -10,10 +10,16 @@ const apiClient = axios.create({
 });
 
 export const registerEmployee = async (employeeDetails: AddEmployeeForm) => {
+  const adminToken = localStorage.getItem("adminToken");
+
   try {
+    if (!adminToken) {
+      throw "Not authorized to access";
+    }
     const response = await apiClient.post(
       "/admin/registerEmployeeByAdmin",
-      employeeDetails
+      employeeDetails,
+      { headers: { auth_token: adminToken } }
     );
     return response.data;
   } catch (error) {
