@@ -1,22 +1,26 @@
 export interface OrganizationConfig {
-  organization: string;
-  logo: string;
-  theme: {
-    colorScheme: "light" | "dark";
-    primaryColor: string;
-    fontFamily: string;
-    button: {
+  organization_name: string;
+  organization_theme: {
+    logo: string;
+    organization: string;
+    theme: {
+      backgroundColor: string;
+      headerBackgroundColor: string;
+      colorScheme: "light" | "dark";
+
+      primaryColor: string;
+      fontFamily: string;
+      button: {
+        color: string;
+        textColor: string;
+      };
+      colors: {
+        primary: string[];
+        [key: string]: string[];
+      };
       color: string;
-      textColor: string;
+      borderColor: string;
+      linkColor: string;
     };
-    colors: {
-      primary: string[];
-      [key: string]: string[];
-    };
-    color: string;
-    backgroundColor: string;
-    borderColor: string;
-    linkColor: string;
-    headerBackgroundColor: string;
   };
 }

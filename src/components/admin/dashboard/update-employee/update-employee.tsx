@@ -81,14 +81,15 @@ const UpdateEmployee = ({
         toast("Employee details updated !", {
           style: {
             color: theme.colors.primary[2],
-            backgroundColor: organizationConfig.theme.backgroundColor,
+            backgroundColor:
+              organizationConfig.organization_theme.theme.backgroundColor,
           },
           progressStyle: {
             background: theme.colors.primary[8],
           },
           icon: <IconCircleDashedCheck width={32} height={32} />,
         });
-        navigate(`/admin/${organizationConfig.organization}/dashboard`);
+        navigate(`/admin/${organizationConfig.organization_name}/dashboard`);
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Something went wrong");
@@ -115,7 +116,7 @@ const UpdateEmployee = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.color,
+        color: organizationConfig.organization_theme.theme.color,
         fontFamily: theme.fontFamily,
       }}
       className="flex justify-center items-center py-12"
@@ -123,7 +124,8 @@ const UpdateEmployee = ({
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          backgroundColor: organizationConfig.theme.backgroundColor,
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
           color: theme.colors.primary[8],
         }}
         className="rounded-lg shadow-lg w-full max-w-4xl p-8"
@@ -136,7 +138,9 @@ const UpdateEmployee = ({
           <Button
             bg={theme.colors.primary[5]}
             onClick={() =>
-              navigate(`/admin/${organizationConfig.organization}/dashboard`)
+              navigate(
+                `/admin/${organizationConfig.organization_name}/dashboard`
+              )
             }
           >
             {" "}

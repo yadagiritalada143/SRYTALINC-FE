@@ -42,7 +42,8 @@ const AddEmployee = ({
         {
           style: {
             color: theme.colors.primary[2],
-            backgroundColor: organizationConfig.theme.backgroundColor,
+            backgroundColor:
+              organizationConfig.organization_theme.theme.backgroundColor,
           },
           progressStyle: {
             background: theme.colors.primary[8],
@@ -51,7 +52,7 @@ const AddEmployee = ({
         }
       );
       reset();
-      navigate(`/admin/${organizationConfig.organization}/dashboard`);
+      navigate(`/admin/${organizationConfig.organization_name}/dashboard`);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(
@@ -70,7 +71,10 @@ const AddEmployee = ({
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
+        style={{
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
+        }}
         className="w-full max-w-2xl p-8 shadow-lg rounded-lg"
       >
         <div className="flex justify-between">
@@ -79,7 +83,9 @@ const AddEmployee = ({
           <Button
             className="rounded-full"
             onClick={() =>
-              navigate(`/admin/${organizationConfig.organization}/dashboard`)
+              navigate(
+                `/admin/${organizationConfig.organization_name}/dashboard`
+              )
             }
           >
             <IconX />
@@ -141,7 +147,9 @@ const AddEmployee = ({
               isSubmitting && (
                 <Loader
                   size="xs"
-                  color={organizationConfig.theme.button.color}
+                  color={
+                    organizationConfig.organization_theme.theme.button.color
+                  }
                 />
               )
             }

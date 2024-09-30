@@ -39,3 +39,14 @@ export const sendContactUsMail = async (data: ContactForm) => {
     throw error;
   }
 };
+
+export const getOrganizationConfig = async (organizationName: string) => {
+  try {
+    const response = await apiClient(
+      `/getOrganizationThemes/${organizationName}`
+    );
+    return response.data.themesResponse;
+  } catch (error) {
+    throw error;
+  }
+};

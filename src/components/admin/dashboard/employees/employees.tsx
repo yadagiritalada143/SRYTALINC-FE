@@ -14,7 +14,7 @@ const Employees = ({
 }) => {
   const theme = useMantineTheme();
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Employees = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.button.textColor,
+        color: organizationConfig.organization_theme.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
       className="h-auto"
@@ -44,7 +44,7 @@ const Employees = ({
             <Button
               onClick={() =>
                 navigate(
-                  `/admin/${organizationConfig.organization}/dashboard/addemployee`
+                  `/admin/${organizationConfig.organization_name}/dashboard/addemployee`
                 )
               }
             >
@@ -55,7 +55,10 @@ const Employees = ({
 
         {isLoading ? ( // Display Loader when loading
           <div className="flex justify-center items-center h-48">
-            <Loader size="xl" color={organizationConfig.theme.button.color} />
+            <Loader
+              size="xl"
+              color={organizationConfig.organization_theme.theme.button.color}
+            />
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -123,7 +126,7 @@ const Employees = ({
                       <Button
                         onClick={() =>
                           navigate(
-                            `/admin/${organizationConfig.organization}/dashboard/update/${employee._id}`
+                            `/admin/${organizationConfig.organization_name}/dashboard/update/${employee._id}`
                           )
                         }
                       >
