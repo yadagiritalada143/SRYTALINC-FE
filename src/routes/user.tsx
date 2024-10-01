@@ -19,6 +19,7 @@ import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { LoadingOverlay } from "@mantine/core";
 import Loader from "../components/common/loader/loader";
+import Profile from "../components/user/dashboard/profile/profile";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -183,6 +184,7 @@ const EmployeeRoutes = () => {
                   <UpdateCompany organizationConfig={organizationConfig} />
                 }
               />
+              <Route path="profile" element={<Profile />} />
             </Route>
             <Route path="profile" element={<h1>Welcome to your profile</h1>} />
           </Route>
