@@ -34,16 +34,22 @@ const AddEmployee = ({
   const onSubmit = async (employeeDetails: AddEmployeeForm) => {
     try {
       await registerEmployee(employeeDetails);
-      toast(`${getValues("userRole")} created successfully !`, {
-        style: {
-          color: theme.colors.primary[2],
-          backgroundColor: organizationConfig.theme.backgroundColor,
-        },
-        progressStyle: {
-          background: theme.colors.primary[8],
-        },
-        icon: <IconCircleDashedCheck width={32} height={32} />,
-      });
+      toast(
+        `${
+          getValues("userRole")[0].toUpperCase() +
+          getValues("userRole").slice(1)
+        } created successfully !`,
+        {
+          style: {
+            color: theme.colors.primary[2],
+            backgroundColor: organizationConfig.theme.backgroundColor,
+          },
+          progressStyle: {
+            background: theme.colors.primary[8],
+          },
+          icon: <IconCircleDashedCheck width={32} height={32} />,
+        }
+      );
       reset();
       navigate(`/admin/${organizationConfig.organization}/dashboard`);
     } catch (error) {
