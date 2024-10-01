@@ -36,14 +36,17 @@ const AdminLogin = ({
         toast("Login successfully !", {
           style: {
             color: theme.colors.primary[2],
-            backgroundColor: organizationConfig.theme.backgroundColor,
+            backgroundColor:
+              organizationConfig.organization_theme.theme.backgroundColor,
           },
           progressStyle: {
             background: theme.colors.primary[8],
           },
           icon: <IconCircleDashedCheck width={32} height={32} />,
         });
-        navigate(`/admin/${organizationConfig.organization}/dashboard`);
+        navigate(
+          `/admin/${organizationConfig.organization_theme.organization}/dashboard`
+        );
       } else {
         toast.error("Not authorized to access");
       }
@@ -69,13 +72,16 @@ const AdminLogin = ({
     >
       <form
         onSubmit={handleSubmit(Submit)}
-        style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
+        style={{
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
+        }}
         className="shadow-lg border rounded-lg p-6 max-w-md w-full"
       >
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-bold text-center mb-4">ADMIN LOGIN</h1>
           <img
-            src={organizationConfig.logo}
+            src={organizationConfig.organization_theme.logo}
             className="mb-4 w-20 h-20 object-contain"
             alt="default"
           />
@@ -100,7 +106,7 @@ const AdminLogin = ({
               to="forgot-password"
               style={{
                 textDecoration: "underline",
-                color: organizationConfig.theme.linkColor,
+                color: organizationConfig.organization_theme.theme.linkColor,
               }}
               className="text-sm"
             >
@@ -120,7 +126,10 @@ const AdminLogin = ({
                 isSubmitting && (
                   <Loader
                     size="xs"
-                    color={organizationConfig.theme.button.textColor}
+                    color={
+                      organizationConfig.organization_theme.theme.button
+                        .textColor
+                    }
                   />
                 )
               }

@@ -35,14 +35,15 @@ const AddCompany = ({
       toast("Company added successfully !", {
         style: {
           color: theme.colors.primary[2],
-          backgroundColor: organizationConfig.theme.backgroundColor,
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
         },
         progressStyle: {
           background: theme.colors.primary[8],
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
-      navigate(`/employee/${organizationConfig.organization}/dashboard`);
+      navigate(`/employee/${organizationConfig.organization_name}/dashboard`);
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -51,13 +52,15 @@ const AddCompany = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.button.textColor,
+        color: organizationConfig.organization_theme.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
     >
       <h1 className="text-center">Add Company</h1>
       <form
-        style={{ color: organizationConfig.theme.button.textColor }}
+        style={{
+          color: organizationConfig.organization_theme.theme.button.textColor,
+        }}
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextInput
@@ -69,7 +72,7 @@ const AddCompany = ({
         <fieldset
           className="m-4 p-4"
           style={{
-            border: `1px solid ${organizationConfig.theme.borderColor}`,
+            border: `1px solid ${organizationConfig.organization_theme.theme.borderColor}`,
           }}
         >
           <legend>
@@ -96,7 +99,7 @@ const AddCompany = ({
           <fieldset
             className="flex-auto m-4 p-4"
             style={{
-              border: `1px solid ${organizationConfig.theme.borderColor}`,
+              border: `1px solid ${organizationConfig.organization_theme.theme.borderColor}`,
             }}
           >
             <legend>
@@ -122,7 +125,7 @@ const AddCompany = ({
           <fieldset
             className="flex-auto m-4 p-4"
             style={{
-              border: `1px solid ${organizationConfig.theme.borderColor}`,
+              border: `1px solid ${organizationConfig.organization_theme.theme.borderColor}`,
             }}
           >
             <legend>

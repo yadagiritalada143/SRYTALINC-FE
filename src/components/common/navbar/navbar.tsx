@@ -26,7 +26,7 @@ const Navbar = ({
       className="h-full flex flex-col shadow-lg"
       style={{
         backgroundColor: theme.colors.primary[1],
-        color: organizationConfig.theme.button.textColor,
+        color: organizationConfig.organization_theme.theme.button.textColor,
       }}
     >
       <div className="p-6 flex justify-between items-center">
@@ -36,7 +36,9 @@ const Navbar = ({
             {isDrawerOpen && (
               <IconX
                 size={24}
-                color={organizationConfig.theme.button.textColor}
+                color={
+                  organizationConfig.organization_theme.theme.button.textColor
+                }
               />
             )}
           </button>
@@ -45,7 +47,7 @@ const Navbar = ({
       <div className="flex flex-col mt-6  px-2">
         {localStorage.getItem("userRole") === "recruiter" && (
           <NavLink
-            to={`/employee/${organizationConfig.organization}/dashboard`}
+            to={`/employee/${organizationConfig.organization_name}/dashboard`}
             end
             className={({ isActive }) =>
               `flex items-center  p-4 py-6 hover:shadow-xl ${
@@ -54,11 +56,11 @@ const Navbar = ({
             }
             style={({ isActive }) => ({
               backgroundColor: isActive
-                ? organizationConfig.theme.backgroundColor
+                ? organizationConfig.organization_theme.theme.backgroundColor
                 : "transparent",
               color: isActive
                 ? theme.colors.primary[5]
-                : organizationConfig.theme.button.textColor,
+                : organizationConfig.organization_theme.theme.button.textColor,
             })}
           >
             <IconBuildings size={24} className="mr-2" />
@@ -70,7 +72,7 @@ const Navbar = ({
           return (
             <NavLink
               key={link.url}
-              to={`/${link.role}/${organizationConfig.organization}/${link.url}`}
+              to={`/${link.role}/${organizationConfig.organization_name}/${link.url}`}
               end
               className={({ isActive }) =>
                 `flex items-center p-4 py-6 shadow-md hover:shadow-xl ${
@@ -79,11 +81,12 @@ const Navbar = ({
               }
               style={({ isActive }) => ({
                 backgroundColor: isActive
-                  ? organizationConfig.theme.backgroundColor
+                  ? organizationConfig.organization_theme.theme.backgroundColor
                   : "transparent",
                 color: isActive
                   ? theme.colors.primary[5]
-                  : organizationConfig.theme.button.textColor,
+                  : organizationConfig.organization_theme.theme.button
+                      .textColor,
               })}
             >
               <Icon size={24} className="mr-2" />

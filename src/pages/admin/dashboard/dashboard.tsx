@@ -21,7 +21,7 @@ const AdminDashboard = ({
     <div
       className="flex min-h-screen relative"
       style={{
-        color: organizationConfig.theme.color,
+        color: organizationConfig.organization_theme.theme.color,
       }}
     >
       <div className="lg:hidden fixed top-4  z-50">
@@ -29,7 +29,9 @@ const AdminDashboard = ({
           {!isDrawerOpen && (
             <IconMenu2
               size={24}
-              color={organizationConfig.theme.button.textColor}
+              color={
+                organizationConfig.organization_theme.theme.button.textColor
+              }
             />
           )}
         </button>
@@ -66,8 +68,8 @@ const AdminDashboard = ({
       >
         <div className="my-2">
           <Header
-            color={organizationConfig.theme.button.textColor}
-            organization={organizationConfig.organization}
+            color={organizationConfig.organization_theme.theme.button.textColor}
+            organization={organizationConfig.organization_name}
           />
         </div>
         <div className="h-full overflow-auto">

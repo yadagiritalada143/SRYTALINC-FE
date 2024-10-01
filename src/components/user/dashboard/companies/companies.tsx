@@ -29,7 +29,7 @@ const Companies = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.button.textColor,
+        color: organizationConfig.organization_theme.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
       className=" h-screen  "
@@ -42,7 +42,7 @@ const Companies = ({
           <Button
             onClick={() =>
               navigate(
-                `/employee/${organizationConfig.organization}/dashboard/addcompany`
+                `/employee/${organizationConfig.organization_name}/dashboard/addcompany`
               )
             }
           >
@@ -159,7 +159,7 @@ const Companies = ({
                     <Button
                       onClick={() =>
                         navigate(
-                          `/employee/${organizationConfig.organization}/dashboard/update/${company.id}`
+                          `/employee/${organizationConfig.organization_name}/dashboard/update/${company.id}`
                         )
                       }
                       size="sm"

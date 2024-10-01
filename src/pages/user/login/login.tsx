@@ -33,16 +33,17 @@ const EmployeeLogin = ({
       localStorage.setItem("lastName", data.lastName);
       localStorage.setItem("userId", data.id);
       if (data.userRole === "recruiter") {
-        navigate(`/employee/${organizationConfig.organization}/dashboard`);
+        navigate(`/employee/${organizationConfig.organization_name}/dashboard`);
       } else {
         navigate(
-          `/employee/${organizationConfig.organization}/dashboard/profile`
+          `/employee/${organizationConfig.organization_name}/dashboard/profile`
         );
       }
       toast("Login successfully !", {
         style: {
           color: theme.colors.primary[2],
-          backgroundColor: organizationConfig.theme.backgroundColor,
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
         },
         progressStyle: {
           background: theme.colors.primary[8],
@@ -71,16 +72,19 @@ const EmployeeLogin = ({
       <form
         onSubmit={handleSubmit(Submit)}
         className=" shadow-lg border rounded-lg p-6 max-w-md w-full"
-        style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
+        style={{
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
+        }}
       >
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-bold text-center mb-4">
             EMPLOYEE LOGIN
           </h1>
           <img
-            src={organizationConfig.logo}
+            src={organizationConfig.organization_theme.logo}
             className="mb-4 w-20 h-20 object-contain"
-            alt={organizationConfig.organization}
+            alt={organizationConfig.organization_name}
           />
         </div>
         <div className="mb-4">
@@ -103,7 +107,7 @@ const EmployeeLogin = ({
               to="forgot-password"
               style={{
                 textDecoration: "underline",
-                color: organizationConfig.theme.linkColor,
+                color: organizationConfig.organization_theme.theme.linkColor,
               }}
               className=" text-sm"
             >
@@ -121,7 +125,10 @@ const EmployeeLogin = ({
                 isSubmitting && (
                   <Loader
                     size="xs"
-                    color={organizationConfig.theme.button.textColor}
+                    color={
+                      organizationConfig.organization_theme.theme.button
+                        .textColor
+                    }
                   />
                 )
               }

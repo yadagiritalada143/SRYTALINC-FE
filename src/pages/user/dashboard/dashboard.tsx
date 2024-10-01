@@ -67,7 +67,7 @@ const EmployeeDashboard = ({
       <div
         className="flex min-h-screen relative"
         style={{
-          color: organizationConfig.theme.color,
+          color: organizationConfig.organization_theme.theme.color,
         }}
       >
         <div className="lg:hidden fixed top-4 z-50">
@@ -75,7 +75,9 @@ const EmployeeDashboard = ({
             {!isDrawerOpen && (
               <IconMenu2
                 size={24}
-                color={organizationConfig.theme.button.textColor}
+                color={
+                  organizationConfig.organization_theme.theme.button.textColor
+                }
               />
             )}
           </button>
@@ -112,8 +114,10 @@ const EmployeeDashboard = ({
         >
           <div className="my-2">
             <Header
-              color={organizationConfig.theme.button.textColor}
-              organization={organizationConfig.organization}
+              color={
+                organizationConfig.organization_theme.theme.button.textColor
+              }
+              organization={organizationConfig.organization_name}
             />
           </div>
           <div className="h-full overflow-auto">
@@ -126,7 +130,10 @@ const EmployeeDashboard = ({
         onClose={() => toast.error("Please update your password")}
         size="md"
         centered
-        style={{ backgroundColor: organizationConfig.theme.backgroundColor }}
+        style={{
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
+        }}
       >
         <div className=" flex justify-center items-center">
           <form onSubmit={handleSubmit(onSubmit)} className="p-2 w-full">

@@ -5,7 +5,7 @@ import {
 } from "../../../../forms/add-company";
 import { OrganizationConfig } from "../../../../interfaces/organization";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Select, TextInput, Modal, Group } from "@mantine/core";
+import { Button, Select, TextInput, Modal } from "@mantine/core";
 import {
   addCommentByRecruiter,
   getCompanyDetailsByIdByRecruiter,
@@ -69,14 +69,15 @@ const UpdateCompany = ({
       toast("Company details updated successfully !", {
         style: {
           color: theme.colors.primary[2],
-          backgroundColor: organizationConfig.theme.backgroundColor,
+          backgroundColor:
+            organizationConfig.organization_theme.theme.backgroundColor,
         },
         progressStyle: {
           background: theme.colors.primary[8],
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
-      navigate(`/employee/${organizationConfig.organization}/dashboard`);
+      navigate(`/employee/${organizationConfig.organization_name}/dashboard`);
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -88,7 +89,8 @@ const UpdateCompany = ({
         toast("Your comment has been added !", {
           style: {
             color: theme.colors.primary[2],
-            backgroundColor: organizationConfig.theme.backgroundColor,
+            backgroundColor:
+              organizationConfig.organization_theme.theme.backgroundColor,
           },
           progressStyle: {
             background: theme.colors.primary[8],
@@ -117,7 +119,7 @@ const UpdateCompany = ({
   return (
     <div
       style={{
-        color: organizationConfig.theme.button.textColor,
+        color: organizationConfig.organization_theme.theme.button.textColor,
         fontFamily: theme.fontFamily,
       }}
     >
@@ -125,7 +127,9 @@ const UpdateCompany = ({
         <Button
           bg={theme.colors.primary[5]}
           onClick={() =>
-            navigate(`/employee/${organizationConfig.organization}/dashboard`)
+            navigate(
+              `/employee/${organizationConfig.organization_name}/dashboard`
+            )
           }
         >
           {" "}
@@ -176,7 +180,10 @@ const UpdateCompany = ({
 
         <fieldset
           className="mx-4  p-4 border"
-          style={{ borderColor: organizationConfig.theme.borderColor }}
+          style={{
+            borderColor:
+              organizationConfig.organization_theme.theme.borderColor,
+          }}
         >
           <legend className="text-lg font-semibold">Primary Contact</legend>
           <TextInput
@@ -202,7 +209,10 @@ const UpdateCompany = ({
         <div className="flex flex-wrap">
           <fieldset
             className="flex-auto m-4 p-4 border"
-            style={{ borderColor: organizationConfig.theme.borderColor }}
+            style={{
+              borderColor:
+                organizationConfig.organization_theme.theme.borderColor,
+            }}
           >
             <legend className="text-lg font-semibold">
               Secondary Contact 1
@@ -229,7 +239,10 @@ const UpdateCompany = ({
 
           <fieldset
             className="flex-auto m-4 p-4 border"
-            style={{ borderColor: organizationConfig.theme.borderColor }}
+            style={{
+              borderColor:
+                organizationConfig.organization_theme.theme.borderColor,
+            }}
           >
             <legend className="text-lg font-semibold">
               Secondary Contact 2
@@ -269,7 +282,8 @@ const UpdateCompany = ({
               <div
                 key={index}
                 style={{
-                  backgroundColor: organizationConfig.theme.backgroundColor,
+                  backgroundColor:
+                    organizationConfig.organization_theme.theme.backgroundColor,
                   color: theme.colors.primary[8],
                 }}
                 className="p-4 mx-10 my-4 rounded-md hover:shadow-lg shadow-gray-500"
