@@ -71,3 +71,52 @@ export const getUserDetails = async () => {
     throw error;
   }
 };
+
+export const uploadProfileImage = async (image: File) => {
+  try {
+    const userRole = localStorage.getItem("userRole");
+    let token;
+    if (userRole === "admin") {
+      token = localStorage.getItem("adminToken");
+    } else {
+      token = localStorage.getItem("employeeToken");
+    }
+    if (!userRole || !token) {
+      throw "Not authorized to access";
+    }
+    const response = await apiClient.post(
+      "/uploadProfileImage",
+      { profileImage: image },
+      { headers: { auth_token: token, "Content-Type": "multipart/form-data" } }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getProfileImage = async () => {
+  try {
+    const userRole = localStorage.getItem("userRole");
+    let token;
+    if (userRole === "admin") {
+      token = localStorage.getItem("adminToken");
+    } else {
+      token = localStorage.getItem("employeeToken");
+    }
+
+    if (!userRole || !token) {
+      throw new Error("Not authorized to access");
+    }
+
+    const response = await apiClient.get("/getProfileImage", {
+      headers: { auth_token: token },
+      responseType: "blob",
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

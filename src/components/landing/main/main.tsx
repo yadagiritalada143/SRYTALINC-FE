@@ -8,7 +8,7 @@ const Main = () => {
       </h1>
 
       <p className="text-base md:text-lg text-white text-center max-w-full md:max-w-3xl px-4 md:px-0 leading-relaxed animate-slideInBottom">
-        At Srytal Inc, we are dedicated to driving digital transformation by
+        At Srytal Systems, we are dedicated to driving digital transformation by
         providing cutting-edge software solutions tailored to meet the unique
         needs of businesses across industries. Our expertise spans custom
         software development, web and mobile app creation, cloud solutions, and
@@ -16,7 +16,7 @@ const Main = () => {
         satisfaction, we leverage the latest technologies to deliver scalable
         and efficient solutions that empower our clients to thrive in the
         digital age. Whether you're a startup or an established enterprise,
-        Srytal Inc. is your trusted partner in achieving technological
+        Srytal Systems is your trusted partner in achieving technological
         excellence.
       </p>
 
