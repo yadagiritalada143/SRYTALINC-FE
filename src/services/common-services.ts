@@ -50,3 +50,24 @@ export const getOrganizationConfig = async (organizationName: string) => {
     throw error;
   }
 };
+
+export const getUserDetails = async () => {
+  try {
+    const userRole = localStorage.getItem("userRole");
+    let token;
+    if (userRole === "admin") {
+      token = localStorage.getItem("adminToken");
+    } else {
+      token = localStorage.getItem("employeeToken");
+    }
+    if (!userRole || !token) {
+      throw "Not authorized to access";
+    }
+    const response = await apiClient("/getEmployeeDetails", {
+      headers: { auth_token: token },
+    });
+    return response.data.employeeDetails;
+  } catch (error) {
+    throw error;
+  }
+};

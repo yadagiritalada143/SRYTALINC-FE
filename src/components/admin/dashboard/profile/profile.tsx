@@ -5,12 +5,12 @@ import { getUserDetails } from "../../../../services/common-services";
 import { toast } from "react-toastify";
 import { EmployeeInterface } from "../../../../interfaces/employee";
 
-const EmployeeProfile = ({
+const AdminProfile = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
-  const [employeeDetails, setEmployeeDetails] = useState<EmployeeInterface>({
+  const [adminDetails, setAdminDetails] = useState<EmployeeInterface>({
     _id: "",
     firstName: "",
     lastName: "",
@@ -30,7 +30,7 @@ const EmployeeProfile = ({
   useEffect(() => {
     getUserDetails()
       .then((user) => {
-        setEmployeeDetails(user);
+        setAdminDetails(user);
       })
       .catch((error) =>
         toast.error(error || error.message || error.response.data.message)
@@ -39,12 +39,9 @@ const EmployeeProfile = ({
 
   return (
     <>
-      <Profile
-        details={employeeDetails}
-        organizationConfig={organizationConfig}
-      />
+      <Profile details={adminDetails} organizationConfig={organizationConfig} />
     </>
   );
 };
 
-export default EmployeeProfile;
+export default AdminProfile;
