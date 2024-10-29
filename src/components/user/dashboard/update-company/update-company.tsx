@@ -123,7 +123,7 @@ const UpdateCompany = ({
         fontFamily: theme.fontFamily,
       }}
     >
-      <div className="px-4 flex justify-between">
+      <div className="px-4 flex flex-wrap justify-between">
         <Button
           bg={theme.colors.primary[5]}
           onClick={() =>
@@ -132,7 +132,6 @@ const UpdateCompany = ({
             )
           }
         >
-          {" "}
           Go back
         </Button>
         <h1 className="text-center text-2xl font-bold mb-4">Update Company</h1>
@@ -143,7 +142,7 @@ const UpdateCompany = ({
           <TextInput
             {...register("companyName")}
             label="Company Name"
-            className="mb-4 w-1/3"
+            className="w-1/3"
             disabled
             error={errors.companyName?.message}
           />
@@ -171,11 +170,10 @@ const UpdateCompany = ({
               />
             )}
           />
-          <div className="m-4 w-1/4 flex justify-center items-center">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Loading..." : "Update Company"}
-            </Button>
-          </div>
+
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Loading..." : "Update Company"}
+          </Button>
         </div>
 
         <fieldset

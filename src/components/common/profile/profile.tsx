@@ -11,10 +11,11 @@ const Profile = ({
   organizationConfig: OrganizationConfig;
 }) => {
   const theme = useMantineTheme();
+
   return (
     <div>
       <div className="flex justify-between mx-8 my-8">
-        <ProfileImageUploader />
+        <ProfileImageUploader organizationConfig={organizationConfig} />
         <div
           style={{
             color: organizationConfig.organization_theme.theme.button.textColor,
@@ -34,7 +35,7 @@ const Profile = ({
       >
         <Tabs
           mt="lg"
-          defaultValue="bankDetails"
+          defaultValue="employment"
           styles={{
             tab: {
               "&:hover": {
@@ -44,16 +45,37 @@ const Profile = ({
           }}
         >
           <Tabs.List className="my-4" grow>
-            <Tabs.Tab className="font-bold" value="bankDetails">
-              Bank Details
-            </Tabs.Tab>
             <Tabs.Tab className="font-bold" value="employment">
               Employment Details
+            </Tabs.Tab>
+            <Tabs.Tab className="font-bold" value="bankDetails">
+              Bank Details
             </Tabs.Tab>
             <Tabs.Tab className="font-bold" value="general">
               General
             </Tabs.Tab>
           </Tabs.List>
+
+          <Tabs.Panel
+            style={{
+              color:
+                organizationConfig.organization_theme.theme.button.textColor,
+              padding: "10px 0",
+            }}
+            value="employment"
+          >
+            <p style={{ marginBottom: "10px" }}>
+              Employment Type: {details.employmentType?.employmentType || "N/A"}
+            </p>
+            <p className="flex space-x-10">
+              Employment Roles:
+              {details.employeeRole.length > 0
+                ? details.employeeRole.map((role) => (
+                    <Code key={role._id}>{role.designation}</Code>
+                  ))
+                : "N/A"}
+            </p>
+          </Tabs.Panel>
 
           <Tabs.Panel
             style={{
@@ -71,27 +93,6 @@ const Profile = ({
               {details.bankDetailsInfo?.accountHolderName || "N/A"}
             </p>
             <p>IFSC Code: {details.bankDetailsInfo?.ifscCode || "N/A"}</p>
-          </Tabs.Panel>
-
-          <Tabs.Panel
-            style={{
-              color:
-                organizationConfig.organization_theme.theme.button.textColor,
-              padding: "10px 0",
-            }}
-            value="employment"
-          >
-            <p style={{ marginBottom: "10px" }}>
-              Employment Type: {details.employmentType?.employmentType || "N/A"}
-            </p>
-            <p className="flex space-x-10">
-              Employment Roles:{" "}
-              {details.employeeRole.length > 0
-                ? details.employeeRole.map((role) => (
-                    <Code key={role._id}> {role.designation}</Code>
-                  ))
-                : "N/A"}
-            </p>
           </Tabs.Panel>
 
           <Tabs.Panel

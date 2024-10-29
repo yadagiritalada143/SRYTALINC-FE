@@ -165,25 +165,37 @@ const EmployeeRoutes = () => {
           >
             <Route
               element={
-                <RecruiterProtectedRoutes
+                <EmployeeProtectedRoutes
                   organizationConfig={organizationConfig}
                 />
               }
             >
               <Route
-                path=""
-                element={<Companies organizationConfig={organizationConfig} />}
-              />
-              <Route
-                path="addcompany"
-                element={<AddCompany organizationConfig={organizationConfig} />}
-              />
-              <Route
-                path="update/:companyId"
                 element={
-                  <UpdateCompany organizationConfig={organizationConfig} />
+                  <RecruiterProtectedRoutes
+                    organizationConfig={organizationConfig}
+                  />
                 }
-              />
+              >
+                <Route
+                  path=""
+                  element={
+                    <Companies organizationConfig={organizationConfig} />
+                  }
+                />
+                <Route
+                  path="addcompany"
+                  element={
+                    <AddCompany organizationConfig={organizationConfig} />
+                  }
+                />
+                <Route
+                  path="update/:companyId"
+                  element={
+                    <UpdateCompany organizationConfig={organizationConfig} />
+                  }
+                />
+              </Route>
               <Route
                 path="profile"
                 element={
