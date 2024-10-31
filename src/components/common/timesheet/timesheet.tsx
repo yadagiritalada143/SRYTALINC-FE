@@ -20,9 +20,8 @@ const DateTableComponent = ({
     moment().tz("Asia/Kolkata").add(7, "days").format("YYYY-MM-DD")
   );
   const [dateRange, setDateRange] = useState<string[]>([]);
-  const [workingHours, setWorkingHours] = useState<{
-    [key: number]: { [date: string]: number };
-  }>({});
+  const [daysInRange, setDaysInRange] = useState<number>(0);
+  const [workingHours, setWorkingHours] = useState(data);
 
   const getDateRange = (start: string, end: string): string[] => {
     const startDt = new Date(start);
@@ -43,28 +42,112 @@ const DateTableComponent = ({
       }
       const range = getDateRange(startDate, endDate);
       setDateRange(range);
+      setDaysInRange(range.length);
     }
   };
 
-  const handleHourChange = (
-    projectIndex: number,
-    date: string,
-    newHours: number
-  ) => {
-    setWorkingHours((prev) => ({
-      ...prev,
-      [projectIndex]: {
-        ...prev[projectIndex],
-        [date]: newHours || 0,
-      },
-    }));
+  const extendRange = (direction: "forward" | "backward"): void => {
+    if (!startDate || !endDate) return;
+
+    const startDt = new Date(startDate);
+    const endDt = new Date(endDate);
+    const rangeExtension = daysInRange;
+
+    if (direction === "backward") {
+      const newStart = new Date(
+        startDt.setDate(startDt.getDate() - rangeExtension)
+      );
+
+      const newEnd = new Date(endDt.setDate(endDt.getDate() - rangeExtension));
+
+      setStartDate(newStart.toISOString().split("T")[0]);
+      setEndDate(newEnd.toISOString().split("T")[0]);
+      const newRange = getDateRange(
+        newStart.toISOString().split("T")[0],
+        newEnd.toISOString().split("T")[0]
+      );
+      setDateRange(newRange);
+    } else {
+      const newStart = new Date(
+        startDt.setDate(startDt.getDate() + rangeExtension)
+      );
+
+      const newEnd = new Date(endDt.setDate(endDt.getDate() + rangeExtension));
+      setStartDate(newStart.toISOString().split("T")[0]);
+      setEndDate(newEnd.toISOString().split("T")[0]);
+      const newRange = getDateRange(
+        newStart.toISOString().split("T")[0],
+        newEnd.toISOString().split("T")[0]
+      );
+      setDateRange(newRange);
+    }
   };
 
   const getProjectTotalHours = (projectIndex: number) => {
     return dateRange.reduce((total, date) => {
-      const hours = workingHours[projectIndex]?.[date] || 0;
-      return total + hours;
+      const hoursForDate = workingHours[projectIndex].activities.reduce(
+        (taskTotal, task) => {
+          const matchedDate = task.days.find(
+            (taskDate) =>
+              taskDate.date === moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
+          );
+          return taskTotal + (matchedDate ? matchedDate.hours : 0);
+        },
+        0
+      );
+      return total + hoursForDate;
     }, 0);
+  };
+  const handleChange = (
+    newHours: number,
+    projectIndex: number,
+    taskIndex: number,
+    date: string
+  ) => {
+    if (newHours) {
+      setWorkingHours((prev) => {
+        const updatedWorkingHours = prev.map((project, pIndex) => {
+          if (pIndex === projectIndex) {
+            return {
+              ...project,
+              activities: project.activities.map((task, tIndex) => {
+                if (tIndex === taskIndex) {
+                  const dateExists = task.days.some(
+                    (day) =>
+                      day.date ===
+                      moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
+                  );
+
+                  const updatedDays = dateExists
+                    ? task.days.map((day) =>
+                        day.date ===
+                        moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
+                          ? { ...day, hours: newHours }
+                          : day
+                      )
+                    : [
+                        ...task.days,
+                        {
+                          date: moment(date, "YYYY-MM-DD").format("DD-MM-YYYY"),
+                          hours: newHours,
+                        },
+                      ];
+
+                  return {
+                    ...task,
+                    days: updatedDays,
+                  };
+                }
+                return task;
+              }),
+            };
+          }
+          return project;
+        });
+
+        return updatedWorkingHours;
+      });
+    }
   };
 
   return (
@@ -101,6 +184,12 @@ const DateTableComponent = ({
         <div className="flex justify-center mb-4">
           <Button onClick={handleSearch} className="mx-2">
             Search
+          </Button>
+          <Button onClick={() => extendRange("backward")} className="mx-2">
+            {"<"}
+          </Button>
+          <Button onClick={() => extendRange("forward")} className="mx-2">
+            {">"}
           </Button>
         </div>
       </Grid>
@@ -155,98 +244,79 @@ const DateTableComponent = ({
               </tr>
             </thead>
             <tbody>
-              {data.map((project: any, index: number) => {
-                const months = Object.keys(
-                  project.acitivities.workingDays.month
-                );
-                return (
-                  <>
-                    <tr key={index}>
+              {workingHours.map((project: any, projectIndex: number) =>
+                project.activities
+                  .filter((task: any) => task.task_id !== "WEEK_OFF")
+                  .map((task: any, taskIndex: number) => (
+                    <tr
+                      key={`${project.project_id}-${task.task_id}-${taskIndex}`}
+                    >
+                      {taskIndex === 0 && (
+                        <td
+                          rowSpan={project.activities.length - 1}
+                          style={{
+                            padding: "0.75rem 1rem",
+                            border: "1px solid #ddd",
+                          }}
+                        >
+                          {project.project_id}
+                        </td>
+                      )}
                       <td
-                        rowSpan={
-                          months.reduce(
-                            (totalDays, month) =>
-                              totalDays +
-                              Object.keys(
-                                project.acitivities.workingDays.month[month].day
-                              ).length,
-                            0
-                          ) + 1
-                        }
                         style={{
                           padding: "0.75rem 1rem",
                           border: "1px solid #ddd",
                         }}
                       >
-                        {project.project_id}
+                        {task.task_id}
                       </td>
-                    </tr>
-
-                    {months.map((month) =>
-                      Object.entries(
-                        project.acitivities.workingDays.month[month].day
-                      ).map(([day, task]: [string, any], taskIndex) => {
-                        return (
-                          <tr key={`${index}-${month}-${taskIndex}`}>
-                            <td
-                              style={{
-                                padding: "0.75rem 1rem",
-                                border: "1px solid #ddd",
-                              }}
-                            >
-                              {task.task}
-                            </td>
-                            {dateRange.map((date) => {
-                              const taskDate = moment(
-                                `2024-${month}-${day}`,
-                                "YYYY-MM-DD"
-                              ).format("YYYY-MM-DD");
-                              const hours =
-                                workingHours[index]?.[date] ||
-                                (taskDate === date ? task.hours : 0);
-
-                              return (
-                                <td
-                                  key={`${date}-${taskIndex}`}
-                                  style={{
-                                    padding: "0.75rem 1rem",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  <TextInput
-                                    type="number"
-                                    value={hours || ""}
-                                    onChange={(e) =>
-                                      handleHourChange(
-                                        index,
-                                        date,
-                                        parseInt(e.target.value) || 0
-                                      )
-                                    }
-                                    placeholder="0"
-                                    style={{ width: "100%" }}
-                                  />
-                                </td>
-                              );
-                            })}
-                            <td
-                              style={{
-                                padding: "0.75rem 1rem",
-                                textAlign: "center",
-                                border: "1px solid #ddd",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {getProjectTotalHours(index)}
-                            </td>
-                          </tr>
+                      {dateRange.map((date) => {
+                        const matchedDate = task.days.find(
+                          (taskDate: any) =>
+                            moment(taskDate.date, "DD-MM-YYYY").format(
+                              "YYYY-MM-DD"
+                            ) === date
                         );
-                      })
-                    )}
-                  </>
-                );
-              })}
+                        const hours = matchedDate ? matchedDate.hours : "";
+                        return (
+                          <td
+                            key={`${date}-${task.task_id}`}
+                            style={{
+                              textAlign: "center",
+                              border: "1px solid #ddd",
+                            }}
+                          >
+                            <TextInput
+                              type="number"
+                              value={hours}
+                              onChange={(e) =>
+                                handleChange(
+                                  parseInt(e.target.value),
+                                  projectIndex,
+                                  taskIndex,
+                                  date
+                                )
+                              }
+                              placeholder="0"
+                              className="p-4"
+                            />
+                          </td>
+                        );
+                      })}
+                      {taskIndex === 0 && (
+                        <td
+                          rowSpan={project.activities.length - 1}
+                          style={{
+                            textAlign: "center",
+                            border: "1px solid #ddd",
+                          }}
+                        >
+                          {getProjectTotalHours(projectIndex)}
+                        </td>
+                      )}
+                    </tr>
+                  ))
+              )}
             </tbody>
           </Table>
         </div>
