@@ -19,6 +19,7 @@ import "@mantine/core/styles.css";
 import { LoadingOverlay } from "@mantine/core";
 import Loader from "../components/common/loader/loader";
 import EmployeeProfile from "../components/user/dashboard/profile/profile";
+import Timesheet from "../components/common/timesheet/timesheet";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -82,7 +83,7 @@ const EmployeeRoutes = () => {
         }
       );
     }
-  }, []);
+  }, [organization]);
 
   const theme = {
     colorScheme: organizationConfig.organization_theme.theme.colorScheme,
@@ -201,6 +202,10 @@ const EmployeeRoutes = () => {
                 element={
                   <EmployeeProfile organizationConfig={organizationConfig} />
                 }
+              />
+              <Route
+                path="timesheet"
+                element={<Timesheet organizationConfig={organizationConfig} />}
               />
             </Route>
           </Route>

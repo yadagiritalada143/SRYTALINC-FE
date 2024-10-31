@@ -1,4 +1,4 @@
-import { Icon, IconBuildings, IconX } from "@tabler/icons-react";
+import { Icon, IconBackpack, IconBuildings, IconX } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { memo } from "react";
@@ -11,13 +11,13 @@ const Navbar = ({
   toggleDrawer,
 }: {
   navLinks: {
-    role: "employee" | "admin";
+    role: string;
     url: string;
     icon: Icon;
     name: string;
   }[];
   organizationConfig: OrganizationConfig;
-  isDrawerOpen: Boolean;
+  isDrawerOpen: boolean;
   toggleDrawer: () => void;
 }) => {
   const theme = useMantineTheme();
@@ -46,26 +46,50 @@ const Navbar = ({
       </div>
       <div className="flex flex-col mt-6  px-2">
         {localStorage.getItem("userRole") === "recruiter" && (
-          <NavLink
-            to={`/employee/${organizationConfig.organization_name}/dashboard`}
-            end
-            className={({ isActive }) =>
-              `flex items-center  p-4 py-6 hover:shadow-xl ${
-                isActive ? "font-bold" : ""
-              } hover:bg-opacity-75 transition-all`
-            }
-            style={({ isActive }) => ({
-              backgroundColor: isActive
-                ? organizationConfig.organization_theme.theme.backgroundColor
-                : "transparent",
-              color: isActive
-                ? theme.colors.primary[5]
-                : organizationConfig.organization_theme.theme.button.textColor,
-            })}
-          >
-            <IconBuildings size={24} className="mr-2" />
-            <span>Manage Companies</span>
-          </NavLink>
+          <>
+            <NavLink
+              to={`/employee/${organizationConfig.organization_name}/dashboard`}
+              end
+              className={({ isActive }) =>
+                `flex items-center  p-4 py-6 hover:shadow-xl ${
+                  isActive ? "font-bold" : ""
+                } hover:bg-opacity-75 transition-all`
+              }
+              style={({ isActive }) => ({
+                backgroundColor: isActive
+                  ? organizationConfig.organization_theme.theme.backgroundColor
+                  : "transparent",
+                color: isActive
+                  ? theme.colors.primary[5]
+                  : organizationConfig.organization_theme.theme.button
+                      .textColor,
+              })}
+            >
+              <IconBuildings size={24} className="mr-2" />
+              <span>Manage Companies</span>
+            </NavLink>
+            <NavLink
+              to={`/employee/${organizationConfig.organization_name}/dashboard/poolEmployees`}
+              end
+              className={({ isActive }) =>
+                `flex items-center  p-4 py-6 hover:shadow-xl ${
+                  isActive ? "font-bold" : ""
+                } hover:bg-opacity-75 transition-all`
+              }
+              style={({ isActive }) => ({
+                backgroundColor: isActive
+                  ? organizationConfig.organization_theme.theme.backgroundColor
+                  : "transparent",
+                color: isActive
+                  ? theme.colors.primary[5]
+                  : organizationConfig.organization_theme.theme.button
+                      .textColor,
+              })}
+            >
+              <IconBackpack size={24} className="mr-2" />
+              <span>Pool Employees</span>
+            </NavLink>
+          </>
         )}
         {navLinks.map((link) => {
           const Icon = link.icon;
