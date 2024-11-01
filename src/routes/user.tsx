@@ -20,6 +20,7 @@ import { LoadingOverlay } from "@mantine/core";
 import Loader from "../components/common/loader/loader";
 import EmployeeProfile from "../components/user/dashboard/profile/profile";
 import Timesheet from "../components/common/timesheet/timesheet";
+import { ModalsProvider } from "@mantine/modals";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -205,7 +206,11 @@ const EmployeeRoutes = () => {
               />
               <Route
                 path="timesheet"
-                element={<Timesheet organizationConfig={organizationConfig} />}
+                element={
+                  <ModalsProvider>
+                    <Timesheet organizationConfig={organizationConfig} />
+                  </ModalsProvider>
+                }
               />
             </Route>
           </Route>

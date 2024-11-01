@@ -6,13 +6,16 @@ import { toast } from "react-toastify";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { useMantineTheme } from "@mantine/core";
 import { data } from "./resources";
-
+import { TaskPopover } from "./task-popover";
+import { IconPlus, IconX } from "@tabler/icons-react";
+import { useModals } from "@mantine/modals";
 const DateTableComponent = ({
   organizationConfig,
 }: {
   organizationConfig: OrganizationConfig;
 }) => {
   const theme = useMantineTheme();
+  const modals = useModals();
   const [startDate, setStartDate] = useState<string>(
     moment().tz("Asia/Kolkata").format("YYYY-MM-DD")
   );
@@ -132,6 +135,8 @@ const DateTableComponent = ({
                           hours: newHours,
                         },
                       ];
+                  console.log("updatedDays", updatedDays);
+                  console.log("task", task);
 
                   return {
                     ...task,
@@ -150,6 +155,32 @@ const DateTableComponent = ({
     }
   };
 
+  const AddTask = (projectIndex: number) => {
+    const id = modals.openModal({
+      title: "Add New Task",
+      children: (
+        <TextInput
+          placeholder="Enter task name"
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && e.currentTarget.value) {
+              const newTaskName = e.currentTarget.value;
+              setWorkingHours((prev) => {
+                const updatedHours = [...prev];
+                updatedHours[projectIndex].activities.push({
+                  task_id: newTaskName,
+                  days: [],
+                });
+                return updatedHours;
+              });
+              modals.closeModal(id);
+            }
+          }}
+        />
+      ),
+    });
+  };
+
+  console.log(workingHours);
   return (
     <div
       className="w-full p-4"
@@ -201,20 +232,25 @@ const DateTableComponent = ({
             highlightOnHover
             className="mt-4 shadow-lg"
             style={{
-              borderCollapse: "collapse",
               border: "1px solid #ddd",
               borderSpacing: "0 10px",
+              width: "100%",
             }}
           >
             <thead>
-              <tr>
+              <tr style={{ backgroundColor: theme.colors.primary[0] }}>
                 <th
-                  style={{ padding: "0.75rem 1rem", border: "1px solid #ddd" }}
+                  style={{ padding: "1rem", width: "150px", minWidth: "120px" }}
                 >
                   Project Name
                 </th>
                 <th
-                  style={{ padding: "0.75rem 1rem", border: "1px solid #ddd" }}
+                  style={{
+                    border: `1px solid ${organizationConfig.organization_theme.theme.button.textColor}`,
+                    padding: "1rem",
+                    width: "190px",
+                    minWidth: "180px",
+                  }}
                 >
                   Task Details
                 </th>
@@ -222,11 +258,9 @@ const DateTableComponent = ({
                   <th
                     key={date}
                     style={{
-                      backgroundColor: theme.colors.primary[0],
-                      color: "#fff",
-                      padding: "0.75rem 1rem",
-                      textAlign: "center",
-                      border: "1px solid #ddd",
+                      padding: "1rem",
+                      width: "120px",
+                      minWidth: "100px",
                     }}
                   >
                     {moment(date).format("DD MMM")}
@@ -234,9 +268,9 @@ const DateTableComponent = ({
                 ))}
                 <th
                   style={{
-                    padding: "0.75rem 1rem",
+                    padding: "1rem",
+                    width: "120px",
                     textAlign: "center",
-                    border: "1px solid #ddd",
                   }}
                 >
                   Total Hours
@@ -245,77 +279,92 @@ const DateTableComponent = ({
             </thead>
             <tbody>
               {workingHours.map((project: any, projectIndex: number) =>
-                project.activities
-                  .filter((task: any) => task.task_id !== "WEEK_OFF")
-                  .map((task: any, taskIndex: number) => (
-                    <tr
-                      key={`${project.project_id}-${task.task_id}-${taskIndex}`}
-                    >
-                      {taskIndex === 0 && (
-                        <td
-                          rowSpan={project.activities.length - 1}
-                          style={{
-                            padding: "0.75rem 1rem",
-                            border: "1px solid #ddd",
-                          }}
-                        >
-                          {project.project_id}
-                        </td>
-                      )}
+                project.activities.map((task: any, taskIndex: number) => (
+                  <tr
+                    key={`${project.project_id}-${task.task_id}-${taskIndex}`}
+                  >
+                    {taskIndex === 0 && (
                       <td
+                        rowSpan={project.activities.length}
                         style={{
-                          padding: "0.75rem 1rem",
-                          border: "1px solid #ddd",
+                          padding: "1rem",
+                          border: `1px solid ${organizationConfig.organization_theme.theme.button.textColor}`,
                         }}
                       >
-                        {task.task_id}
-                      </td>
-                      {dateRange.map((date) => {
-                        const matchedDate = task.days.find(
-                          (taskDate: any) =>
-                            moment(taskDate.date, "DD-MM-YYYY").format(
-                              "YYYY-MM-DD"
-                            ) === date
-                        );
-                        const hours = matchedDate ? matchedDate.hours : "";
-                        return (
-                          <td
-                            key={`${date}-${task.task_id}`}
-                            style={{
-                              textAlign: "center",
-                              border: "1px solid #ddd",
-                            }}
+                        <div className="flex justify-between">
+                          <p>{project.project_id}</p>
+                          <p
+                            style={{ cursor: "pointer" }}
+                            onClick={() => AddTask(projectIndex)}
                           >
-                            <TextInput
-                              type="number"
-                              value={hours}
-                              onChange={(e) =>
-                                handleChange(
-                                  parseInt(e.target.value),
-                                  projectIndex,
-                                  taskIndex,
-                                  date
-                                )
-                              }
-                              placeholder="0"
-                              className="p-4"
-                            />
-                          </td>
-                        );
-                      })}
-                      {taskIndex === 0 && (
+                            <IconPlus />
+                          </p>
+                        </div>
+                      </td>
+                    )}
+                    <td
+                      style={{
+                        padding: "1rem",
+                        border: `1px solid ${organizationConfig.organization_theme.theme.button.textColor}`,
+                      }}
+                    >
+                      <div className=" w-full flex justify-between">
+                        <TaskPopover task={task.task_id} />
+                        <p>
+                          {" "}
+                          <IconX />{" "}
+                        </p>
+                      </div>
+                    </td>
+                    {dateRange.map((date) => {
+                      const matchedDate = task.days.find(
+                        (taskDate: any) =>
+                          moment(taskDate.date, "DD-MM-YYYY").format(
+                            "YYYY-MM-DD"
+                          ) === date
+                      );
+                      const hours = matchedDate ? matchedDate.hours : "";
+
+                      return (
                         <td
-                          rowSpan={project.activities.length - 1}
+                          key={`${date}-${task.task_id}`}
                           style={{
+                            padding: "1rem",
                             textAlign: "center",
-                            border: "1px solid #ddd",
+                            width: "120px",
+                            border: `1px solid ${organizationConfig.organization_theme.theme.button.textColor}`,
                           }}
                         >
-                          {getProjectTotalHours(projectIndex)}
+                          <TextInput
+                            placeholder="0"
+                            value={hours}
+                            onChange={(e) =>
+                              handleChange(
+                                parseFloat(e.target.value) || 0,
+                                projectIndex,
+                                taskIndex,
+                                date
+                              )
+                            }
+                            style={{ textAlign: "center" }}
+                          />
                         </td>
-                      )}
-                    </tr>
-                  ))
+                      );
+                    })}
+                    {taskIndex === 0 && (
+                      <td
+                        rowSpan={project.activities.length}
+                        style={{
+                          padding: "1rem",
+                          textAlign: "center",
+                          border: `1px solid ${organizationConfig.organization_theme.theme.button.textColor}`,
+                        }}
+                      >
+                        {getProjectTotalHours(projectIndex)}
+                      </td>
+                    )}
+                  </tr>
+                ))
               )}
             </tbody>
           </Table>

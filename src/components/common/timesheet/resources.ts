@@ -57,7 +57,7 @@ export const data = [
     project_id: "Srytal",
     activities: [
       {
-        task_id: "Some task",
+        task_id: "Some task tadsafweoifjawoeifj",
         days: [
           {
             date: "01-11-2024",
@@ -68,7 +68,7 @@ export const data = [
             hours: 10,
           },
           {
-            date: "03-12-2024",
+            date: "03-11-2024",
             hours: 10,
           },
           {
@@ -152,31 +152,6 @@ export const data = [
           },
         ],
       },
-      {
-        task_id: "WEEK_OFF",
-        days: [
-          {
-            date: "10-10-2024",
-            hours: 10,
-          },
-          {
-            date: "10-11-2024",
-            hours: 10,
-          },
-          {
-            date: "10-12-2024",
-            hours: 10,
-          },
-          {
-            date: "10-13-2024",
-            hours: 10,
-          },
-          {
-            date: "10-14-2024",
-            hours: 10,
-          },
-        ],
-      },
     ],
   },
   {
@@ -234,31 +209,6 @@ export const data = [
       },
       {
         task_id: "Some task 1",
-        days: [
-          {
-            date: "10-10-2024",
-            hours: 10,
-          },
-          {
-            date: "10-11-2024",
-            hours: 10,
-          },
-          {
-            date: "10-12-2024",
-            hours: 10,
-          },
-          {
-            date: "10-13-2024",
-            hours: 10,
-          },
-          {
-            date: "10-14-2024",
-            hours: 10,
-          },
-        ],
-      },
-      {
-        task_id: "WEEK_OFF",
         days: [
           {
             date: "10-10-2024",
