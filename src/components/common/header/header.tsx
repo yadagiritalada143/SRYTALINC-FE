@@ -1,4 +1,4 @@
-import { Avatar, Button, Menu, rem } from "@mantine/core";
+import { Avatar, Menu, rem } from "@mantine/core";
 import { IconLogout, IconSettings, IconUser } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 const Header = ({

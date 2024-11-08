@@ -135,8 +135,6 @@ const DateTableComponent = ({
                           hours: newHours,
                         },
                       ];
-                  console.log("updatedDays", updatedDays);
-                  console.log("task", task);
 
                   return {
                     ...task,
@@ -161,7 +159,7 @@ const DateTableComponent = ({
       children: (
         <TextInput
           placeholder="Enter task name"
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === "Enter" && e.currentTarget.value) {
               const newTaskName = e.currentTarget.value;
               setWorkingHours((prev) => {
@@ -180,7 +178,22 @@ const DateTableComponent = ({
     });
   };
 
-  console.log(workingHours);
+  const ApplyForLeave = () => {
+    const handleApply = (id: string) => {
+      modals.closeModal(id);
+    };
+    const id = modals.openModal({
+      title: "Apply for leave",
+      children: (
+        <div className="flex flex-col gap-5">
+          <TextInput placeholder="Reason" />
+          <TextInput type="date" placeholder="Date" />
+          <Button onClick={() => handleApply(id)}>Apply</Button>
+        </div>
+      ),
+    });
+  };
+
   return (
     <div
       className="w-full p-4"
@@ -221,6 +234,9 @@ const DateTableComponent = ({
           </Button>
           <Button onClick={() => extendRange("forward")} className="mx-2">
             {">"}
+          </Button>
+          <Button onClick={ApplyForLeave} className="mx-4">
+            Apply For Leave
           </Button>
         </div>
       </Grid>
@@ -291,13 +307,16 @@ const DateTableComponent = ({
                           border: `1px solid ${organizationConfig.organization_theme.theme.button.textColor}`,
                         }}
                       >
-                        <div className="flex justify-between">
+                        <div className="flex flex-col text-center gap-10">
                           <p>{project.project_id}</p>
                           <p
                             style={{ cursor: "pointer" }}
+                            className="rounded-full"
                             onClick={() => AddTask(projectIndex)}
                           >
-                            <IconPlus />
+                            <Button className="rounded-full">
+                              <IconPlus />
+                            </Button>
                           </p>
                         </div>
                       </td>
@@ -311,8 +330,9 @@ const DateTableComponent = ({
                       <div className=" w-full flex justify-between">
                         <TaskPopover task={task.task_id} />
                         <p>
-                          {" "}
-                          <IconX />{" "}
+                          <Button className="rounded-full">
+                            <IconX />
+                          </Button>
                         </p>
                       </div>
                     </td>

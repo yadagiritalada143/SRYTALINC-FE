@@ -7,7 +7,7 @@ export const TaskPopover = ({ task }: { task: string }) => {
     <Popover opened={opened}>
       <Popover.Target>
         <Text onMouseEnter={open} onMouseLeave={close}>
-          {task.slice(0, 12)}
+          {task.slice(0, 10)}
         </Text>
       </Popover.Target>
       <Popover.Dropdown style={{ pointerEvents: "none" }}>

@@ -5,7 +5,6 @@ import {
   IconBrandFacebook,
   IconBrandLinkedin,
   IconBrandMeta,
-  IconBrandWhatsapp,
 } from "@tabler/icons-react";
 import { HashLink as Link } from "react-router-hash-link";
 
