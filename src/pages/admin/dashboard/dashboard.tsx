@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { Outlet } from "react-router-dom";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import AdminNavbar from "../../../components/common/navbar/navbar";
 import { adminNavLinks } from "../../../utils/admin/nav-links/admin-nav-links";
 import { useMantineTheme } from "@mantine/core";

@@ -28,7 +28,7 @@ const EmployeeDashboard = ({
   const theme = useMantineTheme();
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     handleSubmit,
   } = useForm<UpdatePasswordForm>({
     resolver: zodResolver(updatePasswordSchema),

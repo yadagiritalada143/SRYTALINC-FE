@@ -110,7 +110,7 @@ const Companies = ({
             </tr>
           </thead>
           <tbody className="text-sm">
-            {companies.map((company: CompaniesInterface, index) => {
+            {companies.map((company: CompaniesInterface) => {
               return (
                 <tr
                   key={company.id}
