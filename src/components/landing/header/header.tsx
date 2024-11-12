@@ -19,14 +19,18 @@ const Header = () => {
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <header id="header" className="relative text-white my-4">
-      <div className="container mx-auto flex flex-col lg:flex-row px-4 items-center justify-between">
-        <div className="flex justify-between w-full lg:w-auto lg:justify-start items-center">
+    <header id="header" className="relative text-white my-4 px-4">
+      <div className="container mx-auto flex flex-col lg:flex-row  items-center justify-between">
+        <div className="flex justify-between w-full lg:w-auto  items-center">
           <a
             href="/"
-            className="text-3xl sm:text-4xl cursor-pointer font-bold  text-white hover:text-transparent bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text shadow-md transition-transform duration-300 ease-in-out hover:scale-110  text-center"
+            className=" cursor-pointer  shadow-md transition-transform duration-300 ease-in-out hover:scale-110  "
           >
-            SRYTAL
+            <img
+              src="/logo.jpg"
+              style={{ width: "auto", maxWidth: "280px", height: "auto" }}
+              alt="Logo"
+            />
           </a>
 
           <div className="lg:hidden ml-auto">

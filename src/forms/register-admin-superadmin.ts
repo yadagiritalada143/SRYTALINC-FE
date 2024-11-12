@@ -14,7 +14,13 @@ export const registerAdminBySuperAdminForm = z.object({
   organizationId: z.string(),
   userRole: z.enum(["admin"]),
 });
+export const getAllEmployeesSearchForm = z.object({
+  organizationId: z.string(),
+});
 
 export type RegisterAdminBySuperAdminForm = z.infer<
   typeof registerAdminBySuperAdminForm
+>;
+export type GetAllEmployeesSearchForm = z.infer<
+  typeof getAllEmployeesSearchForm
 >;
