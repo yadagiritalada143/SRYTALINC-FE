@@ -10,7 +10,9 @@ const apiClient = axios.create({
 
 export const getOrganizations = async () => {
   try {
-    const response = await apiClient.get("/superadmin/getOrganizations");
+    const response = await apiClient.get(
+      "/superadmin/getAllOrganizationsBySuperadmin"
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -26,6 +28,19 @@ export const registerAdmin = async (
       adminDetails
     );
     return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllEmployeeDetailsBySuperAdmin = async (
+  organizationId: string
+) => {
+  try {
+    const response = await apiClient.get(
+      `/superadmin/getAllEmployeesBySuperAdmin/${organizationId}`
+    );
+    return response.data.superadminEmployeeList;
   } catch (error) {
     throw error;
   }
