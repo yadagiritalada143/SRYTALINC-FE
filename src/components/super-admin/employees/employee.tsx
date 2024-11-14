@@ -19,7 +19,7 @@ interface organization {
   id: string;
 }
 
-const EmployeesForSuperAdmin = () => {
+const EmployeesForSuperadmin = () => {
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [organizations, setOrganization] = useState<organization[]>([]);
@@ -185,4 +185,4 @@ const EmployeesForSuperAdmin = () => {
   );
 };
 
-export default EmployeesForSuperAdmin;
+export default EmployeesForSuperadmin;

@@ -134,6 +134,7 @@ const RegisterAdminBySuperAdmin = () => {
               />
             )}
           />
+          <div></div>
 
           <Button
             className=" mt-7 rounded-md"
