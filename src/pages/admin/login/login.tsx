@@ -8,15 +8,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useMantineTheme } from "@mantine/core";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
-import { OrganizationConfig } from "../../../interfaces/organization";
+import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+import { useRecoilValue } from "recoil";
 
-const AdminLogin = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AdminLogin = () => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
   const {
     register,
     handleSubmit,
@@ -62,14 +61,7 @@ const AdminLogin = ({
   };
 
   return (
-    <div
-      className="flex justify-center items-center h-screen px-4"
-      style={{
-        color: theme.colors.primary[8],
-        backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
-        fontFamily: theme.fontFamily,
-      }}
-    >
+    <BgDiv className="flex justify-center items-center h-screen px-4">
       <form
         onSubmit={handleSubmit(Submit)}
         style={{
@@ -106,7 +98,6 @@ const AdminLogin = ({
               to="forgot-password"
               style={{
                 textDecoration: "underline",
-                color: organizationConfig.organization_theme.theme.linkColor,
               }}
               className="text-sm"
             >
@@ -139,7 +130,7 @@ const AdminLogin = ({
           </div>
         </div>
       </form>
-    </div>
+    </BgDiv>
   );
 };
 
