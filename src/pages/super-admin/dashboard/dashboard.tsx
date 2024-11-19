@@ -5,7 +5,7 @@ import SuperAdminNavbar from "../../../components/super-admin/nav-bar/nav-bar";
 import { SuperAdminNavLinks } from "../../../utils/super-admin/nav-links/super-admin-nav-links";
 import SuperAdminHeader from "../../../components/super-admin/header/header";
 
-const SuperAdminDashboard = () => {
+const SuperadminDashboard = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const toggleDrawer = () => setDrawerOpen(!isDrawerOpen);
@@ -50,4 +50,4 @@ const SuperAdminDashboard = () => {
   );
 };
 
-export default SuperAdminDashboard;
+export default SuperadminDashboard;

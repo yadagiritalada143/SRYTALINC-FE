@@ -1,4 +1,4 @@
-import { IconUser, IconUsers } from "@tabler/icons-react";
+import { IconFile3d, IconUser, IconUsers } from "@tabler/icons-react";
 
 export const SuperAdminNavLinks = [
   {
@@ -10,5 +10,10 @@ export const SuperAdminNavLinks = [
     url: "dashboard/employees",
     icon: IconUsers,
     name: "Manage Employees",
+  },
+  {
+    url: "dashboard/documents",
+    icon: IconFile3d,
+    name: "Documents",
   },
 ];
