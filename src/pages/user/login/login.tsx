@@ -1,5 +1,4 @@
 import { Button, Loader, PasswordInput, TextInput } from "@mantine/core";
-import { OrganizationConfig } from "../../../interfaces/organization";
 import { useForm } from "react-hook-form";
 import { LoginForm, loginSchema } from "../../../forms/login";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,15 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../../services/common-services";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useMantineTheme } from "@mantine/core";
-import { IconCircleDashedCheck } from "@tabler/icons-react";
+import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { useCustomToast } from "../../../utils/common/toast";
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+import { useRecoilValue } from "recoil";
 
-const EmployeeLogin = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
-  const theme = useMantineTheme();
+const EmployeeLogin = () => {
+  const { showSuccessToast } = useCustomToast();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
   const {
     register,
     formState: { errors, isSubmitting },
@@ -39,17 +37,7 @@ const EmployeeLogin = ({
           `/employee/${organizationConfig.organization_name}/dashboard/profile`
         );
       }
-      toast("Login successfully !", {
-        style: {
-          color: theme.colors.primary[2],
-          backgroundColor:
-            organizationConfig.organization_theme.theme.backgroundColor,
-        },
-        progressStyle: {
-          background: theme.colors.primary[8],
-        },
-        icon: <IconCircleDashedCheck width={32} height={32} />,
-      });
+      showSuccessToast("Login successfully !");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(
@@ -61,14 +49,7 @@ const EmployeeLogin = ({
     }
   };
   return (
-    <div
-      className="flex justify-center items-center h-screen px-4"
-      style={{
-        color: theme.colors.primary[8],
-        backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
-        fontFamily: theme.fontFamily,
-      }}
-    >
+    <BgDiv className="flex justify-center items-center h-screen px-4">
       <form
         onSubmit={handleSubmit(Submit)}
         className=" shadow-lg border rounded-lg p-6 max-w-md w-full"
@@ -82,8 +63,12 @@ const EmployeeLogin = ({
             EMPLOYEE LOGIN
           </h1>
           <img
-            src={organizationConfig.organization_theme.logo}
-            className="mb-4 w-20 h-20 object-contain"
+            src={
+              organizationConfig.organization_name === "srytal"
+                ? "/logo.jpg"
+                : "/data-store.png"
+            }
+            className="mb-4 p-4 max-h-40 object-contain"
             alt={organizationConfig.organization_name}
           />
         </div>
@@ -103,14 +88,7 @@ const EmployeeLogin = ({
         </div>
         <div className="flex flex-wrap justify-between items-center gap-4 mt-8">
           <div className="w-full md:w-auto flex justify-center md:justify-start order-2 md:order-1">
-            <Link
-              to="forgot-password"
-              style={{
-                textDecoration: "underline",
-                color: organizationConfig.organization_theme.theme.linkColor,
-              }}
-              className=" text-sm"
-            >
+            <Link to="forgot-password" className=" text-sm">
               Forgot Password
             </Link>
           </div>
@@ -138,7 +116,7 @@ const EmployeeLogin = ({
           </div>
         </div>
       </form>
-    </div>
+    </BgDiv>
   );
 };
 

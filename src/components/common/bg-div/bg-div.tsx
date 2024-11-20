@@ -16,8 +16,7 @@ export const BgDiv = ({
     <div
       className={`custom-style-div ${className}`}
       style={{
-        color: theme.colors.primary[8],
-
+        color: organizationConfig.organization_theme.theme.color,
         backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
         fontFamily: theme.fontFamily,
       }}

@@ -21,58 +21,14 @@ import Loader from "../components/common/loader/loader";
 import EmployeeProfile from "../components/user/dashboard/profile/profile";
 import Timesheet from "../components/common/timesheet/timesheet";
 import { ModalsProvider } from "@mantine/modals";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { organizationThemeAtom } from "../atoms/organization-atom";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [organizationConfig, setOrganizationConfig] =
-    useState<OrganizationConfig>({
-      organization_name: "",
-      organization_theme: {
-        logo: "/data-store.png",
-        organization: "",
-        theme: {
-          primaryColor: "primary",
-          colorScheme: "dark",
-          fontFamily: "Arial, sans-serif",
-          button: {
-            color: "#343a40", // Dark gray
-            textColor: "#ffffff", // White for contrast
-          },
-          colors: {
-            primary: [
-              "#343a40", // Dark gray
-              "#2c3136", // Slightly darker gray
-              "#23272b", // Darker gray
-              "#1d2124", // Even darker gray
-              "#16191c", // Almost black gray
-              "#0f1214", // Near black
-              "#080a0b", // Very dark
-              "#030405", // Almost completely black
-              "#000000", // Black
-              "#000000", // Black
-            ],
-            secondary: [
-              "#adb5bd", // Muted gray
-              "#949aa0", // Slightly darker gray
-              "#7b8287", // Darker gray
-              "#62696f", // Even darker gray
-              "#4a5157", // Very dark gray
-              "#32383e", // Almost black
-              "#1a1f24", // Near black
-              "#080a0b", // Very dark
-              "#000000", // Black
-              "#000000", // Black
-            ],
-          },
-          color: "#ffffff", // White text
-          backgroundColor: "#1b1e21", // Dark background
-          borderColor: "#4a4e69", // Muted purple for borders
-          linkColor: "#ff4d77", // Bright pink for links
-          headerBackgroundColor: "#23272b", // Dark header background
-        },
-      },
-    });
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const setOrganizationConfig = useSetRecoilState(organizationThemeAtom);
 
   useEffect(() => {
     if (organization) {
@@ -84,7 +40,7 @@ const EmployeeRoutes = () => {
         }
       );
     }
-  }, [organization]);
+  }, [organization, setOrganizationConfig]);
 
   const theme = {
     colorScheme: organizationConfig.organization_theme.theme.colorScheme,
@@ -150,35 +106,16 @@ const EmployeeRoutes = () => {
         loaderProps={{ children: <Loader /> }}
       />
       <Routes>
-        <Route
-          path="/login"
-          element={<EmployeeLogin organizationConfig={organizationConfig} />}
-        />
-        <Route
-          element={
-            <EmployeeProtectedRoutes organizationConfig={organizationConfig} />
-          }
-        >
+        <Route path="/login" element={<EmployeeLogin />} />
+        <Route element={<EmployeeProtectedRoutes />}>
           <Route
             path="/dashboard"
             element={
               <EmployeeDashboard organizationConfig={organizationConfig} />
             }
           >
-            <Route
-              element={
-                <EmployeeProtectedRoutes
-                  organizationConfig={organizationConfig}
-                />
-              }
-            >
-              <Route
-                element={
-                  <RecruiterProtectedRoutes
-                    organizationConfig={organizationConfig}
-                  />
-                }
-              >
+            <Route element={<EmployeeProtectedRoutes />}>
+              <Route element={<RecruiterProtectedRoutes />}>
                 <Route
                   path=""
                   element={
@@ -220,13 +157,10 @@ const EmployeeRoutes = () => {
   );
 };
 
-const RecruiterProtectedRoutes = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const RecruiterProtectedRoutes = () => {
   const token = localStorage.getItem("employeeToken");
   const userRole = localStorage.getItem("userRole");
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -245,13 +179,10 @@ const RecruiterProtectedRoutes = ({
   return <Outlet />;
 };
 
-const EmployeeProtectedRoutes = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const EmployeeProtectedRoutes = () => {
   const token = localStorage.getItem("employeeToken");
   const userRole = localStorage.getItem("userRole");
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
