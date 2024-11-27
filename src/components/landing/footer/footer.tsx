@@ -1,11 +1,4 @@
-import {
-  IconBrandLinkedin,
-  IconBrandTwitter,
-  IconBrandYoutube,
-  IconBrandGithub,
-  IconBrandX,
-  IconBrandFacebook,
-} from "@tabler/icons-react";
+import { IconBrandLinkedin, IconBrandFacebook } from "@tabler/icons-react";
 import TechIcon from "../../common/tech-icons/tech-icons";
 import { HashLink as Link } from "react-router-hash-link";
 
@@ -25,7 +18,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between">
           <div className="mb-6 md:mb-0">
             <h1 className="text-3xl py-4 sm:text-4xl cursor-pointer font-bold  text-white hover:text-transparent bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text  transition-transform duration-300 ease-in-out hover:scale-110  ">
-              Srytal Systems
+              SRYTAL System Pvt Ltd.
             </h1>
             <p className="text-sm mb-4">
               Empowering business with technology !

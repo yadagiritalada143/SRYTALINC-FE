@@ -5,6 +5,8 @@ import {
   offerLetterForm,
 } from "../../../../forms/offerletter";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GenerateOfferletterBySuperAdmin } from "../../../../services/super-admin-services";
+import { toast } from "react-toastify";
 
 const OfferLetterModal = () => {
   const {
@@ -16,7 +18,13 @@ const OfferLetterModal = () => {
   } = useForm<OfferLetterForm>({ resolver: zodResolver(offerLetterForm) });
 
   const onSubmit = (data: OfferLetterForm) => {
-    console.log(data);
+    GenerateOfferletterBySuperAdmin(data)
+      .then(() => {
+        toast.success("Offer Letter generated successfully");
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
     reset();
   };
   return (
@@ -28,16 +36,16 @@ const OfferLetterModal = () => {
           <TextInput
             label="Candidate Name"
             placeholder="Enter first name"
-            {...register("candidateName")}
-            error={errors.candidateName?.message}
+            {...register("nameOfTheCandidate")}
+            error={errors.nameOfTheCandidate?.message}
           />
 
           <TextInput
             type="date"
             label="Joining Date"
             placeholder="Select joining date"
-            {...register("joiningDate")}
-            error={errors.joiningDate?.message}
+            {...register("dateOfJoining")}
+            error={errors.dateOfJoining?.message}
           />
 
           <TextInput
