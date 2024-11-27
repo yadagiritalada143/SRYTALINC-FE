@@ -16,6 +16,7 @@ import Loader from "../components/common/loader/loader";
 import AdminProfile from "../components/admin/dashboard/profile/profile";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../atoms/organization-atom";
+import { organizationAdminUrls } from "../utils/common/constants";
 
 const AdminRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -136,7 +137,9 @@ const AdminProtectedRoutes = () => {
     if (!userRole || !token || userRole !== "admin") {
       setTimeout(() => {
         toast.error("Not authorized to access");
-        navigate(`/admin//${organizationConfig.organization_name}/login`);
+        navigate(
+          `${organizationAdminUrls(organizationConfig.organization_name)}/login`
+        );
       }, 500);
     }
   }, [navigate, userRole, token, organizationConfig.organization_name]);

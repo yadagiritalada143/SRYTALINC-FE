@@ -1,6 +1,10 @@
 import { Avatar, Menu, rem } from "@mantine/core";
 import { IconLogout, IconSettings, IconUser } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import {
+  organizationAdminUrls,
+  organizationEmployeeUrls,
+} from "../../../utils/common/constants";
 const Header = ({
   color,
   organization,
@@ -13,9 +17,9 @@ const Header = ({
     const userRole = localStorage.getItem("userRole");
 
     if (userRole === "admin") {
-      navigate(`/${userRole}/${organization}/login`);
+      navigate(`/${organizationAdminUrls(organization)}/login`);
     } else {
-      navigate(`/employee/${organization}/login`);
+      navigate(`/${organizationEmployeeUrls(organization)}/login`);
     }
     localStorage.clear();
   };

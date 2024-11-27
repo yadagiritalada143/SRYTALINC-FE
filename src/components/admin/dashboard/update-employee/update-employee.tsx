@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { OrganizationConfig } from "../../../../interfaces/organization";
+import { organizationAdminUrls } from "../../../../utils/common/constants";
 
 const UpdateEmployee = ({
   organizationConfig,
@@ -89,7 +90,11 @@ const UpdateEmployee = ({
           },
           icon: <IconCircleDashedCheck width={32} height={32} />,
         });
-        navigate(`/admin/${organizationConfig.organization_name}/dashboard`);
+        navigate(
+          `${organizationAdminUrls(
+            organizationConfig.organization_name
+          )}/dashboard`
+        );
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Something went wrong");
@@ -139,7 +144,9 @@ const UpdateEmployee = ({
             bg={theme.colors.primary[5]}
             onClick={() =>
               navigate(
-                `/admin/${organizationConfig.organization_name}/dashboard`
+                `${organizationAdminUrls(
+                  organizationConfig.organization_name
+                )}/dashboard`
               )
             }
           >

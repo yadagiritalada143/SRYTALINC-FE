@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { EmployeeInterface } from "../../../../interfaces/employee";
 import { getAllEmployeeDetailsByAdmin } from "../../../../services/admin-services";
 import { toast } from "react-toastify";
+import { organizationAdminUrls } from "../../../../utils/common/constants";
 
 const Employees = ({
   organizationConfig,
@@ -44,7 +45,9 @@ const Employees = ({
             <Button
               onClick={() =>
                 navigate(
-                  `/admin/${organizationConfig.organization_name}/dashboard/addemployee`
+                  `${organizationAdminUrls(
+                    organizationConfig.organization_name
+                  )}/dashboard/addemployee`
                 )
               }
             >
@@ -126,7 +129,9 @@ const Employees = ({
                       <Button
                         onClick={() =>
                           navigate(
-                            `/admin/${organizationConfig.organization_name}/dashboard/update/${employee._id}`
+                            `${organizationAdminUrls(
+                              organizationConfig.organization_name
+                            )}/dashboard/update/${employee._id}`
                           )
                         }
                       >

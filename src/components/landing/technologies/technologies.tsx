@@ -28,7 +28,7 @@ const Technologies = () => {
         Cutting-Edge Tools & Technologies
       </h1>
       <div className="flex ">
-        <div className="flex space-x-32 animate-technologies mt-8">
+        <div className="flex space-x-32  animate-technologies mt-8">
           {technologies.concat(technologies).map((tech, index) => {
             const IconComponent = tech.icon;
             return (
@@ -38,7 +38,7 @@ const Technologies = () => {
                 color={tech.color}
                 name={tech.name}
                 hoverColor={tech.color}
-                size={20}
+                size={32}
               />
             );
           })}

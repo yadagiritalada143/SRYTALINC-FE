@@ -23,7 +23,7 @@ function TechIcon({
         <IconComponent
           onMouseEnter={open}
           onMouseLeave={close}
-          className={`w-${size}  h-${size} ${color} hover:${hoverColor} transform transition-transform ease-in-out duration-500 hover:scale-150`}
+          className={`w-${size}   h-${size} ${color} hover:${hoverColor} transform transition-transform ease-in-out duration-500 hover:scale-150`}
         />
       </Popover.Target>
       <Popover.Dropdown className="border-1 border-black bg-gradient-to-r from-purple-500 to-blue-500">

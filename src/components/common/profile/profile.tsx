@@ -1,26 +1,19 @@
 import { Code, Tabs } from "@mantine/core";
 import { EmployeeInterface } from "../../../interfaces/employee";
-import { OrganizationConfig } from "../../../interfaces/organization";
 import ProfileImageUploader from "../profile-image/profile-image";
 import { useMantineTheme } from "@mantine/core";
-const Profile = ({
-  organizationConfig,
-  details,
-}: {
-  details: EmployeeInterface;
-  organizationConfig: OrganizationConfig;
-}) => {
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+import { useRecoilValue } from "recoil";
+import { ColorDiv } from "../style-components/c-div";
+const Profile = ({ details }: { details: EmployeeInterface }) => {
   const theme = useMantineTheme();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   return (
-    <div>
+    <ColorDiv>
       <div className="flex justify-between mx-8 my-8">
         <ProfileImageUploader organizationConfig={organizationConfig} />
-        <div
-          style={{
-            color: organizationConfig.organization_theme.theme.button.textColor,
-          }}
-        >
+        <div>
           <p>First Name:{details?.firstName}</p>
           <p>Last Name: {details?.lastName}</p>
           <p>Email: {details?.email}</p>
@@ -29,23 +22,17 @@ const Profile = ({
       </div>
       <div
         style={{
-          color: theme.colors.primary[9],
           padding: "20px",
         }}
       >
         <Tabs
           mt="lg"
+          variant="pills"
           defaultValue="employment"
-          styles={{
-            tab: {
-              "&:hover": {
-                backgroundColor: "transparent",
-              },
-            },
-          }}
+          color={theme.colors.primary[4]}
         >
           <Tabs.List className="my-4" grow>
-            <Tabs.Tab className="font-bold" value="employment">
+            <Tabs.Tab className="font-bold " value="employment">
               Employment Details
             </Tabs.Tab>
             <Tabs.Tab className="font-bold" value="bankDetails">
@@ -58,8 +45,6 @@ const Profile = ({
 
           <Tabs.Panel
             style={{
-              color:
-                organizationConfig.organization_theme.theme.button.textColor,
               padding: "10px 0",
             }}
             value="employment"
@@ -78,9 +63,8 @@ const Profile = ({
           </Tabs.Panel>
 
           <Tabs.Panel
+            color={organizationConfig.organization_theme.theme.button.textColor}
             style={{
-              color:
-                organizationConfig.organization_theme.theme.button.textColor,
               padding: "10px 0",
             }}
             value="bankDetails"
@@ -97,8 +81,6 @@ const Profile = ({
 
           <Tabs.Panel
             style={{
-              color:
-                organizationConfig.organization_theme.theme.button.textColor,
               padding: "10px 0",
             }}
             value="general"
@@ -109,7 +91,7 @@ const Profile = ({
           </Tabs.Panel>
         </Tabs>
       </div>
-    </div>
+    </ColorDiv>
   );
 };
 

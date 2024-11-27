@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 
 const AddCompany = ({
   organizationConfig,
@@ -43,7 +44,11 @@ const AddCompany = ({
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
-      navigate(`/employee/${organizationConfig.organization_name}/dashboard`);
+      navigate(
+        `${organizationEmployeeUrls(
+          organizationConfig.organization_name
+        )}/dashboard`
+      );
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }

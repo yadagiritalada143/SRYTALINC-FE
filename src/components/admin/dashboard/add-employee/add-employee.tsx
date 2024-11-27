@@ -12,6 +12,7 @@ import { registerEmployee } from "../../../../services/admin-services";
 import axios from "axios";
 import { IconCircleDashedCheck, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router";
+import { organizationAdminUrls } from "../../../../utils/common/constants";
 
 const AddEmployee = ({
   organizationConfig,
@@ -52,7 +53,11 @@ const AddEmployee = ({
         }
       );
       reset();
-      navigate(`/admin/${organizationConfig.organization_name}/dashboard`);
+      navigate(
+        `${organizationAdminUrls(
+          organizationConfig.organization_name
+        )}/dashboard`
+      );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(
@@ -84,7 +89,9 @@ const AddEmployee = ({
             className="rounded-full"
             onClick={() =>
               navigate(
-                `/admin/${organizationConfig.organization_name}/dashboard`
+                `${organizationAdminUrls(
+                  organizationConfig.organization_name
+                )}/dashboard`
               )
             }
           >
