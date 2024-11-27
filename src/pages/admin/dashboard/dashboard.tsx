@@ -1,21 +1,18 @@
 import { useRef, useState } from "react";
-import { OrganizationConfig } from "../../../interfaces/organization";
 import { Outlet } from "react-router-dom";
 import { IconMenu2 } from "@tabler/icons-react";
 import AdminNavbar from "../../../components/common/navbar/navbar";
 import { adminNavLinks } from "../../../utils/admin/nav-links/admin-nav-links";
-import { useMantineTheme } from "@mantine/core";
 import Header from "../../../components/common/header/header";
+import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+import { useRecoilValue } from "recoil";
 
-const AdminDashboard = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AdminDashboard = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
-  const theme = useMantineTheme();
   const toggleDrawer = () => setDrawerOpen(!isDrawerOpen);
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   return (
     <div
@@ -58,14 +55,7 @@ const AdminDashboard = ({
         ></div>
       )}
 
-      <div
-        style={{
-          color: theme.colors.primary[8],
-          backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
-          fontFamily: theme.fontFamily,
-        }}
-        className="flex-grow p-6 transition-all duration-300 z-20 overflow-hidden"
-      >
+      <BgDiv className="flex-grow p-6 transition-all duration-300 z-20 overflow-hidden">
         <div className="my-2">
           <Header
             color={organizationConfig.organization_theme.theme.button.textColor}
@@ -75,7 +65,7 @@ const AdminDashboard = ({
         <div className="h-full overflow-auto">
           <Outlet />
         </div>
-      </div>
+      </BgDiv>
     </div>
   );
 };

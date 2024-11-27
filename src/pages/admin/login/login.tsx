@@ -6,17 +6,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../../services/common-services";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useMantineTheme } from "@mantine/core";
-import { IconCircleDashedCheck } from "@tabler/icons-react";
-import { OrganizationConfig } from "../../../interfaces/organization";
+import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+import { useRecoilValue } from "recoil";
+import { useCustomToast } from "../../../utils/common/toast";
 
-const AdminLogin = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
-  const theme = useMantineTheme();
+const AdminLogin = () => {
   const navigate = useNavigate();
+  const { showSuccessToast } = useCustomToast();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
   const {
     register,
     handleSubmit,
@@ -33,17 +31,7 @@ const AdminLogin = ({
       localStorage.setItem("firstName", data.firstName);
       localStorage.setItem("lastName", data.lastName);
       if (data.userRole === "admin") {
-        toast("Login successfully !", {
-          style: {
-            color: theme.colors.primary[2],
-            backgroundColor:
-              organizationConfig.organization_theme.theme.backgroundColor,
-          },
-          progressStyle: {
-            background: theme.colors.primary[8],
-          },
-          icon: <IconCircleDashedCheck width={32} height={32} />,
-        });
+        showSuccessToast("Login successfully !");
         navigate(
           `/admin/${organizationConfig.organization_theme.organization}/dashboard`
         );
@@ -62,14 +50,7 @@ const AdminLogin = ({
   };
 
   return (
-    <div
-      className="flex justify-center items-center h-screen px-4"
-      style={{
-        color: theme.colors.primary[8],
-        backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[9]})`,
-        fontFamily: theme.fontFamily,
-      }}
-    >
+    <BgDiv className="flex justify-center items-center h-screen px-4">
       <form
         onSubmit={handleSubmit(Submit)}
         style={{
@@ -81,9 +62,13 @@ const AdminLogin = ({
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-bold text-center mb-4">ADMIN LOGIN</h1>
           <img
-            src={organizationConfig.organization_theme.logo}
-            className="mb-4 w-20 h-20 object-contain"
-            alt="default"
+            src={
+              organizationConfig.organization_name === "srytal"
+                ? "/logo.jpg"
+                : "/data-store.png"
+            }
+            className="mb-4 p-4 max-h-40 object-contain"
+            alt={organizationConfig.organization_name}
           />
         </div>
         <div className="mb-4">
@@ -106,7 +91,6 @@ const AdminLogin = ({
               to="forgot-password"
               style={{
                 textDecoration: "underline",
-                color: organizationConfig.organization_theme.theme.linkColor,
               }}
               className="text-sm"
             >
@@ -139,7 +123,7 @@ const AdminLogin = ({
           </div>
         </div>
       </form>
-    </div>
+    </BgDiv>
   );
 };
 

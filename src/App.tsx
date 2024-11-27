@@ -5,24 +5,30 @@ import { MantineProvider } from "@mantine/core";
 import AdminRoutes from "./routes/admin";
 import EmployeeRoutes from "./routes/user";
 import SuperAdminRoutes from "./routes/super-admin";
+import { RecoilRoot } from "recoil";
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <MantineProvider>
-              <Landing />
-            </MantineProvider>
-          }
-        />
-        <Route path="/admin/:organization/*" element={<AdminRoutes />} />
-        <Route path="/employee/:organization/*" element={<EmployeeRoutes />} />
-        <Route path="/superadmin/*" element={<SuperAdminRoutes />} />
-      </Routes>
-    </Router>
+    <RecoilRoot>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MantineProvider>
+                <Landing />
+              </MantineProvider>
+            }
+          />
+          <Route path="/admin/:organization/*" element={<AdminRoutes />} />
+          <Route
+            path="/employee/:organization/*"
+            element={<EmployeeRoutes />}
+          />
+          <Route path="/superadmin/*" element={<SuperAdminRoutes />} />
+        </Routes>
+      </Router>
+    </RecoilRoot>
   );
 };
 
