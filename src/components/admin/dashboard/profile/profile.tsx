@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import Profile from "../../../common/profile/profile";
 import { getUserDetails } from "../../../../services/common-services";
 import { toast } from "react-toastify";
 import { EmployeeInterface } from "../../../../interfaces/employee";
 
-const AdminProfile = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AdminProfile = () => {
   const [adminDetails, setAdminDetails] = useState<EmployeeInterface>({
     _id: "",
     firstName: "",
@@ -39,7 +34,7 @@ const AdminProfile = ({
 
   return (
     <>
-      <Profile details={adminDetails} organizationConfig={organizationConfig} />
+      <Profile details={adminDetails} />
     </>
   );
 };

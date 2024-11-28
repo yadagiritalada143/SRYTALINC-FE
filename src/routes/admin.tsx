@@ -110,10 +110,7 @@ const AdminRoutes = () => {
               path=""
               element={<Employees organizationConfig={organizationConfig} />}
             />
-            <Route
-              path="profile"
-              element={<AdminProfile organizationConfig={organizationConfig} />}
-            />
+            <Route path="profile" element={<AdminProfile />} />
             <Route
               path="update/:employeeId"
               element={
