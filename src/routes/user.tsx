@@ -136,12 +136,7 @@ const EmployeeRoutes = () => {
                   }
                 />
               </Route>
-              <Route
-                path="profile"
-                element={
-                  <EmployeeProfile organizationConfig={organizationConfig} />
-                }
-              />
+              <Route path="profile" element={<EmployeeProfile />} />
               <Route
                 path="timesheet"
                 element={
