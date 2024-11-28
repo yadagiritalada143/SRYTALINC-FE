@@ -6,10 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../../services/common-services";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { BgDiv } from "../../../components/common/style-components/bg-div";
 import { organizationThemeAtom } from "../../../atoms/organization-atom";
 import { useRecoilValue } from "recoil";
 import { useCustomToast } from "../../../utils/common/toast";
+import { organizationAdminUrls } from "../../../utils/common/constants";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ const AdminLogin = () => {
       if (data.userRole === "admin") {
         showSuccessToast("Login successfully !");
         navigate(
-          `/admin/${organizationConfig.organization_theme.organization}/dashboard`
+          `${organizationAdminUrls(
+            organizationConfig.organization_name
+          )}/dashboard`
         );
       } else {
         toast.error("Not authorized to access");

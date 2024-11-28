@@ -19,6 +19,7 @@ import moment from "moment";
 import { useMantineTheme } from "@mantine/core";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 
 const UpdateCompany = ({
   organizationConfig,
@@ -77,7 +78,11 @@ const UpdateCompany = ({
         },
         icon: <IconCircleDashedCheck width={32} height={32} />,
       });
-      navigate(`/employee/${organizationConfig.organization_name}/dashboard`);
+      navigate(
+        `${organizationEmployeeUrls(
+          organizationConfig.organization_name
+        )}/dashboard`
+      );
     } catch (error: any) {
       toast.error(error.response.data.message || "Something went wrong");
     }
@@ -128,7 +133,9 @@ const UpdateCompany = ({
           bg={theme.colors.primary[5]}
           onClick={() =>
             navigate(
-              `/employee/${organizationConfig.organization_name}/dashboard`
+              `${organizationEmployeeUrls(
+                organizationConfig.organization_name
+              )}/dashboard`
             )
           }
         >

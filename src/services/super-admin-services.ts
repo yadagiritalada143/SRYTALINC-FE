@@ -1,5 +1,6 @@
 import axios from "axios";
 import { RegisterAdminBySuperAdminForm } from "../forms/register-admin-superadmin";
+import { OfferLetterForm } from "../forms/offerletter";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -41,6 +42,19 @@ export const getAllEmployeeDetailsBySuperAdmin = async (
       `/superadmin/getAllEmployeesBySuperAdmin/${organizationId}`
     );
     return response.data.superadminEmployeeList;
+  } catch (error) {
+    throw error;
+  }
+};
+export const GenerateOfferletterBySuperAdmin = async (
+  data: OfferLetterForm
+) => {
+  try {
+    const response = await apiClient.post(
+      `/superadmin/generateofferletter`,
+      data
+    );
+    return response.data;
   } catch (error) {
     throw error;
   }

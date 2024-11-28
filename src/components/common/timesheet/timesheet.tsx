@@ -9,6 +9,7 @@ import { data } from "./resources";
 import { TaskPopover } from "./task-popover";
 import { IconPlus, IconX } from "@tabler/icons-react";
 import { useModals } from "@mantine/modals";
+import { ColorDiv } from "../style-components/c-div";
 const DateTableComponent = ({
   organizationConfig,
 }: {
@@ -195,12 +196,7 @@ const DateTableComponent = ({
   };
 
   return (
-    <div
-      className="w-full p-4"
-      style={{
-        color: organizationConfig.organization_theme.theme.button.textColor,
-      }}
-    >
+    <ColorDiv className="w-full p-4">
       <Title order={2} className="mb-4 text-center">
         Timesheet
       </Title>
@@ -390,7 +386,7 @@ const DateTableComponent = ({
           </Table>
         </div>
       )}
-    </div>
+    </ColorDiv>
   );
 };
 

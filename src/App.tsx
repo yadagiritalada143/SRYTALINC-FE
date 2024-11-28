@@ -20,11 +20,8 @@ const App: React.FC = () => {
               </MantineProvider>
             }
           />
-          <Route path="/admin/:organization/*" element={<AdminRoutes />} />
-          <Route
-            path="/employee/:organization/*"
-            element={<EmployeeRoutes />}
-          />
+          <Route path="/:organization/admin/*" element={<AdminRoutes />} />
+          <Route path="/:organization/employee*" element={<EmployeeRoutes />} />
           <Route path="/superadmin/*" element={<SuperAdminRoutes />} />
         </Routes>
       </Router>

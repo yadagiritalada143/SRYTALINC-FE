@@ -8,6 +8,7 @@ import { IconBuildings, IconUserEdit } from "@tabler/icons-react";
 import { CompaniesInterface } from "../../../../interfaces/companies";
 import moment from "moment";
 import { useMantineTheme } from "@mantine/core";
+import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 
 const Companies = ({
   organizationConfig,
@@ -42,7 +43,9 @@ const Companies = ({
           <Button
             onClick={() =>
               navigate(
-                `/employee/${organizationConfig.organization_name}/dashboard/addcompany`
+                `${organizationEmployeeUrls(
+                  organizationConfig.organization_name
+                )}/dashboard/addcompany`
               )
             }
           >
@@ -159,7 +162,9 @@ const Companies = ({
                     <Button
                       onClick={() =>
                         navigate(
-                          `/employee/${organizationConfig.organization_name}/dashboard/update/${company.id}`
+                          `${organizationEmployeeUrls(
+                            organizationConfig.organization_name
+                          )}/dashboard/update/${company.id}`
                         )
                       }
                       size="sm"

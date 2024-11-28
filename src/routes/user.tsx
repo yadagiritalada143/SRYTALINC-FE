@@ -23,6 +23,7 @@ import Timesheet from "../components/common/timesheet/timesheet";
 import { ModalsProvider } from "@mantine/modals";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { organizationThemeAtom } from "../atoms/organization-atom";
+import { organizationEmployeeUrls } from "../utils/common/constants";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -167,7 +168,11 @@ const RecruiterProtectedRoutes = () => {
     if (!userRole || !token || userRole !== "recruiter") {
       toast.error("Not authorized to access");
       setTimeout(() => {
-        navigate(`/employee/${organizationConfig.organization_name}/login`);
+        navigate(
+          `${organizationEmployeeUrls(
+            organizationConfig.organization_name
+          )}/login`
+        );
       }, 500);
     }
   }, [navigate, userRole, token, organizationConfig.organization_name]);
@@ -189,7 +194,11 @@ const EmployeeProtectedRoutes = () => {
     if (!userRole || !token) {
       setTimeout(() => {
         toast.error("Not authorized to access");
-        navigate(`/employee/${organizationConfig.organization_name}/login`);
+        navigate(
+          `${organizationEmployeeUrls(
+            organizationConfig.organization_name
+          )}/login`
+        );
       }, 500);
     }
   }, [navigate, userRole, token, organizationConfig.organization_name]);

@@ -4,7 +4,7 @@ import { IconMenu2 } from "@tabler/icons-react";
 import AdminNavbar from "../../../components/common/navbar/navbar";
 import { adminNavLinks } from "../../../utils/admin/nav-links/admin-nav-links";
 import Header from "../../../components/common/header/header";
-import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { BgDiv } from "../../../components/common/style-components/bg-div";
 import { organizationThemeAtom } from "../../../atoms/organization-atom";
 import { useRecoilValue } from "recoil";
 

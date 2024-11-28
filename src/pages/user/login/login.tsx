@@ -6,10 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../../services/common-services";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { BgDiv } from "../../../components/common/bg-div/bg-div";
+import { BgDiv } from "../../../components/common/style-components/bg-div";
 import { useCustomToast } from "../../../utils/common/toast";
 import { organizationThemeAtom } from "../../../atoms/organization-atom";
 import { useRecoilValue } from "recoil";
+import { organizationEmployeeUrls } from "../../../utils/common/constants";
 
 const EmployeeLogin = () => {
   const { showSuccessToast } = useCustomToast();
@@ -31,10 +32,16 @@ const EmployeeLogin = () => {
       localStorage.setItem("lastName", data.lastName);
       localStorage.setItem("userId", data.id);
       if (data.userRole === "recruiter") {
-        navigate(`/employee/${organizationConfig.organization_name}/dashboard`);
+        navigate(
+          `${organizationEmployeeUrls(
+            organizationConfig.organization_name
+          )}/dashboard`
+        );
       } else {
         navigate(
-          `/employee/${organizationConfig.organization_name}/dashboard/profile`
+          `${organizationEmployeeUrls(
+            organizationConfig.organization_name
+          )}/dashboard/profile`
         );
       }
       showSuccessToast("Login successfully !");
