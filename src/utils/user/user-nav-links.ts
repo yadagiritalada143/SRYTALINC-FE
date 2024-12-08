@@ -8,15 +8,15 @@ export const NavLinks = [
     name: "Profile",
   },
   {
-    role: "employee",
-    url: "dashboard/courses" as string,
-    icon: IconBook,
-    name: "Courses",
-  },
-  {
     role: "employee" as string,
     url: "dashboard/timesheet",
     icon: IconTimeline,
     name: "Timesheet",
+  },
+  {
+    role: "employee",
+    url: "dashboard/courses" as string,
+    icon: IconBook,
+    name: "Courses",
   },
 ];

@@ -95,7 +95,13 @@ const EmployeeLogin = () => {
         </div>
         <div className="flex flex-wrap justify-between items-center gap-4 mt-8">
           <div className="w-full md:w-auto flex justify-center md:justify-start order-2 md:order-1">
-            <Link to="forgot-password" className=" text-sm">
+            <Link
+              to="forgot-password"
+              style={{
+                textDecoration: "underline",
+              }}
+              className="text-sm"
+            >
               Forgot Password
             </Link>
           </div>

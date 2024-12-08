@@ -3,8 +3,12 @@ import TechIcon from "../../common/tech-icons/tech-icons";
 import { HashLink as Link } from "react-router-hash-link";
 
 const SocialIcons = [
-  { name: "Follow us on LinkedIn", icon: IconBrandLinkedin },
-  { name: "Follow us on Facebook", icon: IconBrandFacebook },
+  {
+    name: "Follow us on LinkedIn",
+    icon: IconBrandLinkedin,
+    link: "https://www.linkedin.com/company/srytal-systems-india-pvt-ltd ",
+  },
+  { name: "Follow us on Facebook", icon: IconBrandFacebook, link: "" },
   // {
   //   name: "Watch us on YouTube",
   //   icon: IconBrandYoutube,
@@ -18,16 +22,14 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between">
           <div className="mb-6 md:mb-0">
             <h1 className="text-3xl py-4 sm:text-4xl cursor-pointer font-bold  text-white hover:text-transparent bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text  transition-transform duration-300 ease-in-out hover:scale-110  ">
-              SRYTAL System Pvt Ltd.
+              SRYTAL Systems India Pvt Ltd
             </h1>
-            <p className="text-sm mb-4">
-              Empowering business with technology !
-            </p>
+            <p className="text-sm mb-4">Empowering Business with Technology</p>
             <div className="flex gap-6 mb-4">
               {SocialIcons.map((icon, index) => {
                 const IconComponent = icon.icon;
                 return (
-                  <a href="#" key={index}>
+                  <a href={icon.link} key={index}>
                     <TechIcon
                       icon={IconComponent}
                       name={icon.name}
@@ -40,7 +42,7 @@ const Footer = () => {
               })}
             </div>
             <p className="text-xs text-gray-400">
-              &copy; SRYTAL Systems Pvt. Ltd. 2024 | All Rights Reserved
+              &copy; SRYTAL Systems India Pvt Ltd 2024 | All Rights Reserved
             </p>
           </div>
 
