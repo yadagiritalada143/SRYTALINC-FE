@@ -48,7 +48,7 @@ const Navbar = ({
         {localStorage.getItem("userRole") === "recruiter" && (
           <>
             <NavLink
-              to={`/employee/${organizationConfig.organization_name}/dashboard`}
+              to={`/${organizationConfig.organization_name}/employee/dashboard`}
               end
               className={({ isActive }) =>
                 `flex items-center  p-4 py-6 hover:shadow-xl ${
@@ -69,7 +69,7 @@ const Navbar = ({
               <span>Manage Companies</span>
             </NavLink>
             <NavLink
-              to={`/employee/${organizationConfig.organization_name}/dashboard/poolEmployees`}
+              to={`/${organizationConfig.organization_name}/employee/dashboard/poolEmployees`}
               end
               className={({ isActive }) =>
                 `flex items-center  p-4 py-6 hover:shadow-xl ${
@@ -96,7 +96,7 @@ const Navbar = ({
           return (
             <NavLink
               key={link.url}
-              to={`/${link.role}/${organizationConfig.organization_name}/${link.url}`}
+              to={`/${organizationConfig.organization_name}/${link.role}/${link.url}`}
               end
               className={({ isActive }) =>
                 `flex items-center p-4 py-6 shadow-md hover:shadow-xl ${

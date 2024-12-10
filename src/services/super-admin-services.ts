@@ -52,7 +52,8 @@ export const GenerateOfferletterBySuperAdmin = async (
   try {
     const response = await apiClient.post(
       `/superadmin/generateofferletter`,
-      data
+      data,
+      { responseType: "blob" }
     );
     return response.data;
   } catch (error) {

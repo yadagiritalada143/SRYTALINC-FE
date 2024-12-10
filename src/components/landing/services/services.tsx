@@ -56,8 +56,7 @@ const Services = () => {
             Our Services
           </h2>
           <p className="text-xl mt-4">
-            Empowering your business with innovative solutions tailored to your
-            needs.
+            Empowering Business with Innovative Solutions
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
