@@ -13,6 +13,7 @@ import axios from "axios";
 import { IconCircleDashedCheck, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router";
 import { organizationAdminUrls } from "../../../../utils/common/constants";
+import { BgDiv } from "../../../common/style-components/bg-div";
 
 const AddEmployee = ({
   organizationConfig,
@@ -70,102 +71,103 @@ const AddEmployee = ({
   };
 
   return (
-    <div
-      style={{ color: theme.colors.primary[8], fontFamily: theme.fontFamily }}
-      className="flex items-center justify-center h-screen "
-    >
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          backgroundColor:
-            organizationConfig.organization_theme.theme.backgroundColor,
-        }}
-        className="w-full max-w-2xl p-8 shadow-lg rounded-lg"
-      >
-        <div className="flex justify-between">
-          <div></div>
-          <h2 className="text-2xl font-bold text-center mb-6">Add Employee</h2>
-          <Button
-            className="rounded-full"
-            onClick={() =>
-              navigate(
-                `${organizationAdminUrls(
-                  organizationConfig.organization_name
-                )}/dashboard`
-              )
-            }
-          >
-            <IconX />
-          </Button>
-        </div>
+    <div className="flex items-center justify-center h-screen ">
+      <BgDiv>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{
+            backgroundColor:
+              organizationConfig.organization_theme.theme.backgroundColor,
+          }}
+          className="w-full max-w-2xl p-8 shadow-lg rounded-lg"
+        >
+          <div className="flex justify-between">
+            <div></div>
+            <h2 className="text-2xl font-bold text-center mb-6">
+              Add Employee
+            </h2>
+            <Button
+              className="rounded-full"
+              onClick={() =>
+                navigate(
+                  `${organizationAdminUrls(
+                    organizationConfig.organization_name
+                  )}/dashboard`
+                )
+              }
+            >
+              <IconX />
+            </Button>
+          </div>
 
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-          <TextInput
-            label="First Name"
-            placeholder="Enter first name"
-            {...register("firstName")}
-            error={errors.firstName?.message}
-          />
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            <TextInput
+              label="First Name"
+              placeholder="Enter first name"
+              {...register("firstName")}
+              error={errors.firstName?.message}
+            />
 
-          <TextInput
-            label="Last Name"
-            placeholder="Enter last name"
-            {...register("lastName")}
-            error={errors.lastName?.message}
-          />
+            <TextInput
+              label="Last Name"
+              placeholder="Enter last name"
+              {...register("lastName")}
+              error={errors.lastName?.message}
+            />
 
-          <TextInput
-            label="Email"
-            placeholder="Enter email"
-            {...register("email")}
-            error={errors.email?.message}
-          />
+            <TextInput
+              label="Email"
+              placeholder="Enter email"
+              {...register("email")}
+              error={errors.email?.message}
+            />
 
-          <TextInput
-            label="Phone Number"
-            placeholder="Enter phone number"
-            type="tel"
-            {...register("mobileNumber")}
-            error={errors.mobileNumber?.message}
-          />
-          <Controller
-            name="userRole"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="User Role"
-                {...field}
-                error={errors.userRole?.message}
-                placeholder="Select user role"
-                value={field.value}
-                data={[
-                  { label: "Employee", value: "employee" },
-                  { label: "Recruiter", value: "recruiter" },
-                ]}
-              />
-            )}
-          />
-
-          <Button
-            className=" mt-7 rounded-md"
-            type="submit"
-            data-testid="submitButton"
-            leftSection={
-              isSubmitting && (
-                <Loader
-                  size="xs"
-                  color={
-                    organizationConfig.organization_theme.theme.button.color
-                  }
+            <TextInput
+              label="Phone Number"
+              placeholder="Enter phone number"
+              type="tel"
+              {...register("mobileNumber")}
+              error={errors.mobileNumber?.message}
+            />
+            <Controller
+              name="userRole"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="User Role"
+                  {...field}
+                  error={errors.userRole?.message}
+                  placeholder="Select user role"
+                  value={field.value}
+                  data={[
+                    { label: "Employee", value: "employee" },
+                    { label: "Recruiter", value: "recruiter" },
+                  ]}
                 />
-              )
-            }
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Logging in..." : "Create Employee"}
-          </Button>
-        </div>
-      </form>
+              )}
+            />
+
+            <Button
+              className=" mt-7 rounded-md"
+              type="submit"
+              data-testid="submitButton"
+              leftSection={
+                isSubmitting && (
+                  <Loader
+                    size="xs"
+                    color={
+                      organizationConfig.organization_theme.theme.button.color
+                    }
+                  />
+                )
+              }
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Logging in..." : "Create Employee"}
+            </Button>
+          </div>
+        </form>
+      </BgDiv>
     </div>
   );
 };
