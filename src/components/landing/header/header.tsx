@@ -136,7 +136,9 @@ const Header = () => {
         </div>
         <div className="flex justify-center space-x-3 mt-4 lg:mt-0 items-center">
           <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
-            <IconBrandLinkedin size={28} />
+            <a href="https://www.linkedin.com/company/srytal-systems-india-pvt-ltd">
+              <IconBrandLinkedin size={28} />
+            </a>
           </div>
           <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
             <IconBrandMeta size={28} />
