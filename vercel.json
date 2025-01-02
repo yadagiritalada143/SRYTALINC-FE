@@ -8,10 +8,6 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "/dist/index.html"
-        },
-        {
             "src": "/favicon.ico",
             "headers": {
                 "Cache-Control": "public, max-age=3600"
