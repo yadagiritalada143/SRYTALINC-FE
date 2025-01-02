@@ -23,12 +23,12 @@
             "dest": "/dist/static/$1"
         },
         {
-            "src": "/assets/(.*)\\.jpg",
-            "dest": "/dist/assets/$1.jpg"
+            "src": "/(.*)\\.jpg",
+            "dest": "/dist/$1.jpg"
         },
         {
-            "src": "/assets/(.*)\\.(js|css)",
-            "dest": "/dist/assets/$1.$2"
+            "src": "/assets/(.*)",
+            "dest": "/dist/assets/$1"
         }
     ]
 }
