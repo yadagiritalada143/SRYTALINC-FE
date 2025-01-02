@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-black bg-white font-sans;
+}
+
+h1 {
+  @apply text-2xl font-bold;
+}
+/* global css */
+
+/*header links animation */
+.nav-item {
+  transition: transform 0.3s ease;
+}
+.nav-item {
+  cursor: pointer;
+}
+.nav-item:hover {
+  transform: scale(1.2);
+}
+
+.nav-item:hover ~ .nav-item {
+  transform: translateX(10px);
+}
+
+/* About us image flip */
+.flip-inner {
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.is-flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* animate-technologies */
+.animate-technologies:hover {
+  animation-play-state: paused;
+}
