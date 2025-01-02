@@ -25,6 +25,10 @@
         {
             "src": "/assets/(.*)",
             "dest": "/dist/assets/$1"
+        },
+        {
+            "src": "/assets/(.*)\\.jpg",
+            "dest": "/dist/assets/$1.jpg"
         }
     ]
 }
