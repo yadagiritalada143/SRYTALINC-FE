@@ -8,7 +8,7 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/(?!static|assets|favicon.ico)(.*)",
             "dest": "/dist/index.html"
         },
         {
@@ -19,11 +19,12 @@
             "continue": true
         },
         {
+            "src": "/static/(.*)",
+            "dest": "/dist/static/$1"
+        },
+        {
             "src": "/assets/(.*)",
-            "headers": {
-                "Cache-Control": "public, max-age=31556952, immutable"
-            },
-            "continue": true
+            "dest": "/dist/assets/$1"
         }
     ]
 }
