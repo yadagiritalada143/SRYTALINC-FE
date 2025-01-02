@@ -8,7 +8,7 @@
     ],
     "routes": [
         {
-            "src": "/(?!static|assets|favicon.ico)(.*)",
+            "src": "/(?!public|assets|favicon.ico)(.*)",
             "dest": "/dist/index.html"
         },
         {
@@ -19,12 +19,8 @@
             "continue": true
         },
         {
-            "src": "/static/(.*)",
-            "dest": "/dist/static/$1"
-        },
-        {
-            "src": "/(.*)\\.jpg",
-            "dest": "/dist/$1.jpg"
+            "src": "/public/(.*)",
+            "dest": "/dist/public/$1"
         },
         {
             "src": "/assets/(.*)",
