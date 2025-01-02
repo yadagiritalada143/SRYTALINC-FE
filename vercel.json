@@ -23,8 +23,8 @@
             "dest": "/dist/static/$1"
         },
         {
-            "src": "/assets/(.*)",
-            "dest": "/dist/assets/$1"
+            "src": "/assets/(.*)\\.(jpg|png|gif|jpeg)",
+            "dest": "/dist/assets/$1.$2"
         }
     ]
 }
