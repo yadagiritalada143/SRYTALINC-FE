@@ -8,7 +8,7 @@
     ],
     "routes": [
         {
-            "src": "/*.html",
+            "src": "/(.*)",
             "dest": "/dist/index.html"
         },
         {
