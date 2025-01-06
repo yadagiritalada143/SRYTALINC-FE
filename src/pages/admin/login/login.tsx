@@ -65,11 +65,7 @@ const AdminLogin = () => {
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-bold text-center mb-4">ADMIN LOGIN</h1>
           <img
-            src={
-              organizationConfig.organization_name === "srytal"
-                ? "public/logo.jpg"
-                : "/public/data-store.png"
-            }
+            src={organizationConfig.organization_theme.logo}
             className="mb-4 p-4 max-h-40 object-contain"
             alt={organizationConfig.organization_name}
           />
