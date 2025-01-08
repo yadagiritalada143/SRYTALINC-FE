@@ -38,8 +38,9 @@ const Header = () => {
           </div>
         </div>
         <div
-          className={`${opened ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-            } lg:max-h-none lg:opacity-100 overflow-hidden transition-all duration-500 ease-in-out lg:flex justify-center items-center text-center w-full mt-4 lg:mt-0 space-y-4 lg:space-y-0 lg:space-x-8`}
+          className={`${
+            opened ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          } lg:max-h-none lg:opacity-100 overflow-hidden transition-all duration-500 ease-in-out lg:flex justify-center items-center text-center w-full mt-4 lg:mt-0 space-y-4 lg:space-y-0 lg:space-x-8`}
         >
           <nav className="flex flex-col lg:flex-row gap-4 lg:gap-8">
             <Link
@@ -135,7 +136,10 @@ const Header = () => {
         </div>
         <div className="flex justify-center space-x-3 mt-4 lg:mt-0 items-center">
           <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
-            <a href="https://www.linkedin.com/company/srytal-systems-india-pvt-ltd">
+            <a
+              href="https://www.linkedin.com/company/srytal-systems-india-pvt-ltd"
+              target="_blank"
+            >
               <IconBrandLinkedin size={28} />
             </a>
           </div>
