@@ -8,8 +8,10 @@ import WhyChooseUs from "../../components/landing/choose/choose";
 import ContactComponent from "../../components/landing/contact/contact";
 import Technologies from "../../components/landing/technologies/technologies";
 import VisitorCount from "../../components/landing/count/count";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Landing = () => {
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
   return (
     <div className="relative  w-full h-screen bg-gray-900 text-white overflow-x-hidden">
       <div className="fixed top-10 left-10 w-32 h-32 bg-purple-500 rounded-full opacity-50 animate-move1"></div>
@@ -17,14 +19,14 @@ const Landing = () => {
       <div className="fixed bottom-10 left-20 w-48 h-48 bg-blue-500 rounded-full opacity-50 animate-move3"></div>
 
       <div
-        className="relative h-screen flex flex-col justify-between"
+        className="flex flex-col justify-between"
         style={{
           backgroundImage: "url(public/wal2.jpg)",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
           backgroundAttachment: "fixed",
-          height: "120dvh",
+          height: isSmallScreen ? "140dvh" : "120dvh",
         }}
       >
         <Header />

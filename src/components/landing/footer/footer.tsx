@@ -29,7 +29,7 @@ const Footer = () => {
               {SocialIcons.map((icon, index) => {
                 const IconComponent = icon.icon;
                 return (
-                  <a href={icon.link} key={index}>
+                  <a href={icon.link} key={index} target="_blank">
                     <TechIcon
                       icon={IconComponent}
                       name={icon.name}
@@ -41,9 +41,6 @@ const Footer = () => {
                 );
               })}
             </div>
-            <p className="text-xs text-gray-400">
-              &copy; SRYTAL Systems India Pvt Ltd 2024 | All Rights Reserved
-            </p>
           </div>
 
           <div className="flex flex-wrap gap-8">
@@ -109,6 +106,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <p className="text-xs text-gray-400">
+        &copy; SRYTAL Systems India Pvt Ltd 2024 | All Rights Reserved
+      </p>
     </div>
   );
 };
