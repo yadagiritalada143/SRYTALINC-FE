@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-
+import { HashLink as Link } from "react-router-hash-link";
 const Main = () => {
   return (
     <main className="relative h-[130dvh] flex flex-col justify-center items-center px-4">
@@ -21,8 +20,9 @@ const Main = () => {
       </p>
 
       <Link
+        smooth={true}
         className="p-2 mt-4 bg-transparent text-white hover:shadow-lg hover:shadow-purple-400 shadow-sm shadow-purple-400 rounded-md animate-slideInLeft"
-        to="/about"
+        to="#about"
       >
         Get Started
       </Link>
