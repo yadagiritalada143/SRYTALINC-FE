@@ -135,7 +135,10 @@ const Header = () => {
         </div>
         <div className="flex justify-center space-x-3 mt-4 lg:mt-0 items-center">
           <div className="text-white animate-bounce cursor-pointer hover:text-purple-400">
-            <a href="https://www.linkedin.com/company/srytal-systems-india-pvt-ltd">
+            <a
+              href="https://www.linkedin.com/company/srytal-systems-india-pvt-ltd"
+              target="_blank"
+            >
               <IconBrandLinkedin size={28} />
             </a>
           </div>
