@@ -70,11 +70,7 @@ const EmployeeLogin = () => {
             EMPLOYEE LOGIN
           </h1>
           <img
-            src={
-              organizationConfig.organization_name === "srytal"
-                ? "public/logo.jpg"
-                : "public/data-store.png"
-            }
+            src={organizationConfig.organization_theme.logo}
             className="mb-4 p-4 max-h-40 object-contain"
             alt={organizationConfig.organization_name}
           />
