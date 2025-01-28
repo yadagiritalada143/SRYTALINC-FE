@@ -12,7 +12,7 @@ const apiClient = axios.create({
 export const getOrganizations = async () => {
   try {
     const response = await apiClient.get(
-      "/superadmin/getAllOrganizationsBySuperadmin"
+      "superadmin/getAllOrganisationsBySuperadmin"
     );
     return response.data;
   } catch (error) {
@@ -25,7 +25,7 @@ export const registerAdmin = async (
 ) => {
   try {
     const response = await apiClient.post(
-      "/superadmin/registerAdminBySuperAdmin",
+      "/admin/registerEmployeeByAdmin",
       adminDetails
     );
     return response.data;
