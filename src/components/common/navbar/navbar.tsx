@@ -1,4 +1,9 @@
-import { Icon, IconBackpack, IconBuildings, IconX } from "@tabler/icons-react";
+import {
+  Icon,
+  IconUsersGroup,
+  // IconBackpack, IconBuildings,
+  IconX,
+} from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { memo } from "react";
@@ -47,7 +52,7 @@ const Navbar = ({
       <div className="flex flex-col mt-6  px-2">
         {localStorage.getItem("userRole") === "recruiter" && (
           <>
-            <NavLink
+            {/* <NavLink
               to={`/${organizationConfig.organization_name}/employee/dashboard`}
               end
               className={({ isActive }) =>
@@ -67,8 +72,8 @@ const Navbar = ({
             >
               <IconBuildings size={24} className="mr-2" />
               <span>Manage Companies</span>
-            </NavLink>
-            <NavLink
+            </NavLink> */}
+            {/* <NavLink
               to={`/${organizationConfig.organization_name}/employee/dashboard/poolEmployees`}
               end
               className={({ isActive }) =>
@@ -88,6 +93,27 @@ const Navbar = ({
             >
               <IconBackpack size={24} className="mr-2" />
               <span>Pool Employees</span>
+            </NavLink> */}
+            <NavLink
+              to={`/${organizationConfig.organization_name}/employee/dashboard`}
+              end
+              className={({ isActive }) =>
+                `flex items-center  p-4 py-6 hover:shadow-xl ${
+                  isActive ? "font-bold" : ""
+                } hover:bg-opacity-75 transition-all`
+              }
+              style={({ isActive }) => ({
+                backgroundColor: isActive
+                  ? organizationConfig.organization_theme.theme.backgroundColor
+                  : "transparent",
+                color: isActive
+                  ? theme.colors.primary[5]
+                  : organizationConfig.organization_theme.theme.button
+                      .textColor,
+              })}
+            >
+              <IconUsersGroup size={24} className="mr-2" />
+              <span>Pool Candidates</span>
             </NavLink>
           </>
         )}

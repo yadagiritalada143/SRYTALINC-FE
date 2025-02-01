@@ -11,7 +11,7 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
 
   return (
     <ColorDiv>
-      <div className="flex justify-between mx-8 my-8">
+      <div className="flex  mx-8 my-8">
         <ProfileImageUploader organizationConfig={organizationConfig} />
         <div>
           <p>First Name:{details?.firstName}</p>
@@ -38,9 +38,6 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
             <Tabs.Tab className="font-bold" value="bankDetails">
               Bank Details
             </Tabs.Tab>
-            <Tabs.Tab className="font-bold" value="general">
-              General
-            </Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel
@@ -60,6 +57,9 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
                   ))
                 : "N/A"}
             </p>
+            <p style={{ marginBottom: "10px" }}>
+              Blood Group: {details.bloodGroup?.type || "N/A"}
+            </p>
           </Tabs.Panel>
 
           <Tabs.Panel
@@ -77,17 +77,6 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
               {details.bankDetailsInfo?.accountHolderName || "N/A"}
             </p>
             <p>IFSC Code: {details.bankDetailsInfo?.ifscCode || "N/A"}</p>
-          </Tabs.Panel>
-
-          <Tabs.Panel
-            style={{
-              padding: "10px 0",
-            }}
-            value="general"
-          >
-            <p style={{ marginBottom: "10px" }}>
-              Blood Group: {details.bloodGroup?.type || "N/A"}
-            </p>
           </Tabs.Panel>
         </Tabs>
       </div>

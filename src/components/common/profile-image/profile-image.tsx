@@ -158,7 +158,7 @@ const ProfileImageUploader = ({
       {image && (
         <label htmlFor="file-upload" className="cursor-pointer">
           <Button onClick={handleUploadImage}>
-            <IconUpload size={20} /> Upload New Image
+            <IconUpload size={20} /> Upload Image
           </Button>
         </label>
       )}

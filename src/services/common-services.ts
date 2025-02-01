@@ -1,6 +1,5 @@
 import axios from "axios";
 import { LoginForm } from "../forms/login";
-import { AddEmployeeForm } from "../forms/add-employee";
 import { ContactForm } from "../forms/contact";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;

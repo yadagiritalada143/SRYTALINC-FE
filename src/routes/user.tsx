@@ -24,6 +24,9 @@ import { ModalsProvider } from "@mantine/modals";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { organizationThemeAtom } from "../atoms/organization-atom";
 import { organizationEmployeeUrls } from "../utils/common/constants";
+import PoolCandidateList from "../components/user/dashboard/candidate/candidate";
+import AddPoolCandidate from "../components/user/dashboard/add-candidate/add-candidate";
+import UpdatePoolCandidateForm from "../components/user/dashboard/update-candidate/update-candidate";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -119,6 +122,28 @@ const EmployeeRoutes = () => {
               <Route element={<RecruiterProtectedRoutes />}>
                 <Route
                   path=""
+                  element={
+                    <PoolCandidateList
+                      organizationConfig={organizationConfig}
+                    />
+                  }
+                />
+                <Route
+                  path="add_pool_candidate"
+                  element={
+                    <AddPoolCandidate organizationConfig={organizationConfig} />
+                  }
+                />
+                <Route
+                  path=":candidateId/edit_pool_candidate"
+                  element={
+                    <UpdatePoolCandidateForm
+                    // organizationConfig={organizationConfig}
+                    />
+                  }
+                />
+                <Route
+                  path="pool_companies"
                   element={
                     <Companies organizationConfig={organizationConfig} />
                   }
