@@ -77,9 +77,9 @@ const Employees = ({
           </div>
         </div>
 
-        <div className="mx-4 my-4">
+        <div className="mx-auto my-4 w-2/3 ">
           <TextInput
-            placeholder="Search employees by name, email, or mobile"
+            placeholder="Search employees by Name, Email, or Mobile"
             rightSection={<IconSearch />}
             value={searchQuery}
             onChange={handleSearch}

@@ -42,18 +42,18 @@ const Header = ({
               <Menu.Item
                 className="hover:bg-transparent  hover:text-inherit tranform transition-all duration-150 hover:scale-110"
                 leftSection={
-                  <IconSettings style={{ width: rem(14), height: rem(14) }} />
-                }
-              >
-                Settings
-              </Menu.Item>
-              <Menu.Item
-                className="hover:bg-transparent  hover:text-inherit tranform transition-all duration-150 hover:scale-110"
-                leftSection={
                   <IconUser style={{ width: rem(14), height: rem(14) }} />
                 }
               >
                 Profile
+              </Menu.Item>
+              <Menu.Item
+                className="hover:bg-transparent  hover:text-inherit tranform transition-all duration-150 hover:scale-110"
+                leftSection={
+                  <IconSettings style={{ width: rem(14), height: rem(14) }} />
+                }
+              >
+                Settings
               </Menu.Item>
               <Menu.Label>Actions</Menu.Label>
               <Menu.Item

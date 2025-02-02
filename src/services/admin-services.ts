@@ -41,6 +41,27 @@ export const updateEmployeeDetailsByAdmin = async (
   }
 };
 
+export const deleteEmployeeByAdmin = async (data: {
+  id: string;
+  confirmDelete: boolean;
+}) => {
+  const adminToken = localStorage.getItem("adminToken");
+  console.log(data);
+  try {
+    const response = await apiClient.post(
+      "/admin/deleteEmployeeByAdmin",
+      data,
+      {
+        headers: { auth_token: adminToken },
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getEmployeeDetailsByAdmin = async (id: string) => {
   try {
     const response = await apiClient.get(
@@ -66,3 +87,35 @@ export const getAllEmployeeDetailsByAdmin = async () => {
     throw error;
   }
 };
+
+export const getAllBloodGroupByAdmin = async () => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    if (!adminToken) {
+      throw "Not authorized to access";
+    }
+    const response = await apiClient("/admin/getAllBloodGroupsByAdmin", {
+      headers: { auth_token: adminToken },
+    });
+    return response.data.bloodGroupList;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const addBloodGroupByAdmin = async (data: { type: string }) => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.post("/admin/addBloodGroupByAdmin", data, {
+      headers: { auth_token: adminToken },
+    });
+
+    return response.data.bloodGroupList;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateBloodGroupByAdmin = () => {};
+
+export const deleteBloodGroupByAdmin = () => {};
