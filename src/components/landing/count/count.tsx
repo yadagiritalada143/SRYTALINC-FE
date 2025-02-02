@@ -4,7 +4,7 @@ import { IconEye } from "@tabler/icons-react";
 import { getVisitorCount } from "../../../services/common-services";
 
 const VisitorCount = () => {
-  const [count, setCount] = useState<number>(50);
+  const [count, setCount] = useState<number>(0);
   const [displayedCount, setDisplayedCount] = useState<number>(0);
   const countRef = useRef<HTMLDivElement>(null);
 

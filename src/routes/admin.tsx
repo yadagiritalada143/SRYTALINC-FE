@@ -17,6 +17,7 @@ import AdminProfile from "../components/admin/dashboard/profile/profile";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../atoms/organization-atom";
 import { organizationAdminUrls } from "../utils/common/constants";
+import BloodGroupTable from "../components/admin/dashboard/blood-group/all-blood";
 
 const AdminRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -116,6 +117,10 @@ const AdminRoutes = () => {
               element={
                 <UpdateEmployee organizationConfig={organizationConfig} />
               }
+            />
+            <Route
+              path="blood-group-management"
+              element={<BloodGroupTable />}
             />
           </Route>
         </Route>

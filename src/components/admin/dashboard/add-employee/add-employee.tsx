@@ -163,7 +163,7 @@ const AddEmployee = ({
               }
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Logging in..." : "Create Employee"}
+              {isSubmitting ? "Creating..." : "Create Employee"}
             </Button>
           </div>
         </form>
