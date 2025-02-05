@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { IconCircleDashedCheck } from "@tabler/icons-react";
+import { IconCircleDashedCheck, IconX } from "@tabler/icons-react";
 import { useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../../atoms/organization-atom";
 import { useMantineTheme } from "@mantine/core";
@@ -15,13 +15,22 @@ export const useCustomToast = () => {
     toast(message, {
       style: {
         color: theme.colors.primary[2],
+
         backgroundColor:
           organizationConfig.organization_theme.theme.backgroundColor,
       },
       progressStyle: {
-        background: theme.colors.primary[8],
+        background: theme.colors.primary[2],
       },
       icon,
+      closeButton: (
+        <IconX
+          style={{ cursor: "pointer" }}
+          width={20}
+          height={20}
+          onClick={() => toast.dismiss()}
+        />
+      ),
     });
   };
 

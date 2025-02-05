@@ -1,11 +1,11 @@
-import { Button, Loader, Table, TextInput, Popover } from "@mantine/core";
+import { Button, Loader, Table } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllPoolCandidatesByEmployee } from "../../../../services/user-services";
-import { IconSearch } from "@tabler/icons-react";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 import { OrganizationConfig } from "../../../../interfaces/organization";
+import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
 
 const PoolCandidateList = ({
   organizationConfig,
@@ -67,16 +67,7 @@ const PoolCandidateList = ({
         </div>
       </div>
 
-      {/* Centered search bar with fixed width */}
-      <div className="w-full max-w-md mx-auto">
-        <TextInput
-          placeholder="Search by Name, Email, or Phone"
-          rightSection={<IconSearch />}
-          value={search}
-          onChange={handleSearch}
-          className="my-4"
-        />
-      </div>
+      <SearchBarFullWidht search={search} handleSearch={handleSearch} />
 
       <div className="overflow-x-auto shadow-lg rounded-lg">
         <Table className="min-w-full table-auto border-separate border-spacing-2">
@@ -105,19 +96,7 @@ const PoolCandidateList = ({
                   key={candidate._id}
                   className="border-b hover:shadow-lg transition-all duration-300"
                 >
-                  <Popover position="top" withArrow shadow="md">
-                    <Popover.Target>
-                      <td className="px-4 py-2">{candidate.candidateName}</td>
-                    </Popover.Target>
-                    <Popover.Dropdown>
-                      <div className="text-sm">
-                        {candidate.comments?.length > 0
-                          ? candidate.comments[candidate.comments.length - 1]
-                              .comment || ""
-                          : "No comments added"}
-                      </div>
-                    </Popover.Dropdown>
-                  </Popover>
+                  <td className="px-4 py-2">{candidate.candidateName}</td>
                   <td className="px-4 py-2">{candidate.contact.email}</td>
                   <td className="px-4 py-2">{candidate.contact.phone}</td>
                   <td className="px-4 py-2">

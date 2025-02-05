@@ -136,11 +136,7 @@ const EmployeeRoutes = () => {
                 />
                 <Route
                   path=":candidateId/edit_pool_candidate"
-                  element={
-                    <UpdatePoolCandidateForm
-                    // organizationConfig={organizationConfig}
-                    />
-                  }
+                  element={<UpdatePoolCandidateForm />}
                 />
                 <Route
                   path="pool_companies"

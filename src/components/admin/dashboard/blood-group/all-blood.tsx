@@ -1,38 +1,38 @@
 import { useState, useEffect } from "react";
 import {
-  Table,
   Button,
   Group,
-  ActionIcon,
   Text,
   Loader,
   Pagination,
   Modal,
   Box,
   TextInput,
-  Card,
-  Title,
-  Container,
 } from "@mantine/core";
 import { toast } from "react-toastify";
 import { useDisclosure } from "@mantine/hooks";
-import { IconEdit, IconTrash, IconPlus } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import {
   getAllBloodGroupByAdmin,
   addBloodGroupByAdmin,
   updateBloodGroupByAdmin,
   deleteBloodGroupByAdmin,
 } from "../../../../services/admin-services";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
+import { useMantineTheme } from "@mantine/core";
+import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
 
 const BloodGroupTable = () => {
   const [bloodGroups, setBloodGroups] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [filteredBloodGroups, setFilteredBloodGroups] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [activePage, setActivePage] = useState(1);
   const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const [search, setSearch] = useState("");
+  const theme = useMantineTheme();
 
   const [editModalOpened, { open: openEditModal, close: closeEditModal }] =
     useDisclosure(false);
@@ -49,15 +49,16 @@ const BloodGroupTable = () => {
   }, []);
 
   const fetchBloodGroups = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const data = await getAllBloodGroupByAdmin();
       setBloodGroups(data);
+      setFilteredBloodGroups(data);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to fetch blood groups");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +73,6 @@ const BloodGroupTable = () => {
   };
 
   const confirmEdit = async () => {
-    setIsUpdating(true);
     try {
       await updateBloodGroupByAdmin();
       toast.success("Blood group updated successfully");
@@ -81,14 +81,11 @@ const BloodGroupTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to update blood group");
-    } finally {
-      setIsUpdating(false);
     }
   };
 
   // Confirm delete
   const confirmDelete = async () => {
-    setIsDeleting(true);
     try {
       await deleteBloodGroupByAdmin();
       toast.success("Blood group deleted successfully");
@@ -97,14 +94,11 @@ const BloodGroupTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to delete blood group");
-    } finally {
-      setIsDeleting(false);
     }
   };
 
   // Handle add blood group
   const handleAdd = async () => {
-    setIsAdding(true);
     try {
       await addBloodGroupByAdmin({ type: newGroupName });
       toast.success("Blood group added successfully");
@@ -114,96 +108,106 @@ const BloodGroupTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to add blood group");
-    } finally {
-      setIsAdding(false);
     }
   };
 
   // Pagination
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(bloodGroups.length / itemsPerPage);
-  const paginatedData = bloodGroups.slice(
+  const totalPages = Math.ceil(filteredBloodGroups.length / itemsPerPage);
+  const paginatedData = filteredBloodGroups.slice(
     (activePage - 1) * itemsPerPage,
     activePage * itemsPerPage
   );
 
-  return (
-    <Container size="lg" py="xl">
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
-        {/* Header */}
-        <Group justify="space-between" mb="md">
-          <Title order={2}>Blood Group Management</Title>
-          <Button
-            onClick={openAddModal}
-            variant="filled"
-            color="blue"
-            leftSection={<IconPlus size={20} />}
-          >
-            Add New Blood Group
-          </Button>
-        </Group>
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value.toLowerCase();
+    setSearch(query);
 
-        {/* Loading State */}
-        {loading ? (
-          <Box
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "200px",
-            }}
-          >
-            <Loader size="lg" />
-          </Box>
+    const filtered = bloodGroups.filter((blood) => {
+      blood.type.toString().toLowerCase();
+      blood.type.toString().trim();
+      return (
+        blood.type.toString().includes(query) ||
+        blood.id.toString().includes(query)
+      );
+    });
+    setFilteredBloodGroups(filtered);
+  };
+
+  return (
+    <div
+      style={{
+        color: organizationConfig.organization_theme.theme.button.textColor,
+        fontFamily: theme.fontFamily,
+      }}
+      className="h-auto"
+    >
+      <div>
+        <div className="flex justify-between items-center mx-4 my-4">
+          <h1 className="text-2xl font-bold text-center">
+            Manage Blood Groups
+          </h1>
+          <div>
+            <Button onClick={openAddModal}>Add Blood Group</Button>
+          </div>
+        </div>
+
+        <SearchBarFullWidht search={search} handleSearch={handleSearch} />
+
+        {isLoading ? (
+          <div className="flex justify-center items-center h-48">
+            <Loader
+              size="xl"
+              color={organizationConfig.organization_theme.theme.button.color}
+            />
+          </div>
         ) : (
-          <>
-            {/* Table */}
-            <Table striped highlightOnHover verticalSpacing="sm">
-              <thead>
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-fixed text-center shadow-md">
+              <colgroup>
+                <col className="w-56" />
+                <col className="w-32" />
+                <col className="w-32" />
+              </colgroup>
+              <thead className="text-xs uppercase">
                 <tr>
-                  <th style={{ textAlign: "center" }}>Name</th>
-                  <th style={{ textAlign: "center" }}>Actions</th>
+                  <th className="p-2 border">Id</th>
+                  <th className="p-2 border">Blood Group</th>
+                  <th className="p-2 border">Action</th>
                 </tr>
               </thead>
-              <tbody>
-                {paginatedData.map((group) => (
-                  <tr key={group.id}>
-                    <td style={{ textAlign: "center" }}>{group.type}</td>
-                    <td style={{ textAlign: "center" }}>
-                      <Group gap="xs" justify="center">
-                        <ActionIcon
-                          color="blue"
-                          onClick={() => handleEdit(group)}
-                          title="Edit"
-                        >
-                          <IconEdit size={20} />
-                        </ActionIcon>
-                        <ActionIcon
-                          color="red"
-                          onClick={() => handleDelete(group.id)}
-                          title="Delete"
-                        >
-                          <IconTrash size={20} />
-                        </ActionIcon>
-                      </Group>
+              <tbody className="text-sm">
+                {paginatedData.map((bloodGroup) => (
+                  <tr
+                    key={bloodGroup._id}
+                    className="hover:bg-slate-200 hover:text-black"
+                  >
+                    <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
+                      {bloodGroup.id}
+                    </td>
+                    <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
+                      {bloodGroup.type}
+                    </td>
+                    <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
+                      <Button onClick={() => handleEdit(bloodGroup)}>
+                        <IconEdit />
+                      </Button>
                     </td>
                   </tr>
                 ))}
+                {totalPages > 1 && (
+                  <Pagination
+                    total={totalPages}
+                    value={activePage}
+                    onChange={setActivePage}
+                    mt="md"
+                  />
+                )}
               </tbody>
-            </Table>
-
-            {totalPages > 1 && (
-              <Pagination
-                total={totalPages}
-                value={activePage}
-                onChange={setActivePage}
-                mt="md"
-              />
-            )}
-          </>
+            </table>
+          </div>
         )}
-      </Card>
-
+      </div>
       <Modal
         opened={addModalOpened}
         onClose={closeAddModal}
@@ -223,9 +227,7 @@ const BloodGroupTable = () => {
             <Button variant="outline" onClick={closeAddModal}>
               Cancel
             </Button>
-            <Button onClick={handleAdd} loading={isAdding}>
-              Add
-            </Button>
+            <Button onClick={handleAdd}>Add</Button>
           </Group>
         </Box>
       </Modal>
@@ -250,8 +252,9 @@ const BloodGroupTable = () => {
             <Button variant="outline" onClick={closeEditModal}>
               Cancel
             </Button>
-            <Button onClick={confirmEdit} loading={isUpdating}>
-              Save Changes
+            <Button onClick={confirmEdit}>Save Changes</Button>
+            <Button bg="red" onClick={confirmDelete}>
+              Delete
             </Button>
           </Group>
         </Box>
@@ -268,12 +271,12 @@ const BloodGroupTable = () => {
           <Button variant="outline" onClick={closeDeleteModal}>
             Cancel
           </Button>
-          <Button color="red" onClick={confirmDelete} loading={isDeleting}>
+          <Button color="red" onClick={() => handleDelete("id")}>
             Delete
           </Button>
         </Group>
       </Modal>
-    </Container>
+    </div>
   );
 };
 

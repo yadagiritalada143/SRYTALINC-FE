@@ -1,12 +1,13 @@
 import { OrganizationConfig } from "../../../../interfaces/organization";
-import { Button, useMantineTheme, Loader, TextInput } from "@mantine/core";
-import { IconEdit, IconSearch, IconUser } from "@tabler/icons-react";
+import { Button, useMantineTheme, Loader } from "@mantine/core";
+import { IconEdit, IconUser } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EmployeeInterface } from "../../../../interfaces/employee";
 import { getAllEmployeeDetailsByAdmin } from "../../../../services/admin-services";
 import { toast } from "react-toastify";
 import { organizationAdminUrls } from "../../../../utils/common/constants";
+import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
 
 const Employees = ({
   organizationConfig,
@@ -77,15 +78,7 @@ const Employees = ({
           </div>
         </div>
 
-        <div className="mx-auto my-4 w-2/3 ">
-          <TextInput
-            placeholder="Search employees by Name, Email, or Mobile"
-            rightSection={<IconSearch />}
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-        </div>
-
+        <SearchBarFullWidht search={searchQuery} handleSearch={handleSearch} />
         {isLoading ? (
           <div className="flex justify-center items-center h-48">
             <Loader

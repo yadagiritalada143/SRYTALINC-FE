@@ -107,7 +107,7 @@ const EmployeeDashboard = ({
         <div
           style={{
             color: theme.colors.primary[8],
-            backgroundImage: `linear-gradient(to right, ${theme.colors.primary[0]}, ${theme.colors.primary[7]})`,
+            backgroundImage: `linear-gradient(to right, ${theme.colors.primary[1]}, ${theme.colors.primary[5]})`,
             fontFamily: theme.fontFamily,
           }}
           className="flex-grow p-6 transition-all duration-300 z-20 overflow-hidden"
