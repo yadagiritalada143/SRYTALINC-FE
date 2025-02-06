@@ -21,7 +21,10 @@ const App: React.FC = () => {
             }
           />
           <Route path="/:organization/admin/*" element={<AdminRoutes />} />
-          <Route path="/:organization/employee*" element={<EmployeeRoutes />} />
+          <Route
+            path="/:organization/employee/*"
+            element={<EmployeeRoutes />}
+          />
           <Route path="/superadmin/*" element={<SuperAdminRoutes />} />
         </Routes>
       </Router>
