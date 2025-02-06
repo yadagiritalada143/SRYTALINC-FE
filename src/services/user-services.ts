@@ -133,13 +133,15 @@ export const getPoolCandidateByRecruiter = async (id: string) => {
   const token = localStorage.getItem("employeeToken");
 
   try {
-    const response = await apiClient.get(`/recruiter/${id}/getPoolCandidate`, {
-      headers: { auth_token: token },
-    });
-    console.log(response.data);
-    return response.data;
+    const response = await apiClient.get(
+      `/recruiter/getTalentPoolCandidateById/${id}`,
+      {
+        headers: { auth_token: token },
+      }
+    );
+
+    return response.data.talentPoolCandidateDetails;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
