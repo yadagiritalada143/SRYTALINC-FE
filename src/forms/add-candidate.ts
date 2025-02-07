@@ -20,7 +20,7 @@ export const candidateSchema = z.object({
   relevantYearsOfExperience: z
     .number()
     .min(0, "Relevant experience must be positive"),
-  evaluatedSkill: z.string().min(1, "At least one skill is required"),
+  evaluatedSkill: z.string(),
   comments: z.array(commentSchema).min(1),
 });
 

@@ -87,10 +87,11 @@ const BloodGroupTable = () => {
   // Confirm delete
   const confirmDelete = async () => {
     try {
-      await deleteBloodGroupByAdmin();
+      await deleteBloodGroupByAdmin(selectedGroup.id);
       toast.success("Blood group deleted successfully");
       fetchBloodGroups();
       closeDeleteModal();
+      closeEditModal();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to delete blood group");
@@ -120,7 +121,7 @@ const BloodGroupTable = () => {
   );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearch(query);
 
     const filtered = bloodGroups.filter((blood) => {
@@ -165,7 +166,7 @@ const BloodGroupTable = () => {
           <div className="overflow-x-auto">
             <table className="min-w-full table-fixed text-center shadow-md">
               <colgroup>
-                <col className="w-56" />
+                <col className="w-16" />
                 <col className="w-32" />
                 <col className="w-32" />
               </colgroup>
@@ -177,13 +178,13 @@ const BloodGroupTable = () => {
                 </tr>
               </thead>
               <tbody className="text-sm">
-                {paginatedData.map((bloodGroup) => (
+                {paginatedData.map((bloodGroup, index) => (
                   <tr
                     key={bloodGroup._id}
                     className="hover:bg-slate-200 hover:text-black"
                   >
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
-                      {bloodGroup.id}
+                      {index + 1}
                     </td>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
                       {bloodGroup.type}
@@ -253,7 +254,7 @@ const BloodGroupTable = () => {
               Cancel
             </Button>
             <Button onClick={confirmEdit}>Save Changes</Button>
-            <Button bg="red" onClick={confirmDelete}>
+            <Button bg="red" onClick={() => handleDelete(selectedGroup.id)}>
               Delete
             </Button>
           </Group>
@@ -271,7 +272,7 @@ const BloodGroupTable = () => {
           <Button variant="outline" onClick={closeDeleteModal}>
             Cancel
           </Button>
-          <Button color="red" onClick={() => handleDelete("id")}>
+          <Button bg="red" onClick={confirmDelete}>
             Delete
           </Button>
         </Group>

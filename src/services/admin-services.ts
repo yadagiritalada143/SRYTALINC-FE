@@ -118,4 +118,18 @@ export const addBloodGroupByAdmin = async (data: { type: string }) => {
 
 export const updateBloodGroupByAdmin = () => {};
 
-export const deleteBloodGroupByAdmin = () => {};
+export const deleteBloodGroupByAdmin = async (id: string) => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.delete(
+      `/admin/deleteBloodGroupByAdmin/${id}`,
+      {
+        headers: { auth_token: adminToken },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
