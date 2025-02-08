@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { OrganizationConfig } from "../../../interfaces/organization";
 import { Outlet } from "react-router-dom";
 import { IconMenu2 } from "@tabler/icons-react";
 import EmployeeNavbar from "../../../components/common/navbar/navbar";
@@ -16,16 +15,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { updatePasswordForEmployee } from "../../../services/user-services";
 import { useMantineTheme } from "@mantine/core";
 import Header from "../../../components/common/header/header";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+import { userDetailsAtom } from "../../../atoms/user";
 
-const EmployeeDashboard = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const EmployeeDashboard = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const user = useRecoilValue(userDetailsAtom);
   const {
     register,
     formState: { errors },
@@ -37,7 +37,7 @@ const EmployeeDashboard = ({
   const toggleDrawer = () => setDrawerOpen(!isDrawerOpen);
 
   useEffect(() => {
-    const passwordReset = localStorage.getItem("passwordReset");
+    const passwordReset = user.passwordResetRequired;
     if (passwordReset === "true") {
       open();
     }
@@ -48,7 +48,6 @@ const EmployeeDashboard = ({
       updatePasswordForEmployee(data)
         .then((response) => {
           if (response.success) {
-            localStorage.removeItem("passwordReset");
             close();
           }
         })

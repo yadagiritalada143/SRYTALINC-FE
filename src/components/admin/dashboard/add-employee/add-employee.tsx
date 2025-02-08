@@ -7,21 +7,19 @@ import {
   AddEmployeeForm,
   addEmployeeSchema,
 } from "../../../../forms/add-employee";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { registerEmployee } from "../../../../services/admin-services";
 import axios from "axios";
 import { IconCircleDashedCheck, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router";
 import { organizationAdminUrls } from "../../../../utils/common/constants";
 import { BgDiv } from "../../../common/style-components/bg-div";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const AddEmployee = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AddEmployee = () => {
   const navigate = useNavigate();
   const theme = useMantineTheme();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
   const {
     register,
     handleSubmit,

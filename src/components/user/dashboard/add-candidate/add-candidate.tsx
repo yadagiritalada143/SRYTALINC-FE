@@ -16,19 +16,16 @@ import {
   candidateSchema,
 } from "../../../../forms/add-candidate";
 import { BgDiv } from "../../../common/style-components/bg-div";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { toast } from "react-toastify";
 import { addPoolCandidateByRecruiter } from "../../../../services/user-services";
 import { useNavigate } from "react-router-dom";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 import { useCustomToast } from "../../../../utils/common/toast";
 import { DateTimePicker } from "@mantine/dates";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const AddPoolCandidate = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AddPoolCandidate = () => {
   const {
     control,
     formState: { errors, isLoading },
@@ -46,6 +43,7 @@ const AddPoolCandidate = ({
   });
   const navigate = useNavigate();
   const { showSuccessToast } = useCustomToast();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   const [skills, setSkills] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState("");

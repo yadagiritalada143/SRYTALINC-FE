@@ -103,21 +103,10 @@ const AdminRoutes = () => {
         <Route path="/login" element={<AdminLogin />} />
         <Route element={<AdminProtectedRoutes />}>
           <Route path="/dashboard" element={<AdminDashboard />}>
-            <Route
-              path="addemployee"
-              element={<AddEmployee organizationConfig={organizationConfig} />}
-            />
-            <Route
-              path=""
-              element={<Employees organizationConfig={organizationConfig} />}
-            />
+            <Route path="addemployee" element={<AddEmployee />} />
+            <Route path="" element={<Employees />} />
             <Route path="profile" element={<AdminProfile />} />
-            <Route
-              path="update/:employeeId"
-              element={
-                <UpdateEmployee organizationConfig={organizationConfig} />
-              }
-            />
+            <Route path="update/:employeeId" element={<UpdateEmployee />} />
             <Route
               path="blood-group-management"
               element={<BloodGroupTable />}
@@ -130,7 +119,7 @@ const AdminRoutes = () => {
 };
 
 const AdminProtectedRoutes = () => {
-  const token = localStorage.getItem("adminToken");
+  const token = localStorage.getItem("auth_token");
   const userRole = localStorage.getItem("userRole");
   const organizationConfig = useRecoilValue(organizationThemeAtom);
   const navigate = useNavigate();

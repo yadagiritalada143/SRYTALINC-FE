@@ -5,6 +5,7 @@ export interface EmployeeInterface {
   email: string;
   mobileNumber: string;
   userRole: string;
+  passwordResetRequired: string;
   employeeRole: [{ _id: string; designation: string }];
   bloodGroup: { _id: string; type: string };
   employmentType: { _id: string; employmentType: string };

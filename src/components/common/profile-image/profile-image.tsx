@@ -36,7 +36,6 @@ const ProfileImageUploader = ({
   const [image, setImage] = useState<File>();
   const [imageUrl, setImageUrl] = useState<string | null>();
   const theme = useMantineTheme();
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -98,7 +97,7 @@ const ProfileImageUploader = ({
 
     // }
     if (image) {
-      uploadProfileImage(image)
+      uploadProfileImage(image, user.userRole)
         .then(() => {
           toast("Profile image uploaded successfully !", {
             style: {

@@ -1,4 +1,3 @@
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { Button, useMantineTheme, Loader } from "@mantine/core";
 import { IconEdit, IconUser } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -8,12 +7,10 @@ import { getAllEmployeeDetailsByAdmin } from "../../../../services/admin-service
 import { toast } from "react-toastify";
 import { organizationAdminUrls } from "../../../../utils/common/constants";
 import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const Employees = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const Employees = () => {
   const theme = useMantineTheme();
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<
@@ -22,6 +19,7 @@ const Employees = ({
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   useEffect(() => {
     getAllEmployeeDetailsByAdmin()

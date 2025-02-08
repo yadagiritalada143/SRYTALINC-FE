@@ -29,8 +29,6 @@ const AdminLogin = () => {
       const data = await login(formData);
       localStorage.setItem("adminToken", data.token);
       localStorage.setItem("userRole", data.userRole);
-      localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("lastName", data.lastName);
       if (data.userRole === "admin") {
         showSuccessToast("Login successfully !");
         navigate(

@@ -3,7 +3,6 @@ import {
   AddCompanyForm,
   addCompanySchema,
 } from "../../../../forms/add-company";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Select, TextInput, Modal } from "@mantine/core";
 import {
@@ -20,16 +19,17 @@ import { useMantineTheme } from "@mantine/core";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
+import { userDetailsAtom } from "../../../../atoms/user";
 
-const UpdateCompany = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const UpdateCompany = () => {
   const theme = useMantineTheme();
   const params = useParams();
   const companyId = params.companyId as string;
   const navigate = useNavigate();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const user = useRecoilValue(userDetailsAtom);
 
   const [comments, setComments] = useState<
     {
@@ -89,7 +89,7 @@ const UpdateCompany = ({
   };
 
   const handleAddComment = () => {
-    addCommentByRecruiter(companyId, newComment)
+    addCommentByRecruiter(companyId, newComment, user.userRole)
       .then(() => {
         toast("Your comment has been added !", {
           style: {
@@ -104,8 +104,8 @@ const UpdateCompany = ({
         });
         const comment = {
           userId: {
-            firstName: localStorage.getItem("firstName") as string,
-            lastName: localStorage.getItem("lastName") as string,
+            firstName: user.firstName,
+            lastName: user.lastName,
           },
           updateAt: new Date().toLocaleDateString(),
           comment: newComment,

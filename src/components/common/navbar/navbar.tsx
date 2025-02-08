@@ -8,7 +8,8 @@ import { NavLink } from "react-router-dom";
 import { OrganizationConfig } from "../../../interfaces/organization";
 import { memo } from "react";
 import { useMantineTheme } from "@mantine/core";
-
+import { userDetailsAtom } from "../../../atoms/user";
+import { useRecoilValue } from "recoil";
 const Navbar = ({
   organizationConfig,
   navLinks,
@@ -26,6 +27,7 @@ const Navbar = ({
   toggleDrawer: () => void;
 }) => {
   const theme = useMantineTheme();
+  const user = useRecoilValue(userDetailsAtom);
   return (
     <nav
       className="h-full flex flex-col shadow-lg"
@@ -50,7 +52,7 @@ const Navbar = ({
         </div>
       </div>
       <div className="flex flex-col mt-6  px-2">
-        {localStorage.getItem("userRole") === "recruiter" && (
+        {user.userRole === "recruiter" && (
           <>
             {/* <NavLink
               to={`/${organizationConfig.organization_name}/employee/dashboard`}

@@ -4,19 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllPoolCandidatesByEmployee } from "../../../../services/user-services";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const PoolCandidateList = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const PoolCandidateList = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [candidates, setCandidates] = useState([]);
   const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   useEffect(() => {
     getAllPoolCandidatesByEmployee()

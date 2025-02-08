@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { getCompanyDetails } from "../../../../services/user-services";
 import { toast } from "react-toastify";
 import { Button } from "@mantine/core";
@@ -9,15 +8,14 @@ import { CompaniesInterface } from "../../../../interfaces/companies";
 import moment from "moment";
 import { useMantineTheme } from "@mantine/core";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const Companies = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const Companies = () => {
   const theme = useMantineTheme();
   const [companies, setCompanies] = useState<CompaniesInterface[]>([]);
   const navigate = useNavigate();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   useEffect(() => {
     getCompanyDetails()
