@@ -100,7 +100,7 @@ const PoolCandidateList = ({
                   <td className="px-4 py-2">{candidate.contact.email}</td>
                   <td className="px-4 py-2">{candidate.contact.phone}</td>
                   <td className="px-4 py-2">
-                    {candidate.totalYearsOfExperience.$numberDecimal}
+                    {candidate.totalYearsOfExperience}
                   </td>
                   <td className="px-4 py-2">
                     {new Date(candidate.createdAt).toLocaleDateString()}
