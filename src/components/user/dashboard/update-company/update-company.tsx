@@ -89,7 +89,7 @@ const UpdateCompany = () => {
   };
 
   const handleAddComment = () => {
-    addCommentByRecruiter(companyId, newComment, user.userRole)
+    addCommentByRecruiter(companyId, newComment)
       .then(() => {
         toast("Your comment has been added !", {
           style: {

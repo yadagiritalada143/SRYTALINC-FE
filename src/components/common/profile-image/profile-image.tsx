@@ -97,7 +97,7 @@ const ProfileImageUploader = ({
 
     // }
     if (image) {
-      uploadProfileImage(image, user.userRole)
+      uploadProfileImage(image)
         .then(() => {
           toast("Profile image uploaded successfully !", {
             style: {
