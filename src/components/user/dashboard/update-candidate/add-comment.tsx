@@ -21,7 +21,7 @@ const AddComment = ({
 }) => {
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     reset,
   } = useForm<AddCommentForm>({
@@ -34,7 +34,6 @@ const AddComment = ({
     addPoolCandidateCommentByRecruiter(data)
       .then((data) => {
         setComments(data.comments);
-        reset(data);
         showSuccessToast("Comment added successfully");
         reset();
       })
@@ -110,7 +109,9 @@ const AddComment = ({
             </Grid.Col>
           </Grid>
           <Group justify="right" mt="lg">
-            <Button type="submit">Add Comment</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Adding" : "Add Comment"}
+            </Button>
           </Group>
         </form>
       </BgDiv>

@@ -38,7 +38,6 @@ import {
 } from "../../../../utils/common/constants";
 import AddComment from "./add-comment";
 import CommentsTable from "./comments-table";
-import { userDetailsAtom } from "../../../../atoms/user";
 
 const UpdatePoolCandidateForm = () => {
   const [skills, setSkills] = useState<string[]>([]);
@@ -46,11 +45,10 @@ const UpdatePoolCandidateForm = () => {
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState<PoolCandidatesComments[]>([]);
   const organizationConfig = useRecoilValue(organizationThemeAtom);
-  const user = useRecoilValue(userDetailsAtom);
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     getValues,
     handleSubmit,
@@ -93,18 +91,19 @@ const UpdatePoolCandidateForm = () => {
     updatePoolCandidateByRecruiter(data)
       .then(() => {
         toast.success("Candidate updated successfully!");
-        if (user.userRole === "admin") {
+        if (localStorage.getItem("userRole") === "admin") {
           navigate(
             `${organizationAdminUrls(
               organizationConfig.organization_name
             )}/dashboard`
           );
+        } else {
+          navigate(
+            `${organizationEmployeeUrls(
+              organizationConfig.organization_name
+            )}/dashboard`
+          );
         }
-        navigate(
-          `${organizationEmployeeUrls(
-            organizationConfig.organization_name
-          )}/dashboard`
-        );
       })
       .catch(() => {
         toast.error("Failed to update candidate.");
@@ -222,26 +221,21 @@ const UpdatePoolCandidateForm = () => {
               </Grid.Col>
             </Grid>
           </Container>
-          {localStorage.getItem("userRole") === "recruiter" ? (
-            <Group justify="right" mt="lg">
-              <Button type="submit">Update Candidate</Button>
-            </Group>
-          ) : (
-            <div></div>
-          )}
+
+          <Group justify="right" mt="lg">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Updating" : "Update Candidate"}
+            </Button>
+          </Group>
         </form>
       </BgDiv>
 
-      {localStorage.getItem("userRole") === "recruiter" ? (
-        <AddComment
-          organizationConfig={organizationConfig}
-          candidateId={candidateId}
-          comments={comments}
-          setComments={setComments}
-        />
-      ) : (
-        <div></div>
-      )}
+      <AddComment
+        organizationConfig={organizationConfig}
+        candidateId={candidateId}
+        comments={comments}
+        setComments={setComments}
+      />
 
       <CommentsTable
         comments={comments}

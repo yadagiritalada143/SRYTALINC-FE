@@ -244,7 +244,7 @@ const AddPoolCandidate = () => {
           </Grid>
 
           <Group justify="flex-end" className="my-6">
-            <Button type="submit">
+            <Button type="submit" disabled={isLoading}>
               {isLoading ? "Adding..." : "Add Candidate"}
             </Button>
           </Group>

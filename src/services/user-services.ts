@@ -106,16 +106,19 @@ export const addCommentByRecruiter = async (id: string, comment: string) => {
 export const addPoolCandidateCommentByRecruiter = async (
   data: AddCommentForm
 ) => {
-  const token = localStorage.getItem("employeeToken");
   const userRole = localStorage.getItem("userRole");
+  let token;
+  if (userRole === "admin") {
+    token = localStorage.getItem("adminToken");
+  } else {
+    token = localStorage.getItem("employeeToken");
+  }
 
   try {
     if (!token) {
       throw "Not authorized, Please login and try again";
     }
-    if (userRole !== "recruiter") {
-      throw "Not authorized, Please login and try again";
-    }
+
     const response = await apiClient.post(
       "/recruiter/addCommentToTalentPoolCandidate",
       data,
