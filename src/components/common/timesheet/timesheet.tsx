@@ -3,18 +3,15 @@ import { Button, TextInput, Title, Table, Grid } from "@mantine/core";
 import moment from "moment";
 import "moment-timezone";
 import { toast } from "react-toastify";
-import { OrganizationConfig } from "../../../interfaces/organization";
 import { useMantineTheme } from "@mantine/core";
 import { data } from "./resources";
 import { TaskPopover } from "./task-popover";
 import { IconPlus, IconX } from "@tabler/icons-react";
 import { useModals } from "@mantine/modals";
 import { ColorDiv } from "../style-components/c-div";
-const DateTableComponent = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../atoms/organization-atom";
+const DateTableComponent = () => {
   const theme = useMantineTheme();
   const modals = useModals();
   const [startDate, setStartDate] = useState<string>(
@@ -26,6 +23,7 @@ const DateTableComponent = ({
   const [dateRange, setDateRange] = useState<string[]>([]);
   const [daysInRange, setDaysInRange] = useState<number>(0);
   const [workingHours, setWorkingHours] = useState(data);
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   const getDateRange = (start: string, end: string): string[] => {
     const startDt = new Date(start);

@@ -18,6 +18,8 @@ import { useSetRecoilState, useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../atoms/organization-atom";
 import { organizationAdminUrls } from "../utils/common/constants";
 import BloodGroupTable from "../components/admin/dashboard/blood-group/all-blood";
+import PoolCandidateList from "../components/user/dashboard/candidate/candidate";
+import UpdatePoolCandidateForm from "../components/user/dashboard/update-candidate/update-candidate";
 
 const AdminRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -103,21 +105,16 @@ const AdminRoutes = () => {
         <Route path="/login" element={<AdminLogin />} />
         <Route element={<AdminProtectedRoutes />}>
           <Route path="/dashboard" element={<AdminDashboard />}>
-            <Route
-              path="addemployee"
-              element={<AddEmployee organizationConfig={organizationConfig} />}
-            />
-            <Route
-              path=""
-              element={<Employees organizationConfig={organizationConfig} />}
-            />
+            <Route path="addemployee" element={<AddEmployee />} />
+            <Route path="" element={<Employees />} />
             <Route path="profile" element={<AdminProfile />} />
             <Route
-              path="update/:employeeId"
-              element={
-                <UpdateEmployee organizationConfig={organizationConfig} />
-              }
+              path=":candidateId/edit_pool_candidate"
+              element={<UpdatePoolCandidateForm />}
             />
+            <Route path="update/:employeeId" element={<UpdateEmployee />} />
+            <Route path="pool_candidates" element={<PoolCandidateList />} />
+
             <Route
               path="blood-group-management"
               element={<BloodGroupTable />}

@@ -16,36 +16,35 @@ import {
   candidateSchema,
 } from "../../../../forms/add-candidate";
 import { BgDiv } from "../../../common/style-components/bg-div";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { toast } from "react-toastify";
 import { addPoolCandidateByRecruiter } from "../../../../services/user-services";
 import { useNavigate } from "react-router-dom";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 import { useCustomToast } from "../../../../utils/common/toast";
 import { DateTimePicker } from "@mantine/dates";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const AddPoolCandidate = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AddPoolCandidate = () => {
   const {
     control,
     formState: { errors, isLoading },
+    getValues,
     handleSubmit,
   } = useForm<AddCandidateForm>({
     resolver: zodResolver(candidateSchema),
     defaultValues: {
       candidateName: "",
       contact: { email: "", phone: "" },
-      evaluatedSkill: "",
-      relevantYearsOfExperience: 0,
+      evaluatedSkills: "",
+      relaventYearsOfExperience: 0,
       totalYearsOfExperience: 0,
       comments: [{ callEndsAt: "", callStartsAt: "", comment: "" }],
     },
   });
   const navigate = useNavigate();
   const { showSuccessToast } = useCustomToast();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   const [skills, setSkills] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState("");
@@ -62,7 +61,7 @@ const AddPoolCandidate = ({
   };
 
   const onSubmit = (formData: AddCandidateForm) => {
-    formData.evaluatedSkill = skills.join(",");
+    formData.evaluatedSkills = skills.join(",");
 
     addPoolCandidateByRecruiter(formData)
       .then(() => {
@@ -87,6 +86,11 @@ const AddPoolCandidate = ({
               organizationConfig.organization_theme.theme.backgroundColor,
           }}
           onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
           className="rounded-lg shadow-lg w-full p-8"
         >
           <Grid gutter="md">
@@ -145,18 +149,23 @@ const AddPoolCandidate = ({
             </Grid.Col>
             <Grid.Col span={6}>
               <Controller
-                name="relevantYearsOfExperience"
+                name="relaventYearsOfExperience"
                 control={control}
                 render={({ field }) => (
                   <NumberInput
                     label="Relevant Experience"
                     {...field}
                     min={0}
-                    error={errors.relevantYearsOfExperience?.message}
+                    error={
+                      field.value > getValues("totalYearsOfExperience")
+                        ? "Relevant experience cannot be more than total experience"
+                        : errors.relaventYearsOfExperience?.message
+                    }
                   />
                 )}
               />
             </Grid.Col>
+
             <Grid.Col span={12}>
               <Input.Wrapper label="Skills">
                 <Group>

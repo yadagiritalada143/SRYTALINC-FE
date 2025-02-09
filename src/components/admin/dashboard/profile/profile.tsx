@@ -12,6 +12,7 @@ const AdminProfile = () => {
     email: "",
     mobileNumber: "",
     userRole: "",
+    passwordResetRequired: "false",
     employeeRole: [{ _id: "", designation: "" }],
     bloodGroup: { _id: "", type: "" },
     employmentType: { _id: "", employmentType: "" },

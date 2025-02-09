@@ -3,7 +3,6 @@ import {
   AddCompanyForm,
   addCompanySchema,
 } from "../../../../forms/add-company";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { useForm } from "react-hook-form";
 import { Button, TextInput } from "@mantine/core";
 import { addCompanyByRecruiter } from "../../../../services/user-services";
@@ -12,12 +11,10 @@ import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { organizationEmployeeUrls } from "../../../../utils/common/constants";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const AddCompany = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const AddCompany = () => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const {
@@ -28,6 +25,7 @@ const AddCompany = ({
   } = useForm<AddCompanyForm>({
     resolver: zodResolver(addCompanySchema),
   });
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   const onSubmit = async (data: AddCompanyForm) => {
     try {

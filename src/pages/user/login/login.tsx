@@ -9,12 +9,14 @@ import axios from "axios";
 import { BgDiv } from "../../../components/common/style-components/bg-div";
 import { useCustomToast } from "../../../utils/common/toast";
 import { organizationThemeAtom } from "../../../atoms/organization-atom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { organizationEmployeeUrls } from "../../../utils/common/constants";
+import { userDetailsAtom } from "../../../atoms/user";
 
 const EmployeeLogin = () => {
   const { showSuccessToast } = useCustomToast();
   const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const setUser = useSetRecoilState(userDetailsAtom);
   const {
     register,
     formState: { errors, isSubmitting },
@@ -27,10 +29,13 @@ const EmployeeLogin = () => {
       const data = await login(formData);
       localStorage.setItem("employeeToken", data.token);
       localStorage.setItem("userRole", data.userRole);
-      localStorage.setItem("passwordReset", data.passwordResetRequired);
-      localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("lastName", data.lastName);
-      localStorage.setItem("userId", data.id);
+      setUser({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        userRole: data.userRole,
+        passwordResetRequired: data.passwordResetRequired,
+      });
+
       if (data.userRole === "recruiter") {
         navigate(
           `${organizationEmployeeUrls(

@@ -5,6 +5,8 @@ import {
   organizationAdminUrls,
   organizationEmployeeUrls,
 } from "../../../utils/common/constants";
+import { useRecoilValue } from "recoil";
+import { userDetailsAtom } from "../../../atoms/user";
 const Header = ({
   color,
   organization,
@@ -13,8 +15,10 @@ const Header = ({
   organization: string;
 }) => {
   const navigate = useNavigate();
+  const user = useRecoilValue(userDetailsAtom);
+
   const handleLogout = () => {
-    const userRole = localStorage.getItem("userRole");
+    const userRole = user.userRole;
 
     if (userRole === "admin") {
       navigate(`${organizationAdminUrls(organization)}/login`);
@@ -30,7 +34,7 @@ const Header = ({
       </div>
       <div className="flex ">
         <p className=" flex justify-center items-center px-4 font-bold">
-          {localStorage.getItem("firstName")} {localStorage.getItem("lastName")}{" "}
+          {user.firstName} {user.lastName}{" "}
         </p>
         <div>
           <Menu shadow="md" width={200} position="bottom-end">

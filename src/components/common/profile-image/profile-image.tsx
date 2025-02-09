@@ -36,7 +36,6 @@ const ProfileImageUploader = ({
   const [image, setImage] = useState<File>();
   const [imageUrl, setImageUrl] = useState<string | null>();
   const theme = useMantineTheme();
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {

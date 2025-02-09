@@ -6,6 +6,7 @@ import AdminRoutes from "./routes/admin";
 import EmployeeRoutes from "./routes/user";
 import SuperAdminRoutes from "./routes/super-admin";
 import { RecoilRoot } from "recoil";
+import UserProvider from "./hooks/user-context";
 
 const App: React.FC = () => {
   return (
@@ -20,7 +21,15 @@ const App: React.FC = () => {
               </MantineProvider>
             }
           />
-          <Route path="/:organization/admin/*" element={<AdminRoutes />} />
+
+          <Route
+            path="/:organization/admin/*"
+            element={
+              <UserProvider>
+                <AdminRoutes />
+              </UserProvider>
+            }
+          />
           <Route
             path="/:organization/employee/*"
             element={<EmployeeRoutes />}
