@@ -22,21 +22,19 @@ import {
 import { toast } from "react-toastify";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { organizationAdminUrls } from "../../../../utils/common/constants";
 import { BgDiv } from "../../../common/style-components/bg-div";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const UpdateEmployee = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const UpdateEmployee = () => {
   const navigate = useNavigate();
   const params = useParams();
   const employeeId = params.employeeId as string;
   const theme = useMantineTheme();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   const {
     register,

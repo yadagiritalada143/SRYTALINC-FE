@@ -1,7 +1,11 @@
 import axios from "axios";
 import { AddCompanyForm } from "../forms/add-company";
 import { UpdatePasswordForm } from "../forms/update-password";
-import { AddCandidateForm } from "../forms/add-candidate";
+import {
+  AddCandidateForm,
+  AddCommentForm,
+  UpdateCandidateSchema,
+} from "../forms/add-candidate";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -99,6 +103,31 @@ export const addCommentByRecruiter = async (id: string, comment: string) => {
   }
 };
 
+export const addPoolCandidateCommentByRecruiter = async (
+  data: AddCommentForm
+) => {
+  const token = localStorage.getItem("employeeToken");
+  const userRole = localStorage.getItem("userRole");
+
+  try {
+    if (!token) {
+      throw "Not authorized, Please login and try again";
+    }
+    if (userRole !== "recruiter") {
+      throw "Not authorized, Please login and try again";
+    }
+    const response = await apiClient.post(
+      "/recruiter/addCommentToTalentPoolCandidate",
+      data,
+      { headers: { auth_token: token } }
+    );
+
+    return response.data.responseAfterCommentAdded;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 export const getAllPoolCandidatesByEmployee = async () => {
   const token = localStorage.getItem("employeeToken");
   try {
@@ -120,6 +149,24 @@ export const addPoolCandidateByRecruiter = async (data: AddCandidateForm) => {
   try {
     const response = await apiClient.post(
       "/recruiter/addTalentPoolCandidateToTracker",
+      data,
+      { headers: { auth_token: token } }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updatePoolCandidateByRecruiter = async (
+  data: UpdateCandidateSchema
+) => {
+  const token = localStorage.getItem("employeeToken");
+
+  try {
+    const response = await apiClient.post(
+      "/recruiter/updatePoolCandidateByRecruiter",
       data,
       { headers: { auth_token: token } }
     );

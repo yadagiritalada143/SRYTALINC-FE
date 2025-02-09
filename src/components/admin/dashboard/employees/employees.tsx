@@ -1,4 +1,3 @@
-import { OrganizationConfig } from "../../../../interfaces/organization";
 import { Button, useMantineTheme, Loader } from "@mantine/core";
 import { IconEdit, IconUser } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -8,12 +7,10 @@ import { getAllEmployeeDetailsByAdmin } from "../../../../services/admin-service
 import { toast } from "react-toastify";
 import { organizationAdminUrls } from "../../../../utils/common/constants";
 import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
+import { useRecoilValue } from "recoil";
+import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 
-const Employees = ({
-  organizationConfig,
-}: {
-  organizationConfig: OrganizationConfig;
-}) => {
+const Employees = () => {
   const theme = useMantineTheme();
   const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<
@@ -22,6 +19,7 @@ const Employees = ({
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   useEffect(() => {
     getAllEmployeeDetailsByAdmin()
@@ -37,15 +35,15 @@ const Employees = ({
   }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearchQuery(query);
 
     const filtered = employees.filter((employee) => {
       return (
-        employee.firstName.toLowerCase().includes(query) ||
-        employee.lastName.toLowerCase().includes(query) ||
-        employee.email.toLowerCase().includes(query) ||
-        employee.mobileNumber.toString().includes(query)
+        employee.firstName.toLowerCase().includes(query.toLowerCase()) ||
+        employee.lastName.toLowerCase().includes(query.toLowerCase()) ||
+        employee.email.toLowerCase().includes(query.toLowerCase()) ||
+        employee.mobileNumber.toString().includes(query.toLowerCase())
       );
     });
 
@@ -87,8 +85,8 @@ const Employees = ({
             />
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-fixed text-center shadow-md">
+          <div className="overflow-auto max-w-full shadow-lg rounded-lg">
+            <table className="w-full text-center shadow-md border table-auto">
               <colgroup>
                 <col className="w-56" />
                 <col className="w-32" />
@@ -99,7 +97,14 @@ const Employees = ({
                 <col className="w-32" />
                 <col className="w-32" />
               </colgroup>
-              <thead className="text-xs uppercase">
+              <thead
+                className="text-xs"
+                style={{
+                  backgroundColor:
+                    organizationConfig.organization_theme.theme.backgroundColor,
+                  color: organizationConfig.organization_theme.theme.color,
+                }}
+              >
                 <tr>
                   <th className="p-2 border">First Name</th>
                   <th className="p-2 border">Last Name</th>
@@ -115,10 +120,7 @@ const Employees = ({
               <tbody className="text-sm">
                 {filteredEmployees.length > 0 ? (
                   filteredEmployees.map((employee) => (
-                    <tr
-                      key={employee._id}
-                      className="hover:bg-slate-200 hover:text-black"
-                    >
+                    <tr key={employee._id}>
                       <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
                         {employee.firstName}
                       </td>

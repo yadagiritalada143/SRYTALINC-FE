@@ -27,6 +27,7 @@ import { organizationEmployeeUrls } from "../utils/common/constants";
 import PoolCandidateList from "../components/user/dashboard/candidate/candidate";
 import AddPoolCandidate from "../components/user/dashboard/add-candidate/add-candidate";
 import UpdatePoolCandidateForm from "../components/user/dashboard/update-candidate/update-candidate";
+import UserProvider from "../hooks/user-context";
 
 const EmployeeRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -111,58 +112,35 @@ const EmployeeRoutes = () => {
       />
       <Routes>
         <Route path="/login" element={<EmployeeLogin />} />
-        <Route element={<EmployeeProtectedRoutes />}>
-          <Route
-            path="/dashboard"
-            element={
-              <EmployeeDashboard organizationConfig={organizationConfig} />
-            }
-          >
+        <Route
+          element={
+            <UserProvider>
+              <EmployeeProtectedRoutes />
+            </UserProvider>
+          }
+        >
+          <Route path="/dashboard" element={<EmployeeDashboard />}>
             <Route element={<EmployeeProtectedRoutes />}>
               <Route element={<RecruiterProtectedRoutes />}>
-                <Route
-                  path=""
-                  element={
-                    <PoolCandidateList
-                      organizationConfig={organizationConfig}
-                    />
-                  }
-                />
+                <Route path="" element={<PoolCandidateList />} />
                 <Route
                   path="add_pool_candidate"
-                  element={
-                    <AddPoolCandidate organizationConfig={organizationConfig} />
-                  }
+                  element={<AddPoolCandidate />}
                 />
                 <Route
                   path=":candidateId/edit_pool_candidate"
                   element={<UpdatePoolCandidateForm />}
                 />
-                <Route
-                  path="pool_companies"
-                  element={
-                    <Companies organizationConfig={organizationConfig} />
-                  }
-                />
-                <Route
-                  path="addcompany"
-                  element={
-                    <AddCompany organizationConfig={organizationConfig} />
-                  }
-                />
-                <Route
-                  path="update/:companyId"
-                  element={
-                    <UpdateCompany organizationConfig={organizationConfig} />
-                  }
-                />
+                <Route path="pool_companies" element={<Companies />} />
+                <Route path="addcompany" element={<AddCompany />} />
+                <Route path="update/:companyId" element={<UpdateCompany />} />
               </Route>
               <Route path="profile" element={<EmployeeProfile />} />
               <Route
                 path="timesheet"
                 element={
                   <ModalsProvider>
-                    <Timesheet organizationConfig={organizationConfig} />
+                    <Timesheet />
                   </ModalsProvider>
                 }
               />
