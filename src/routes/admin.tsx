@@ -20,6 +20,7 @@ import { organizationAdminUrls } from "../utils/common/constants";
 import BloodGroupTable from "../components/admin/dashboard/blood-group/all-blood";
 import PoolCandidateList from "../components/user/dashboard/candidate/candidate";
 import UpdatePoolCandidateForm from "../components/user/dashboard/update-candidate/update-candidate";
+import UserProvider from "../hooks/user-context";
 
 const AdminRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -103,7 +104,13 @@ const AdminRoutes = () => {
       />
       <Routes>
         <Route path="/login" element={<AdminLogin />} />
-        <Route element={<AdminProtectedRoutes />}>
+        <Route
+          element={
+            <UserProvider>
+              <AdminProtectedRoutes />
+            </UserProvider>
+          }
+        >
           <Route path="/dashboard" element={<AdminDashboard />}>
             <Route path="addemployee" element={<AddEmployee />} />
             <Route path="" element={<Employees />} />

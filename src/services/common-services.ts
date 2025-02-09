@@ -65,6 +65,7 @@ export const getUserDetails = async () => {
     const response = await apiClient("/getEmployeeDetails", {
       headers: { auth_token: token },
     });
+
     return response.data.employeeDetails;
   } catch (error) {
     throw error;
