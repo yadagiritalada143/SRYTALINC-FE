@@ -119,6 +119,11 @@ const UpdatePoolCandidateForm = () => {
       <BgDiv>
         <form
           onSubmit={handleSubmit(handleUpdateCandidate)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
           style={{
             backgroundColor:
               organizationConfig.organization_theme.theme.backgroundColor,

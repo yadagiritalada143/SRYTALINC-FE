@@ -115,6 +115,10 @@ export const getProfileImage = async () => {
       responseType: "blob",
     });
 
+    if (response.data.size < 1) {
+      throw "NoImage";
+    }
+
     return response.data;
   } catch (error) {
     throw error;
