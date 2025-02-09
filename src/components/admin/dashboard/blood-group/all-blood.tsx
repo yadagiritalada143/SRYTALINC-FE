@@ -74,7 +74,7 @@ const BloodGroupTable = () => {
 
   const confirmEdit = async () => {
     try {
-      await updateBloodGroupByAdmin();
+      await updateBloodGroupByAdmin(selectedGroup.id, selectedGroup.type);
       toast.success("Blood group updated successfully");
       fetchBloodGroups();
       closeEditModal();
@@ -163,14 +163,21 @@ const BloodGroupTable = () => {
             />
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-fixed text-center shadow-md">
+          <div className="overflow-auto max-w-full shadow-lg rounded-lg">
+            <table className="w-full text-center shadow-md border table-auto">
               <colgroup>
                 <col className="w-16" />
                 <col className="w-32" />
                 <col className="w-32" />
               </colgroup>
-              <thead className="text-xs uppercase">
+              <thead
+                className="text-xs"
+                style={{
+                  backgroundColor:
+                    organizationConfig.organization_theme.theme.backgroundColor,
+                  color: organizationConfig.organization_theme.theme.color,
+                }}
+              >
                 <tr>
                   <th className="p-2 border">Id</th>
                   <th className="p-2 border">Blood Group</th>

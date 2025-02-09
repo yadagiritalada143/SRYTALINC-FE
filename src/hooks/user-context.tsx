@@ -14,10 +14,9 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("auth_token");
-      if (!token) return;
       try {
         const data: EmployeeInterface = await getUserDetails();
+
         setUser({
           firstName: data.firstName,
           lastName: data.lastName,

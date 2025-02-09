@@ -116,7 +116,22 @@ export const addBloodGroupByAdmin = async (data: { type: string }) => {
   }
 };
 
-export const updateBloodGroupByAdmin = () => {};
+export const updateBloodGroupByAdmin = async (id: string, type: string) => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.put(
+      `/admin/updateBloodGroupByAdmin`,
+      { id, type },
+      {
+        headers: { auth_token: adminToken },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const deleteBloodGroupByAdmin = async (id: string) => {
   const adminToken = localStorage.getItem("adminToken");

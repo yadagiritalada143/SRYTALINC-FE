@@ -5,38 +5,40 @@ import {
   TextInput,
   Title,
   Grid,
-  Textarea,
-  Text,
   NumberInput,
   Chip,
-  // Flex,
   Input,
-  Box,
-  Spoiler,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import {
-  AddCandidateForm,
-  candidateSchema,
+  UpdateCandidateSchema,
+  updateCandidateSchema,
 } from "../../../../forms/add-candidate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import {
+  useNavigate,
   //  useNavigate,
   useParams,
 } from "react-router-dom";
 import {
   // addPoolCandidateByRecruiter,
   getPoolCandidateByRecruiter,
+  updatePoolCandidateByRecruiter,
 } from "../../../../services/user-services";
 import { toast } from "react-toastify";
 // import { organizationEmployeeUrls } from "../../../../utils/common/constants";
 import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 import { useRecoilValue } from "recoil";
-import { DateTimePicker } from "@mantine/dates";
 import { PoolCandidatesComments } from "../../../../interfaces/candidate";
 import { BgDiv } from "../../../common/style-components/bg-div";
-import moment from "moment";
+import {
+  organizationAdminUrls,
+  organizationEmployeeUrls,
+} from "../../../../utils/common/constants";
+import AddComment from "./add-comment";
+import CommentsTable from "./comments-table";
+import { userDetailsAtom } from "../../../../atoms/user";
 
 const UpdatePoolCandidateForm = () => {
   const [skills, setSkills] = useState<string[]>([]);
@@ -44,16 +46,19 @@ const UpdatePoolCandidateForm = () => {
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState<PoolCandidatesComments[]>([]);
   const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const user = useRecoilValue(userDetailsAtom);
 
   const {
     control,
     formState: { errors },
     reset,
-  } = useForm<AddCandidateForm>({
-    resolver: zodResolver(candidateSchema),
+    getValues,
+    handleSubmit,
+  } = useForm<UpdateCandidateSchema>({
+    resolver: zodResolver(updateCandidateSchema),
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { candidateId } = useParams();
 
   useEffect(() => {
@@ -61,7 +66,7 @@ const UpdatePoolCandidateForm = () => {
       getPoolCandidateByRecruiter(candidateId)
         .then((data) => {
           setComments(data.comments);
-
+          setSkills(data.evaluatedSkills.split(","));
           reset(data);
         })
         .catch(() => {
@@ -82,21 +87,29 @@ const UpdatePoolCandidateForm = () => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
 
-  // const handleUpdateCandidate = (data: AddCandidateForm) => {
-  //   data.evaluatedSkill = skills.join(",");
-  //   addPoolCandidateByRecruiter(data)
-  //     .then(() => {
-  //       toast.success("Candidate updated successfully!");
-  //       navigate(
-  //         `${organizationEmployeeUrls(
-  //           organizationConfig.organization_name
-  //         )}/dashboard`
-  //       );
-  //     })
-  //     .catch(() => {
-  //       toast.error("Failed to update candidate.");
-  //     });
-  // };
+  const handleUpdateCandidate = (data: UpdateCandidateSchema) => {
+    data.evaluatedSkills = skills.join(",");
+    data.id = candidateId;
+    updatePoolCandidateByRecruiter(data)
+      .then(() => {
+        toast.success("Candidate updated successfully!");
+        if (user.userRole === "admin") {
+          navigate(
+            `${organizationAdminUrls(
+              organizationConfig.organization_name
+            )}/dashboard`
+          );
+        }
+        navigate(
+          `${organizationEmployeeUrls(
+            organizationConfig.organization_name
+          )}/dashboard`
+        );
+      })
+      .catch(() => {
+        toast.error("Failed to update candidate.");
+      });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -106,6 +119,7 @@ const UpdatePoolCandidateForm = () => {
     <div className="w-full my-6">
       <BgDiv>
         <form
+          onSubmit={handleSubmit(handleUpdateCandidate)}
           style={{
             backgroundColor:
               organizationConfig.organization_theme.theme.backgroundColor,
@@ -158,26 +172,30 @@ const UpdatePoolCandidateForm = () => {
                 <Controller
                   name="totalYearsOfExperience"
                   control={control}
-                  render={() => (
+                  render={({ field }) => (
                     <NumberInput
                       label="Total Experience"
-                      // {...field}
-                      // min={0}
-                      // error={errors.totalYearsOfExperience?.message}
+                      {...field}
+                      min={0}
+                      error={errors.totalYearsOfExperience?.message}
                     />
                   )}
                 />
               </Grid.Col>
               <Grid.Col span={6}>
                 <Controller
-                  name="relevantYearsOfExperience"
+                  name="relaventYearsOfExperience"
                   control={control}
                   render={({ field }) => (
                     <NumberInput
                       label="Relevant Experience"
                       {...field}
                       min={0}
-                      error={errors.relevantYearsOfExperience?.message}
+                      error={
+                        field.value > getValues("totalYearsOfExperience")
+                          ? "Relevant experience cannot be more than total experience"
+                          : errors.relaventYearsOfExperience?.message
+                      }
                     />
                   )}
                 />
@@ -211,121 +229,17 @@ const UpdatePoolCandidateForm = () => {
         </form>
       </BgDiv>
 
-      <div className="my-8 max-w-4xl mx-auto">
-        <Grid>
-          {comments.map((comment) => {
-            return (
-              <Grid.Col
-                className="rounded-lg shadow-lg w-full p-8"
-                style={{
-                  backgroundColor:
-                    organizationConfig.organization_theme.theme.backgroundColor,
-                  color: organizationConfig.organization_theme.theme.color,
-                }}
-              >
-                <Box>
-                  <Box style={{ overflow: "hidden" }}>
-                    <Text
-                      style={{
-                        float: "right",
-                        marginLeft: "20px",
-                        textAlign: "right",
-                      }}
-                    >
-                      By: {comment.userId?.firstName} {comment.userId?.lastName}
-                    </Text>
-                    <Text
-                      style={{
-                        float: "right",
-                        marginLeft: "20px",
-                        textAlign: "right",
-                      }}
-                    >
-                      Date:{" "}
-                      {moment(new Date(comment.updateAt)).format("MMM Do YY")}
-                    </Text>
-                    <Text
-                      style={{
-                        float: "right",
-                        marginLeft: "20px",
-                        textAlign: "right",
-                      }}
-                    >
-                      Duration:{" "}
-                      {Math.round(
-                        (new Date(comment.callEndsAt).getTime() -
-                          new Date(comment.callStartsAt).getTime()) /
-                          60000
-                      )}{" "}
-                      minutes
-                    </Text>
-                  </Box>
+      <AddComment
+        organizationConfig={organizationConfig}
+        candidateId={candidateId}
+        comments={comments}
+        setComments={setComments}
+      />
 
-                  <Spoiler
-                    showLabel="Show more"
-                    maxHeight={100}
-                    hideLabel="Hide"
-                    c={organizationConfig.organization_theme.theme.color}
-                  >
-                    {comment.comment}
-                  </Spoiler>
-                </Box>
-              </Grid.Col>
-            );
-          })}
-        </Grid>
-      </div>
-
-      <div className="w-full max-w-3xl mx-auto my-6">
-        <BgDiv>
-          <form
-            style={{
-              backgroundColor:
-                organizationConfig.organization_theme.theme.backgroundColor,
-            }}
-            className="rounded-lg shadow-lg w-full p-8"
-          >
-            <Grid>
-              <Grid.Col span={12}>
-                <Controller
-                  name="comments"
-                  control={control}
-                  render={() => <Textarea label="Comment" autosize rows={4} />}
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, sm: 6 }}>
-                <Controller
-                  name="comments"
-                  control={control}
-                  render={() => (
-                    <DateTimePicker
-                      clearable
-                      label="Call Start Time"
-                      placeholder="Pick date and time"
-                    />
-                  )}
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, sm: 6 }}>
-                <Controller
-                  name="comments"
-                  control={control}
-                  render={() => (
-                    <DateTimePicker
-                      clearable
-                      label="Call End Time"
-                      placeholder="Pick date and time"
-                    />
-                  )}
-                />
-              </Grid.Col>
-            </Grid>
-            <Group justify="right" mt="lg">
-              <Button>Comment</Button>
-            </Group>
-          </form>
-        </BgDiv>
-      </div>
+      <CommentsTable
+        comments={comments}
+        organizationConfig={organizationConfig}
+      />
     </div>
   );
 };

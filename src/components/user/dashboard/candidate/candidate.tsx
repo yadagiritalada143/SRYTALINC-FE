@@ -3,10 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllPoolCandidatesByEmployee } from "../../../../services/user-services";
-import { organizationEmployeeUrls } from "../../../../utils/common/constants";
+import {
+  organizationAdminUrls,
+  organizationEmployeeUrls,
+} from "../../../../utils/common/constants";
 import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
 import { useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../../../../atoms/organization-atom";
+import moment from "moment";
+import { userDetailsAtom } from "../../../../atoms/user";
 
 const PoolCandidateList = () => {
   const navigate = useNavigate();
@@ -15,6 +20,7 @@ const PoolCandidateList = () => {
   const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const organizationConfig = useRecoilValue(organizationThemeAtom);
+  const user = useRecoilValue(userDetailsAtom);
 
   useEffect(() => {
     getAllPoolCandidatesByEmployee()
@@ -29,13 +35,31 @@ const PoolCandidateList = () => {
       });
   }, []);
 
+  const handleNavigate = (id: string) => {
+    if (user.userRole === "admin") {
+      navigate(
+        `${organizationAdminUrls(
+          organizationConfig.organization_name
+        )}/dashboard/${id}/edit_pool_candidate`
+      );
+    } else {
+      navigate(
+        `${organizationEmployeeUrls(
+          organizationConfig.organization_name
+        )}/dashboard/${id}/edit_pool_candidate`
+      );
+    }
+  };
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearch(query);
 
     const filtered = candidates.filter((candidate: any) => {
       return (
-        candidate.candidateName.toLowerCase().includes(query) ||
+        candidate.candidateName
+          .toLowerCase()
+          .includes(query.toLocaleLowerCase()) ||
         candidate.contact.email.toLowerCase().includes(query) ||
         candidate.contact.phone.toString().includes(query)
       );
@@ -67,51 +91,108 @@ const PoolCandidateList = () => {
 
       <SearchBarFullWidht search={search} handleSearch={handleSearch} />
 
-      <div className="overflow-x-auto shadow-lg rounded-lg">
-        <Table className="min-w-full table-auto border-separate border-spacing-2">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Phone</th>
-              <th className="px-4 py-2 text-left">Experience (Years)</th>
-              <th className="px-4 py-2 text-left">Created At</th>
+      <div className="overflow-auto max-w-full shadow-lg rounded-lg">
+        <Table className="w-full text-center shadow-md border table-auto">
+          <colgroup>
+            <col className="w-16" />
+            <col className="w-44" />
+            <col className="w-56" />
+            <col className="w-32" />
+            <col className="w-32" />
+            <col className="w-32" />
+            <col className="w-32" />
+            <col className="w-32" />
+            <col className="w-32" />
+          </colgroup>
+          <thead
+            style={{
+              backgroundColor:
+                organizationConfig.organization_theme.theme.backgroundColor,
+              color: organizationConfig.organization_theme.theme.color,
+            }}
+          >
+            <tr className="border-b ">
+              <th className="px-4 py-2 text-left border-r ">S.no</th>
+              <th className="px-4 py-2 text-left border-r ">Name</th>
+              <th className="px-4 py-2 text-left border-r ">Email</th>
+              <th className="px-4 py-2 text-left border-r ">Phone</th>
+              <th className="px-4 py-2 text-left border-r ">Experience</th>
+              <th className="px-4 py-2 text-left border-r ">Created By</th>
+              <th className="px-4 py-2 text-left border-r ">Created At</th>
+              <th className="px-4 py-2 text-left border-r ">
+                Latest Comment By
+              </th>
+              <th className="px-4 py-2 text-left border-r ">
+                Latest Comment At
+              </th>
               <th className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
+
           {isLoading ? (
             <tbody>
               <tr>
-                <td colSpan={6} className="text-center py-4">
+                <td colSpan={9} className="text-center py-4">
                   <Loader size="xl" />
                 </td>
               </tr>
             </tbody>
           ) : (
             <tbody>
-              {filteredCandidates.map((candidate: any) => (
+              {filteredCandidates.map((candidate: any, index: number) => (
                 <tr
                   key={candidate._id}
-                  className="border-b hover:shadow-lg transition-all duration-300"
+                  className="border-b transition-all duration-200 text-left"
                 >
-                  <td className="px-4 py-2">{candidate.candidateName}</td>
-                  <td className="px-4 py-2">{candidate.contact.email}</td>
-                  <td className="px-4 py-2">{candidate.contact.phone}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 border-r ">{index + 1}</td>
+                  <td className="px-4 py-2 border-r ">
+                    {candidate.candidateName}
+                  </td>
+                  <td className="px-4 py-2 border-r ">
+                    {candidate.contact.email}
+                  </td>
+                  <td className="px-4 py-2 border-r ">
+                    {candidate.contact.phone}
+                  </td>
+                  <td className="px-4 py-2 border-r ">
                     {candidate.totalYearsOfExperience}
                   </td>
-                  <td className="px-4 py-2">
-                    {new Date(candidate.createdAt).toLocaleDateString()}
+                  <td className="px-4 py-2 border-r">
+                    {candidate?.createdBy?.firstName || ""}{" "}
+                    {candidate?.userId?.lastName || ""}
                   </td>
+                  <td className="px-4 py-2 border-r ">
+                    {moment(new Date(candidate.createdAt)).format(
+                      "MMMM Do YYYY"
+                    )}
+                  </td>
+
+                  <td className="px-4 py-2 border-r ">
+                    {candidate?.comments?.length
+                      ? `${
+                          candidate.comments[candidate?.comments?.length - 1]
+                            .userId?.firstName
+                        } ${
+                          candidate.comments[candidate?.comments?.length - 1]
+                            .userId?.lastName
+                        }`
+                      : "N/A"}
+                  </td>
+                  <td className="px-4 py-2 border-r ">
+                    {candidate?.comments?.length
+                      ? moment(
+                          new Date(
+                            candidate.comments[
+                              candidate?.comments?.length - 1
+                            ]?.updateAt
+                          )
+                        ).format("MMMM Do YYYY")
+                      : "N/A"}
+                  </td>
+
                   <td className="px-4 py-2">
                     <Button
-                      onClick={() =>
-                        navigate(
-                          `${organizationEmployeeUrls(
-                            organizationConfig.organization_name
-                          )}/dashboard/${candidate._id}/edit_pool_candidate`
-                        )
-                      }
+                      onClick={() => handleNavigate(candidate._id)}
                       variant="outline"
                     >
                       Edit

@@ -14,10 +14,20 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
       <div className="flex  mx-8 my-8">
         <ProfileImageUploader organizationConfig={organizationConfig} />
         <div>
-          <p>First Name:{details?.firstName}</p>
-          <p>Last Name: {details?.lastName}</p>
-          <p>Email: {details?.email}</p>
-          <p>Mobile: {details?.mobileNumber}</p>
+          <p>
+            <span className="font-bold">First Name:</span>
+            {details?.firstName}
+          </p>
+          <p>
+            <span className="font-bold">Last Name:</span>
+            {details?.lastName}
+          </p>
+          <p>
+            <span className="font-bold">Email:</span> {details?.email}
+          </p>
+          <p>
+            <span className="font-bold">Mobile:</span> {details?.mobileNumber}
+          </p>
         </div>
       </div>
       <div
@@ -47,18 +57,20 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
             value="employment"
           >
             <p style={{ marginBottom: "10px" }}>
-              Employment Type: {details.employmentType?.employmentType || "N/A"}
+              <span className="font-bold">Employment Type:</span>{" "}
+              {details.employmentType?.employmentType || "N/A"}
             </p>
             <p className="flex space-x-10">
-              Employment Roles:
+              <span className="font-bold">Employment Roles:</span>
               {details.employeeRole.length > 0
                 ? details.employeeRole.map((role) => (
                     <Code key={role._id}>{role.designation}</Code>
                   ))
                 : "N/A"}
             </p>
-            <p style={{ marginBottom: "10px" }}>
-              Blood Group: {details.bloodGroup?.type || "N/A"}
+            <p style={{ marginBottom: "10px" }} className="flex space-x-10">
+              <span className="font-bold">Blood Group:</span>
+              {details.bloodGroup?.type || "N/A"}
             </p>
           </Tabs.Panel>
 
@@ -70,13 +82,18 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
             value="bankDetails"
           >
             <p style={{ marginBottom: "10px" }}>
-              Account Number: {details.bankDetailsInfo?.accountNumber || "N/A"}
+              <span className="font-bold">Account Number:</span> Account Number:{" "}
+              {details.bankDetailsInfo?.accountNumber || "N/A"}
             </p>
             <p style={{ marginBottom: "10px" }}>
-              Account Holder Name:{" "}
+              <span className="font-bold">Account Holder Name:</span>{" "}
               {details.bankDetailsInfo?.accountHolderName || "N/A"}
             </p>
-            <p>IFSC Code: {details.bankDetailsInfo?.ifscCode || "N/A"}</p>
+            <p>
+              {" "}
+              <span className="font-bold">IFSC Code:</span>IFSC Code:{" "}
+              {details.bankDetailsInfo?.ifscCode || "N/A"}
+            </p>
           </Tabs.Panel>
         </Tabs>
       </div>

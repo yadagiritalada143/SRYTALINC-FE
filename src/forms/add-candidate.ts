@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 // Schema for a single comment
-const commentSchema = z.object({
+export const commentSchema = z.object({
+  id: z.string().optional(),
   comment: z.string().min(1, "Comment is required"),
   callStartsAt: z
     .string()
@@ -10,19 +11,51 @@ const commentSchema = z.object({
 });
 
 // Schema for the candidate
-export const candidateSchema = z.object({
-  candidateName: z.string().min(1, "Name is required"),
-  contact: z.object({
-    email: z.string().email("Invalid email format"),
-    phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  }),
-  totalYearsOfExperience: z.number().min(0, "Experience must be positive"),
-  relevantYearsOfExperience: z
-    .number()
-    .min(0, "Relevant experience must be positive"),
-  evaluatedSkill: z.string(),
-  comments: z.array(commentSchema).min(1),
-});
+export const candidateSchema = z
+  .object({
+    id: z.string().optional(),
+    candidateName: z.string().min(1, "Name is required"),
+    contact: z.object({
+      email: z.string().email("Invalid email format"),
+      phone: z.string().min(10, "Phone number must be at least 10 digits"),
+    }),
+    totalYearsOfExperience: z.number().min(0, "Experience must be positive"),
+    relaventYearsOfExperience: z
+      .number()
+      .min(0, "Relevant experience must be positive"),
+    evaluatedSkills: z.string(),
+    comments: z.array(commentSchema).min(1),
+  })
+  .refine(
+    (data) => data.relaventYearsOfExperience <= data.totalYearsOfExperience,
+    {
+      message: "Relevant experience cannot be more than total experience",
+      path: ["relevantYearsOfExperience"],
+    }
+  );
 
+export const updateCandidateSchema = z
+  .object({
+    id: z.string().optional(),
+    candidateName: z.string().min(1, "Name is required"),
+    contact: z.object({
+      email: z.string().email("Invalid email format"),
+      phone: z.string().min(10, "Phone number must be at least 10 digits"),
+    }),
+    totalYearsOfExperience: z.number().min(0, "Experience must be positive"),
+    relaventYearsOfExperience: z
+      .number()
+      .min(0, "Relevant experience must be positive"),
+    evaluatedSkills: z.string(),
+  })
+  .refine(
+    (data) => data.relaventYearsOfExperience <= data.totalYearsOfExperience,
+    {
+      message: "Relevant experience cannot be more than total experience",
+      path: ["relevantYearsOfExperience"],
+    }
+  );
 // Infer the type from the schema
 export type AddCandidateForm = z.infer<typeof candidateSchema>;
+export type UpdateCandidateSchema = z.infer<typeof updateCandidateSchema>;
+export type AddCommentForm = z.infer<typeof commentSchema>;
