@@ -27,7 +27,7 @@ const Header = () => {
             className=" cursor-pointer  shadow-md transition-transform duration-300 ease-in-out hover:scale-110  "
           >
             <img
-              src="/logo.jpg"
+              src="/public/logo.jpg"
               style={{ width: "auto", maxWidth: "280px", height: "auto" }}
               alt="Logo"
             />

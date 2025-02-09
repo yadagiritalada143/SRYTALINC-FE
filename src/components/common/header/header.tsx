@@ -18,7 +18,7 @@ const Header = ({
   const user = useRecoilValue(userDetailsAtom);
 
   const handleLogout = () => {
-    const userRole = user.userRole;
+    const userRole = localStorage.getItem("userRole");
 
     if (userRole === "admin") {
       navigate(`${organizationAdminUrls(organization)}/login`);

@@ -10,7 +10,7 @@ const CommentsTable = ({
   organizationConfig: OrganizationConfig;
 }) => {
   return (
-    <div className="overflow-auto max-w-full shadow-lg rounded-lg">
+    <div className=" my-10 overflow-auto max-w-full shadow-lg rounded-lg">
       <Table className="w-full text-center shadow-md border table-auto">
         <colgroup>
           <col className="w-16" />
