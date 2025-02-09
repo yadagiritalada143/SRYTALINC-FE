@@ -222,19 +222,26 @@ const UpdatePoolCandidateForm = () => {
               </Grid.Col>
             </Grid>
           </Container>
-
-          <Group justify="right" mt="lg">
-            <Button type="submit">Update Candidate</Button>
-          </Group>
+          {localStorage.getItem("userRole") === "recruiter" ? (
+            <Group justify="right" mt="lg">
+              <Button type="submit">Update Candidate</Button>
+            </Group>
+          ) : (
+            <div></div>
+          )}
         </form>
       </BgDiv>
 
-      <AddComment
-        organizationConfig={organizationConfig}
-        candidateId={candidateId}
-        comments={comments}
-        setComments={setComments}
-      />
+      {localStorage.getItem("userRole") === "recruiter" ? (
+        <AddComment
+          organizationConfig={organizationConfig}
+          candidateId={candidateId}
+          comments={comments}
+          setComments={setComments}
+        />
+      ) : (
+        <div></div>
+      )}
 
       <CommentsTable
         comments={comments}

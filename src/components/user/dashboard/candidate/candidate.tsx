@@ -11,7 +11,6 @@ import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
 import { useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 import moment from "moment";
-import { userDetailsAtom } from "../../../../atoms/user";
 
 const PoolCandidateList = () => {
   const navigate = useNavigate();
@@ -20,7 +19,6 @@ const PoolCandidateList = () => {
   const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const organizationConfig = useRecoilValue(organizationThemeAtom);
-  const user = useRecoilValue(userDetailsAtom);
 
   useEffect(() => {
     getAllPoolCandidatesByEmployee()
@@ -36,7 +34,7 @@ const PoolCandidateList = () => {
   }, []);
 
   const handleNavigate = (id: string) => {
-    if (user.userRole === "admin") {
+    if (localStorage.getItem("userRole") === "admin") {
       navigate(
         `${organizationAdminUrls(
           organizationConfig.organization_name
@@ -75,17 +73,21 @@ const PoolCandidateList = () => {
           Manage Candidates
         </h1>
         <div className="mt-4 md:mt-0">
-          <Button
-            onClick={() =>
-              navigate(
-                `${organizationEmployeeUrls(
-                  organizationConfig.organization_name
-                )}/dashboard/add_pool_candidate`
-              )
-            }
-          >
-            Add Candidate
-          </Button>
+          {localStorage.getItem("userRole") === "recruiter" ? (
+            <Button
+              onClick={() =>
+                navigate(
+                  `${organizationEmployeeUrls(
+                    organizationConfig.organization_name
+                  )}/dashboard/add_pool_candidate`
+                )
+              }
+            >
+              Add Candidate
+            </Button>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
 

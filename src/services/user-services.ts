@@ -129,7 +129,14 @@ export const addPoolCandidateCommentByRecruiter = async (
   }
 };
 export const getAllPoolCandidatesByEmployee = async () => {
-  const token = localStorage.getItem("employeeToken");
+  const userRole = localStorage.getItem("userRole");
+  let token;
+  if (userRole === "admin") {
+    token = localStorage.getItem("adminToken");
+  } else {
+    token = localStorage.getItem("employeeToken");
+  }
+
   try {
     const response = await apiClient.get(
       "/recruiter/getAllTalentPoolCandidates",
@@ -162,7 +169,13 @@ export const addPoolCandidateByRecruiter = async (data: AddCandidateForm) => {
 export const updatePoolCandidateByRecruiter = async (
   data: UpdateCandidateSchema
 ) => {
-  const token = localStorage.getItem("employeeToken");
+  const userRole = localStorage.getItem("userRole");
+  let token;
+  if (userRole === "admin") {
+    token = localStorage.getItem("adminToken");
+  } else {
+    token = localStorage.getItem("employeeToken");
+  }
 
   try {
     const response = await apiClient.post(
@@ -177,7 +190,13 @@ export const updatePoolCandidateByRecruiter = async (
   }
 };
 export const getPoolCandidateByRecruiter = async (id: string) => {
-  const token = localStorage.getItem("employeeToken");
+  const userRole = localStorage.getItem("userRole");
+  let token;
+  if (userRole === "admin") {
+    token = localStorage.getItem("adminToken");
+  } else {
+    token = localStorage.getItem("employeeToken");
+  }
 
   try {
     const response = await apiClient.get(
