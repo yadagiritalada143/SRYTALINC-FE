@@ -67,7 +67,13 @@ const PoolCandidateList = () => {
   };
 
   return (
-    <div className="p-6">
+    <div
+      style={{
+        color: organizationConfig.organization_theme.theme.button.textColor,
+        fontFamily: organizationConfig.organization_theme.theme.fontFamily,
+      }}
+      className="p-6"
+    >
       <div className="flex flex-col md:flex-row justify-between items-center mx-4 my-4">
         <h1 className="text-2xl font-bold text-center md:text-left">
           Manage Candidates

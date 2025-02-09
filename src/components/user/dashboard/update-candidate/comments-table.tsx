@@ -10,7 +10,13 @@ const CommentsTable = ({
   organizationConfig: OrganizationConfig;
 }) => {
   return (
-    <div className=" my-10 overflow-auto max-w-full shadow-lg rounded-lg">
+    <div
+      style={{
+        color: organizationConfig.organization_theme.theme.button.textColor,
+        fontFamily: organizationConfig.organization_theme.theme.fontFamily,
+      }}
+      className=" my-10 overflow-auto max-w-full shadow-lg rounded-lg"
+    >
       <Table className="w-full text-center shadow-md border table-auto">
         <colgroup>
           <col className="w-16" />
