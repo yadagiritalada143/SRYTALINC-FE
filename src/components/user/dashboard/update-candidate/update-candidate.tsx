@@ -86,7 +86,9 @@ const UpdatePoolCandidateForm = () => {
   };
 
   const handleUpdateCandidate = (data: UpdateCandidateSchema) => {
-    data.evaluatedSkills = skills.join(",");
+    if (data.evaluatedSkills.length) {
+      data.evaluatedSkills = skills.join(",");
+    }
     data.id = candidateId;
     updatePoolCandidateByRecruiter(data)
       .then(() => {

@@ -22,6 +22,7 @@ import { userDetailsAtom } from "../../../atoms/user";
 const EmployeeDashboard = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const organizationConfig = useRecoilValue(organizationThemeAtom);
@@ -45,6 +46,7 @@ const EmployeeDashboard = () => {
   });
 
   const onSubmit = (data: UpdatePasswordForm) => {
+    setIsLoading(true);
     if (data.newPassword === data.confirmNewPassword) {
       updatePasswordForEmployee(data)
         .then((response) => {
@@ -61,6 +63,7 @@ const EmployeeDashboard = () => {
     } else {
       toast.error("New password and confirm password doesn't match");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -154,8 +157,14 @@ const EmployeeDashboard = () => {
               error={errors.confirmNewPassword?.message}
             />
             <div className="text-right mt-4">
-              <Button onClick={close} type="submit">
-                Update
+              <Button
+                bg={organizationConfig.organization_theme.theme.backgroundColor}
+                c={organizationConfig.organization_theme.theme.color}
+                disabled={isLoading}
+                onClick={close}
+                type="submit"
+              >
+                {isLoading ? "Updating " : "Update"}
               </Button>
             </div>
           </form>

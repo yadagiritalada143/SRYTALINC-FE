@@ -5,44 +5,47 @@ import { useMantineTheme } from "@mantine/core";
 import { organizationThemeAtom } from "../../../atoms/organization-atom";
 import { useRecoilValue } from "recoil";
 import { ColorDiv } from "../style-components/c-div";
+
 const Profile = ({ details }: { details: EmployeeInterface }) => {
   const theme = useMantineTheme();
   const organizationConfig = useRecoilValue(organizationThemeAtom);
 
   return (
     <ColorDiv>
-      <div className="flex  mx-8 my-8">
+      <div className="flex mx-4 my-4">
+        {" "}
+        {/* Reduced margin */}
         <ProfileImageUploader organizationConfig={organizationConfig} />
-        <div>
-          <p>
-            <span className="font-bold">First Name:</span>
-            {details?.firstName}
-          </p>
-          <p>
-            <span className="font-bold">Last Name:</span>
-            {details?.lastName}
-          </p>
-          <p>
-            <span className="font-bold">Email:</span> {details?.email}
-          </p>
-          <p>
-            <span className="font-bold">Mobile:</span> {details?.mobileNumber}
-          </p>
+        <div className="ml-4">
+          {" "}
+          {/* Reduced margin */}
+          <div className="grid grid-cols-2 gap-2">
+            {" "}
+            {/* Reduced gap */}
+            <div className="font-bold">First Name:</div>
+            <div>{details?.firstName}</div>
+            <div className="font-bold">Last Name:</div>
+            <div>{details?.lastName}</div>
+            <div className="font-bold">Email:</div>
+            <div>{details?.email}</div>
+            <div className="font-bold">Mobile:</div>
+            <div>{details?.mobileNumber}</div>
+          </div>
         </div>
       </div>
-      <div
-        style={{
-          padding: "20px",
-        }}
-      >
+      <div style={{ padding: "10px" }}>
+        {" "}
+        {/* Reduced padding */}
         <Tabs
-          mt="lg"
+          mt="md"
           variant="pills"
           defaultValue="employment"
           color={theme.colors.primary[4]}
         >
-          <Tabs.List className="my-4" grow>
-            <Tabs.Tab className="font-bold " value="employment">
+          <Tabs.List className="my-2" grow>
+            {" "}
+            {/* Reduced margin */}
+            <Tabs.Tab className="font-bold" value="employment">
               Employment Details
             </Tabs.Tab>
             <Tabs.Tab className="font-bold" value="bankDetails">
@@ -50,50 +53,44 @@ const Profile = ({ details }: { details: EmployeeInterface }) => {
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel
-            style={{
-              padding: "10px 0",
-            }}
-            value="employment"
-          >
-            <p style={{ marginBottom: "10px" }}>
-              <span className="font-bold">Employment Type:</span>{" "}
-              {details.employmentType?.employmentType || "N/A"}
-            </p>
-            <p className="flex space-x-10">
-              <span className="font-bold">Employment Roles:</span>
-              {details.employeeRole.length > 0
-                ? details.employeeRole.map((role) => (
-                    <Code key={role._id}>{role.designation}</Code>
-                  ))
-                : "N/A"}
-            </p>
-            <p style={{ marginBottom: "10px" }} className="flex space-x-10">
-              <span className="font-bold">Blood Group:</span>
-              {details.bloodGroup?.type || "N/A"}
-            </p>
+          <Tabs.Panel style={{ padding: "5px 0" }} value="employment">
+            {" "}
+            {/* Reduced padding */}
+            <div className="grid grid-cols-2 gap-2">
+              {" "}
+              {/* Reduced gap */}
+              <div className="font-bold">Employment Type:</div>
+              <div>{details.employmentType?.employmentType || "N/A"}</div>
+              <div className="font-bold">Employment Roles:</div>
+              <div>
+                {details.employeeRole.length > 0
+                  ? details.employeeRole.map((role) => (
+                      <Code key={role._id} className="mr-1">
+                        {" "}
+                        {/* Reduced margin */}
+                        {role.designation}
+                      </Code>
+                    ))
+                  : "N/A"}
+              </div>
+              <div className="font-bold">Blood Group:</div>
+              <div>{details.bloodGroup?.type || "N/A"}</div>
+            </div>
           </Tabs.Panel>
 
-          <Tabs.Panel
-            color={organizationConfig.organization_theme.theme.button.textColor}
-            style={{
-              padding: "10px 0",
-            }}
-            value="bankDetails"
-          >
-            <p style={{ marginBottom: "10px" }}>
-              <span className="font-bold">Account Number:</span> Account Number:{" "}
-              {details.bankDetailsInfo?.accountNumber || "N/A"}
-            </p>
-            <p style={{ marginBottom: "10px" }}>
-              <span className="font-bold">Account Holder Name:</span>{" "}
-              {details.bankDetailsInfo?.accountHolderName || "N/A"}
-            </p>
-            <p>
+          <Tabs.Panel style={{ padding: "5px 0" }} value="bankDetails">
+            {" "}
+            {/* Reduced padding */}
+            <div className="grid grid-cols-2 gap-2">
               {" "}
-              <span className="font-bold">IFSC Code:</span>IFSC Code:{" "}
-              {details.bankDetailsInfo?.ifscCode || "N/A"}
-            </p>
+              {/* Reduced gap */}
+              <div className="font-bold">Account Number:</div>
+              <div>{details.bankDetailsInfo?.accountNumber || "N/A"}</div>
+              <div className="font-bold">Account Holder Name:</div>
+              <div>{details.bankDetailsInfo?.accountHolderName || "N/A"}</div>
+              <div className="font-bold">IFSC Code:</div>
+              <div>{details.bankDetailsInfo?.ifscCode || "N/A"}</div>
+            </div>
           </Tabs.Panel>
         </Tabs>
       </div>
