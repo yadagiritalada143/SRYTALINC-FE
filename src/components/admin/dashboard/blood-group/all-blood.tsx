@@ -73,6 +73,7 @@ const BloodGroupTable = () => {
   };
 
   const confirmEdit = async () => {
+    setIsLoading(true);
     try {
       await updateBloodGroupByAdmin(selectedGroup.id, selectedGroup.type);
       toast.success("Blood group updated successfully");
@@ -81,11 +82,14 @@ const BloodGroupTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to update blood group");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // Confirm delete
   const confirmDelete = async () => {
+    setIsLoading(true);
     try {
       await deleteBloodGroupByAdmin(selectedGroup.id);
       toast.success("Blood group deleted successfully");
@@ -95,11 +99,14 @@ const BloodGroupTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to delete blood group");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // Handle add blood group
   const handleAdd = async () => {
+    setIsLoading(true);
     try {
       await addBloodGroupByAdmin({ type: newGroupName });
       toast.success("Blood group added successfully");
@@ -109,6 +116,8 @@ const BloodGroupTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to add blood group");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -186,10 +195,7 @@ const BloodGroupTable = () => {
               </thead>
               <tbody className="text-sm">
                 {paginatedData.map((bloodGroup, index) => (
-                  <tr
-                    key={bloodGroup._id}
-                    className="hover:bg-slate-200 hover:text-black"
-                  >
+                  <tr key={bloodGroup._id}>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
                       {index + 1}
                     </td>
@@ -232,10 +238,22 @@ const BloodGroupTable = () => {
             mb="md"
           />
           <Group justify="flex-end">
-            <Button variant="outline" onClick={closeAddModal}>
+            <Button
+              bg={organizationConfig.organization_theme.theme.backgroundColor}
+              c={organizationConfig.organization_theme.theme.color}
+              variant="outline"
+              onClick={closeAddModal}
+            >
               Cancel
             </Button>
-            <Button onClick={handleAdd}>Add</Button>
+            <Button
+              bg={organizationConfig.organization_theme.theme.backgroundColor}
+              onClick={handleAdd}
+              c={organizationConfig.organization_theme.theme.color}
+              disabled={isLoading}
+            >
+              Add
+            </Button>
           </Group>
         </Box>
       </Modal>

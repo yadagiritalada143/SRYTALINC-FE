@@ -59,7 +59,8 @@ const PoolCandidateList = () => {
           .toLowerCase()
           .includes(query.toLocaleLowerCase()) ||
         candidate.contact.email.toLowerCase().includes(query) ||
-        candidate.contact.phone.toString().includes(query)
+        candidate.contact.phone.toString().includes(query) ||
+        candidate.evaluatedSkills?.toLowerCase().toString().includes(query)
       );
     });
 
@@ -177,23 +178,13 @@ const PoolCandidateList = () => {
 
                   <td className="px-4 py-2 border-r ">
                     {candidate?.comments?.length
-                      ? `${
-                          candidate.comments[candidate?.comments?.length - 1]
-                            .userId?.firstName
-                        } ${
-                          candidate.comments[candidate?.comments?.length - 1]
-                            .userId?.lastName
-                        }`
+                      ? `${candidate.comments[0].userId?.firstName} ${candidate.comments[0].userId?.lastName}`
                       : "N/A"}
                   </td>
                   <td className="px-4 py-2 border-r ">
                     {candidate?.comments?.length
                       ? moment(
-                          new Date(
-                            candidate.comments[
-                              candidate?.comments?.length - 1
-                            ]?.updateAt
-                          )
+                          new Date(candidate.comments[0]?.updateAt)
                         ).format("MMMM Do YYYY")
                       : "N/A"}
                   </td>

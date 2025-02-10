@@ -61,8 +61,9 @@ const AddPoolCandidate = () => {
   };
 
   const onSubmit = (formData: AddCandidateForm) => {
-    formData.evaluatedSkills = skills.join(",");
-
+    if (formData.evaluatedSkills.length) {
+      formData.evaluatedSkills = skills.join(",");
+    }
     addPoolCandidateByRecruiter(formData)
       .then(() => {
         showSuccessToast("Candidate added successfully !");
