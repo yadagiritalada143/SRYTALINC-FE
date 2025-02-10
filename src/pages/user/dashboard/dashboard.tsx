@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { updatePasswordForEmployee } from "../../../services/user-services";
 import { useMantineTheme } from "@mantine/core";
 import Header from "../../../components/common/header/header";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { organizationThemeAtom } from "../../../atoms/organization-atom";
 import { userDetailsAtom } from "../../../atoms/user";
 
@@ -26,6 +26,7 @@ const EmployeeDashboard = () => {
   const theme = useMantineTheme();
   const organizationConfig = useRecoilValue(organizationThemeAtom);
   const user = useRecoilValue(userDetailsAtom);
+  const setUser = useSetRecoilState(userDetailsAtom);
   const {
     register,
     formState: { errors },
@@ -49,6 +50,7 @@ const EmployeeDashboard = () => {
         .then((response) => {
           if (response.success) {
             close();
+            setUser({ ...user, passwordResetRequired: "false" });
           }
         })
         .catch((error: any) =>
