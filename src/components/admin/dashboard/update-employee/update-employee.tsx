@@ -18,6 +18,7 @@ import {
   getEmployeeDetailsByAdmin,
   updateEmployeeDetailsByAdmin,
   deleteEmployeeByAdmin,
+  getAllEmploymentTypes,
 } from "../../../../services/admin-services";
 import { toast } from "react-toastify";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
@@ -51,10 +52,22 @@ const UpdateEmployee = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const employmentTypeOptions = [
-    { value: "66cae2a743400091bccfdc51", label: "FTE" },
-    { value: "66cae2a743400091bccfdc52", label: "Contractor" },
-  ];
+  const [employmentTypeOptions, setEmploymentTypes] = useState([]);
+
+  useEffect(() => {
+    getAllEmploymentTypes()
+      .then((response) => {
+        const filteredEmployment = response.map(
+          (res: { _id: string; employmentType: string }) => {
+            return { value: res._id, label: res.employmentType };
+          }
+        );
+        setEmploymentTypes(filteredEmployment);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message || "Something went wrong");
+      });
+  });
 
   const employeeRoles = [
     { value: "66d332c2bc7f50be0a7a573f", label: "Trainee" },

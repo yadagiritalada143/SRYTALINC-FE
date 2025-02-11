@@ -21,6 +21,7 @@ import BloodGroupTable from "../components/admin/dashboard/blood-group/all-blood
 import PoolCandidateList from "../components/user/dashboard/candidate/candidate";
 import UpdatePoolCandidateForm from "../components/user/dashboard/update-candidate/update-candidate";
 import UserProvider from "../hooks/user-context";
+import EmploymentTypes from "../components/admin/dashboard/employement-type/employement-type";
 
 const AdminRoutes = () => {
   const { organization } = useParams<{ organization: string }>();
@@ -125,6 +126,10 @@ const AdminRoutes = () => {
             <Route
               path="blood-group-management"
               element={<BloodGroupTable />}
+            />
+            <Route
+              path="employment-type-management"
+              element={<EmploymentTypes />}
             />
           </Route>
         </Route>

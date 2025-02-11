@@ -168,7 +168,7 @@ const PoolCandidateList = () => {
                   </td>
                   <td className="px-4 py-2 border-r">
                     {candidate?.createdBy?.firstName || ""}{" "}
-                    {candidate?.userId?.lastName || ""}
+                    {candidate?.createdBy?.lastName || ""}
                   </td>
                   <td className="px-4 py-2 border-r ">
                     {moment(new Date(candidate.createdAt)).format(

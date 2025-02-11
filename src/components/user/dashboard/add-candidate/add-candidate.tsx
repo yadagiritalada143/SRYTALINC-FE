@@ -61,7 +61,7 @@ const AddPoolCandidate = () => {
   };
 
   const onSubmit = (formData: AddCandidateForm) => {
-    if (formData.evaluatedSkills.length) {
+    if (skills.length) {
       formData.evaluatedSkills = skills.join(",");
     }
     addPoolCandidateByRecruiter(formData)
