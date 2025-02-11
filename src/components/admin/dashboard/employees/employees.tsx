@@ -76,7 +76,11 @@ const Employees = () => {
           </div>
         </div>
 
-        <SearchBarFullWidht search={searchQuery} handleSearch={handleSearch} />
+        <SearchBarFullWidht
+          search={searchQuery}
+          handleSearch={handleSearch}
+          placeHolder="Search by Name, Email, Phone"
+        />
         {isLoading ? (
           <div className="flex justify-center items-center h-48">
             <Loader

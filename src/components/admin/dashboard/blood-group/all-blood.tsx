@@ -162,7 +162,11 @@ const BloodGroupTable = () => {
           </div>
         </div>
 
-        <SearchBarFullWidht search={search} handleSearch={handleSearch} />
+        <SearchBarFullWidht
+          search={search}
+          handleSearch={handleSearch}
+          placeHolder="Search by blood group"
+        />
 
         {isLoading ? (
           <div className="flex justify-center items-center h-48">

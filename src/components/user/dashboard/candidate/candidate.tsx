@@ -98,7 +98,11 @@ const PoolCandidateList = () => {
         </div>
       </div>
 
-      <SearchBarFullWidht search={search} handleSearch={handleSearch} />
+      <SearchBarFullWidht
+        search={search}
+        handleSearch={handleSearch}
+        placeHolder="Search by Name, Email, Phone, Skills"
+      />
 
       <div className="overflow-auto max-w-full shadow-lg rounded-lg">
         <Table className="w-full text-center shadow-md border table-auto">

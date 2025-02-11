@@ -67,7 +67,7 @@ const UpdateEmployee = () => {
       .catch((error) => {
         toast.error(error.response.data.message || "Something went wrong");
       });
-  });
+  }, []);
 
   const employeeRoles = [
     { value: "66d332c2bc7f50be0a7a573f", label: "Trainee" },

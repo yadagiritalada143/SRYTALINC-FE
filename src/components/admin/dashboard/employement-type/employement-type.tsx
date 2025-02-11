@@ -168,7 +168,11 @@ const EmploymentTypes = () => {
           </div>
         </div>
 
-        <SearchBarFullWidht search={search} handleSearch={handleSearch} />
+        <SearchBarFullWidht
+          search={search}
+          handleSearch={handleSearch}
+          placeHolder="Search by type"
+        />
 
         {isLoading ? (
           <div className="flex justify-center items-center h-48">
