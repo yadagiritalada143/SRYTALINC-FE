@@ -115,6 +115,24 @@ export const addBloodGroupByAdmin = async (data: { type: string }) => {
     throw error;
   }
 };
+export const addEmploymentTypeByAdmin = async (data: {
+  employmentType: string;
+}) => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.post(
+      "/admin/addEmploymentTypeByAdmin",
+      data,
+      {
+        headers: { auth_token: adminToken },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const updateBloodGroupByAdmin = async (id: string, type: string) => {
   const adminToken = localStorage.getItem("adminToken");
@@ -133,11 +151,61 @@ export const updateBloodGroupByAdmin = async (id: string, type: string) => {
   }
 };
 
+export const updateEmploymentTypeByAdmin = async (
+  id: string,
+  employmentType: string
+) => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.put(
+      `/admin/updateEmploymentTypeByAdmin`,
+      { id, employmentType },
+      {
+        headers: { auth_token: adminToken },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllEmploymentTypes = async () => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.get(
+      "/admin/getAllEmploymentTypesByAdmin",
+      { headers: { auth_token: adminToken } }
+    );
+    console.log(response);
+    return response.data.employmentTypesList;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteBloodGroupByAdmin = async (id: string) => {
   const adminToken = localStorage.getItem("adminToken");
   try {
     const response = await apiClient.delete(
       `/admin/deleteBloodGroupByAdmin/${id}`,
+      {
+        headers: { auth_token: adminToken },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteEmploymentTypeByAdmin = async (id: string) => {
+  const adminToken = localStorage.getItem("adminToken");
+  try {
+    const response = await apiClient.delete(
+      `/admin/deleteEmploymentTypeByAdmin/${id}`,
       {
         headers: { auth_token: adminToken },
       }

@@ -13,23 +13,27 @@ import { toast } from "react-toastify";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEdit } from "@tabler/icons-react";
 import {
-  getAllBloodGroupByAdmin,
-  addBloodGroupByAdmin,
-  updateBloodGroupByAdmin,
-  deleteBloodGroupByAdmin,
+  addEmploymentTypeByAdmin,
+  updateEmploymentTypeByAdmin,
+  deleteEmploymentTypeByAdmin,
+  getAllEmploymentTypes,
 } from "../../../../services/admin-services";
 import { useRecoilValue } from "recoil";
 import { organizationThemeAtom } from "../../../../atoms/organization-atom";
 import { useMantineTheme } from "@mantine/core";
 import { SearchBarFullWidht } from "../../../common/search-bar/search-bar";
 
-const BloodGroupTable = () => {
-  const [bloodGroups, setBloodGroups] = useState<any[]>([]);
-  const [filteredBloodGroups, setFilteredBloodGroups] = useState<any[]>([]);
+const EmploymentTypes = () => {
+  const [employmentTypes, setEmploymentTypes] = useState<
+    { id: string; employmentType: string }[]
+  >([]);
+  const [filteredEmployementType, setFilteredEmployementType] = useState<any[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [activePage, setActivePage] = useState(1);
-  const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
-  const [newGroupName, setNewGroupName] = useState("");
+  const [selectedType, setSelectedType] = useState<any | null>(null);
+  const [newTypeName, setNewTypeName] = useState("");
   const organizationConfig = useRecoilValue(organizationThemeAtom);
   const [search, setSearch] = useState("");
   const theme = useMantineTheme();
@@ -43,45 +47,47 @@ const BloodGroupTable = () => {
   const [addModalOpened, { open: openAddModal, close: closeAddModal }] =
     useDisclosure(false);
 
-  // Fetch blood groups on mount
   useEffect(() => {
-    fetchBloodGroups();
+    fetchEmployementTypes();
   }, []);
 
-  const fetchBloodGroups = async () => {
+  const fetchEmployementTypes = async () => {
     setIsLoading(true);
     try {
-      const data = await getAllBloodGroupByAdmin();
-      setBloodGroups(data);
-      setFilteredBloodGroups(data);
+      const data = await getAllEmploymentTypes();
+      setEmploymentTypes(data);
+      setFilteredEmployementType(data);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast.error("Failed to fetch blood groups");
+      toast.error("Failed to fetch employment types");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleEdit = (group: any) => {
-    setSelectedGroup(group);
+    setSelectedType(group);
     openEditModal();
   };
 
   const handleDelete = (id: string) => {
-    setSelectedGroup({ id });
+    setSelectedType({ id });
     openDeleteModal();
   };
 
   const confirmEdit = async () => {
     setIsLoading(true);
     try {
-      await updateBloodGroupByAdmin(selectedGroup.id, selectedGroup.type);
-      toast.success("Blood group updated successfully");
-      fetchBloodGroups();
+      await updateEmploymentTypeByAdmin(
+        selectedType.id,
+        selectedType.employmentType
+      );
+      toast.success(" Updated successfully");
+      fetchEmployementTypes();
       closeEditModal();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast.error("Failed to update blood group");
+      toast.error("Failed to update ");
     } finally {
       setIsLoading(false);
     }
@@ -91,14 +97,14 @@ const BloodGroupTable = () => {
   const confirmDelete = async () => {
     setIsLoading(true);
     try {
-      await deleteBloodGroupByAdmin(selectedGroup.id);
-      toast.success("Blood group deleted successfully");
-      fetchBloodGroups();
+      await deleteEmploymentTypeByAdmin(selectedType.id);
+      toast.success(" Deleted successfully");
+      fetchEmployementTypes();
       closeDeleteModal();
       closeEditModal();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast.error("Failed to delete blood group");
+      toast.error("Failed to delete ");
     } finally {
       setIsLoading(false);
     }
@@ -108,14 +114,14 @@ const BloodGroupTable = () => {
   const handleAdd = async () => {
     setIsLoading(true);
     try {
-      await addBloodGroupByAdmin({ type: newGroupName });
-      toast.success("Blood group added successfully");
-      fetchBloodGroups();
+      await addEmploymentTypeByAdmin({ employmentType: newTypeName });
+      toast.success("Added successfully");
+      fetchEmployementTypes();
       closeAddModal();
-      setNewGroupName("");
+      setNewTypeName("");
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast.error("Failed to add blood group");
+      toast.error("Failed to add ");
     } finally {
       setIsLoading(false);
     }
@@ -123,8 +129,8 @@ const BloodGroupTable = () => {
 
   // Pagination
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(filteredBloodGroups.length / itemsPerPage);
-  const paginatedData = filteredBloodGroups.slice(
+  const totalPages = Math.ceil(filteredEmployementType.length / itemsPerPage);
+  const paginatedData = filteredEmployementType.slice(
     (activePage - 1) * itemsPerPage,
     activePage * itemsPerPage
   );
@@ -133,15 +139,15 @@ const BloodGroupTable = () => {
     const query = e.target.value;
     setSearch(query);
 
-    const filtered = bloodGroups.filter((blood) => {
-      blood.type.toString().toLowerCase();
-      blood.type.toString().trim();
+    const filtered = employmentTypes.filter((type) => {
+      type.employmentType.toString().toLowerCase();
+      type.employmentType.toString().trim();
       return (
-        blood.type.toString().includes(query) ||
-        blood.id.toString().includes(query)
+        type.employmentType.toString().includes(query) ||
+        type.employmentType.toString().includes(query)
       );
     });
-    setFilteredBloodGroups(filtered);
+    setFilteredEmployementType(filtered);
   };
 
   return (
@@ -155,17 +161,17 @@ const BloodGroupTable = () => {
       <div>
         <div className="flex justify-between items-center mx-4 my-4">
           <h1 className="text-2xl font-bold text-center">
-            Manage Blood Groups
+            Manage Employment Types
           </h1>
           <div>
-            <Button onClick={openAddModal}>Add Blood Group</Button>
+            <Button onClick={openAddModal}> Add Employment Type</Button>
           </div>
         </div>
 
         <SearchBarFullWidht
           search={search}
           handleSearch={handleSearch}
-          placeHolder="Search by blood group"
+          placeHolder="Search by type"
         />
 
         {isLoading ? (
@@ -193,21 +199,21 @@ const BloodGroupTable = () => {
               >
                 <tr>
                   <th className="p-2 border">Id</th>
-                  <th className="p-2 border">Blood Group</th>
+                  <th className="p-2 border">Employment Type</th>
                   <th className="p-2 border">Action</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
-                {paginatedData.map((bloodGroup, index) => (
-                  <tr key={bloodGroup._id}>
+                {paginatedData.map((employmentT, index) => (
+                  <tr key={employmentT._id}>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
                       {index + 1}
                     </td>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
-                      {bloodGroup.type}
+                      {employmentT.employmentType}
                     </td>
                     <td className="px-4 py-2 border whitespace-nowrap overflow-hidden text-ellipsis">
-                      <Button onClick={() => handleEdit(bloodGroup)}>
+                      <Button onClick={() => handleEdit(employmentT)}>
                         <IconEdit />
                       </Button>
                     </td>
@@ -229,15 +235,15 @@ const BloodGroupTable = () => {
       <Modal
         opened={addModalOpened}
         onClose={closeAddModal}
-        title="Add New Blood Group"
+        title="Add New Employment Type"
         centered
       >
         <Box>
           <TextInput
-            label="Blood Group Name"
-            value={newGroupName}
-            onChange={(e) => setNewGroupName(e.target.value)}
-            placeholder="Enter blood group name"
+            label="Name"
+            value={newTypeName}
+            onChange={(e) => setNewTypeName(e.target.value)}
+            placeholder="Enter name"
             required
             mb="md"
           />
@@ -265,15 +271,18 @@ const BloodGroupTable = () => {
       <Modal
         opened={editModalOpened}
         onClose={closeEditModal}
-        title="Edit Blood Group"
+        title="Edit "
         centered
       >
         <Box>
           <TextInput
-            label="Blood Group Name"
-            value={selectedGroup?.type || ""}
+            label="Name"
+            value={selectedType?.employmentType || ""}
             onChange={(e) =>
-              setSelectedGroup({ ...selectedGroup, type: e.target.value })
+              setSelectedType({
+                ...selectedType,
+                employmentType: e.target.value,
+              })
             }
             required
             mb="md"
@@ -283,7 +292,7 @@ const BloodGroupTable = () => {
               Cancel
             </Button>
             <Button onClick={confirmEdit}>Save Changes</Button>
-            <Button bg="red" onClick={() => handleDelete(selectedGroup.id)}>
+            <Button bg="red" onClick={() => handleDelete(selectedType.id)}>
               Delete
             </Button>
           </Group>
@@ -296,7 +305,7 @@ const BloodGroupTable = () => {
         title="Confirm Deletion"
         centered
       >
-        <Text size="sm">Are you sure you want to delete this blood group?</Text>
+        <Text size="sm">Are you sure you want to delete this type?</Text>
         <Group justify="flex-end" mt="md">
           <Button variant="outline" onClick={closeDeleteModal}>
             Cancel
@@ -310,4 +319,4 @@ const BloodGroupTable = () => {
   );
 };
 
-export default BloodGroupTable;
+export default EmploymentTypes;

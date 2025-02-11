@@ -4,14 +4,16 @@ import { IconSearch } from "@tabler/icons-react";
 export const SearchBarFullWidht = ({
   search,
   handleSearch,
+  placeHolder,
 }: {
   search: string;
   handleSearch: any;
+  placeHolder: string;
 }) => {
   return (
     <div className="w-full my-2">
       <TextInput
-        placeholder="Search by Name, Email, or Phone"
+        placeholder={placeHolder}
         rightSection={<IconSearch />}
         value={search}
         onChange={handleSearch}

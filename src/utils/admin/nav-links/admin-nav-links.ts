@@ -1,4 +1,9 @@
-import { IconDroplet, IconUser, IconUserEdit } from "@tabler/icons-react";
+import {
+  IconDroplet,
+  IconNetwork,
+  IconUser,
+  IconUserEdit,
+} from "@tabler/icons-react";
 
 export const adminNavLinks = [
   {
@@ -12,6 +17,12 @@ export const adminNavLinks = [
     url: "dashboard/blood-group-management",
     icon: IconDroplet,
     name: "Blood-Groups",
+  },
+  {
+    role: "admin",
+    url: "dashboard/employment-type-management",
+    icon: IconNetwork,
+    name: "Employment-Types",
   },
   {
     role: "admin",

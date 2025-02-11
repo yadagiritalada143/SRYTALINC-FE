@@ -86,7 +86,7 @@ const UpdatePoolCandidateForm = () => {
   };
 
   const handleUpdateCandidate = (data: UpdateCandidateSchema) => {
-    if (data.evaluatedSkills.length) {
+    if (skills.length) {
       data.evaluatedSkills = skills.join(",");
     }
     data.id = candidateId;
@@ -133,7 +133,9 @@ const UpdatePoolCandidateForm = () => {
           className="rounded-lg shadow-lg w-full max-w-3xl  mx-auto p-8"
         >
           <Container>
-            <Title order={3}>Candidate Details</Title>
+            <Title className="text-center" order={3}>
+              Candidate Details
+            </Title>
             <Grid gutter="md">
               <Grid.Col span={12}>
                 <Controller
