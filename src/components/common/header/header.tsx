@@ -7,6 +7,7 @@ import {
 } from "../../../utils/common/constants";
 import { useRecoilValue } from "recoil";
 import { userDetailsAtom } from "../../../atoms/user";
+
 const Header = ({
   color,
   organization,
