@@ -1,5 +1,10 @@
 import { Avatar, Menu, rem } from "@mantine/core";
-import { IconLogout, IconSettings, IconUser } from "@tabler/icons-react";
+import {
+  IconLogout,
+  IconSettings,
+  IconUser,
+  IconPasswordUser,
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import {
   organizationAdminUrls,
@@ -7,6 +12,8 @@ import {
 } from "../../../utils/common/constants";
 import { useRecoilValue } from "recoil";
 import { userDetailsAtom } from "../../../atoms/user";
+import { useDisclosure } from "@mantine/hooks";
+import ChangePasswordPopup from "../../../pages/user/changePassword/changePassword";
 const Header = ({
   color,
   organization,
@@ -16,6 +23,7 @@ const Header = ({
 }) => {
   const navigate = useNavigate();
   const user = useRecoilValue(userDetailsAtom);
+  const [opened, { open, close }] = useDisclosure(false);
 
   const handleLogout = () => {
     const userRole = localStorage.getItem("userRole");
@@ -28,6 +36,7 @@ const Header = ({
     localStorage.clear();
   };
   return (
+    <>
     <div style={{ color }} className="flex justify-between space-x-8 mx-4">
       <div>
         <h1 className="text-2xl uppercase underline">{organization}</h1>
@@ -51,6 +60,18 @@ const Header = ({
               >
                 Profile
               </Menu.Item>
+
+              <Menu.Item
+                className="hover:bg-transparent  hover:text-inherit tranform transition-all duration-150 hover:scale-110"
+                leftSection={
+                  <IconPasswordUser
+                    style={{ width: rem(14), height: rem(14) }}
+                  />
+                }
+                onClick={open}>
+                Change Password
+              </Menu.Item>
+
               <Menu.Item
                 className="hover:bg-transparent  hover:text-inherit tranform transition-all duration-150 hover:scale-110"
                 leftSection={
@@ -74,6 +95,8 @@ const Header = ({
         </div>
       </div>
     </div>
+    <ChangePasswordPopup opened={opened} close={close} />
+    </>
   );
 };
 
